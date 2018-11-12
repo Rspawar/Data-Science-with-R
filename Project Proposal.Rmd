@@ -17,7 +17,7 @@ __Project title:__ <font color ="black"> "Customer Behavioural Analytics in the 
 
 __Names of team members:__<br /> 
 <font color ="black">
-1. Nadiia Honcharenko (220681) <br />
+1. Nadiia Honcharenko (220681, nadiia.honcharenko@st.ovgu.de) <br />
 2. Rutuja Shivraj Pawar (220051, rutuja.pawar@ovgu.de) <br />
 3. Shivani Jadhav () <br />
 4. Sumit Kundu () 
@@ -27,9 +27,28 @@ __Under the Guidance of:__ <font color ="black"> M.Sc. Uli Niemann </font>
 
 __Date:__ <font color ="black"> ```r format(Sys.Date(), "%B %e, %Y")``` </font>
 
-__Background and motivation:__ <font color ="black"> </font>
+__Background and motivation:__ <font color ="black"> 
+<p>Consumer behavior is the series of behaviors or patterns that consumers follow before making a purchase.
+Understanding, analyzing and keeping track of customer decisions 
+helps to increase an annual revenue of companies and satisfy the needs of clients.</p>
+<p>In this project we are trying to research a customer behaviour during shopping, 
+how consumers make buying decisions and what influences those decisions.
+This study shows that products have a "range" effect:
+for some products, customers travel long distances, while
+for other products they settle down with the closest shop. 
+We want to check the existence of dependencies between product prices, 
+their uniqueness and location of a store, then compare and explain them. </p>
+ </font>
 
-__Project objectives:__ <font color ="black"> </font>
+__Project objectives:__ <font color ="black"> 
+<ul>
+<li>Find and investigate the dependencies between product prices, 
+their uniqueness and distance to a shop</li>
+<li>Show when customers overcome long distances to stores</li>
+<li>Predict a customer behaviour to 
+improve marketing strategy of the shop</li>
+</ul>
+</font>
 
 __Name of the dataset to be used:__ <font color ="black"> Supermarket aggr.Customer^[https://bigml.com/user/czuriaga/gallery/dataset/5559c2c6200d5a6570000084] <br />
 The dataset to be used is the retail market data of one of the largest Italian retail distribution company called _Coop_ for a single Italian city [@pennacchioli2013explaining].<br />
