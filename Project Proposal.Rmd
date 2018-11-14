@@ -23,7 +23,7 @@ __Names of team members:__<br />
 <font color ="black">
 1. Nadiia Honcharenko (220681) <br />
 2. Rutuja Shivraj Pawar (220051, rutuja.pawar@ovgu.de) <br />
-3. Shivani Jadhav () <br />
+3. Shivani Jadhav (223856) <br />
 4. Sumit Kundu () 
 </font>
 
@@ -62,7 +62,21 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 
 __Design overview:__ <font color ="black"> </font>
 
-__Time plan:__ <font color ="black"> </font>
+__Time plan:__ <font color ="black">
+23.11.	Data collection & preprocessing
+1.Exploring raw data – All
+2.Tidying data
+   a. Fixing up formats-Nadia
+   b. Correcting erroneous values-Rutuja
+   c. Filling missing values-Shivani
+3.Prepare data for analysis-Sumit
+14.12.	Modeling-Sumit
+Visualisation-Shivani
+Website design- Nadia and Rutuja
+11.01.	Website-Nadia and Rutja
+Visualisation-Shivani
+Screencast-Sumit
+</font>
 
 __GitHub Repository:__ https://github.com/Rspawar/Data-Science-with-R.git 
 
