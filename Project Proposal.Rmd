@@ -36,7 +36,7 @@ __Background and Motivation:__ <font color ="black">
 </font>
 
 __Project Objectives:__ <font color ="black"> A customer is a key-centric factor for any business to be successful. Effectively measuring and modeling customer behaviour by understanding what matters the most to them thus devising appropriate strategies can help to enhance the overall customer experience. This eventually helps in the long run towards customer retention and a sustainable growth of the business. Hence, _Understanding the Customer Behavioural Pattern in a Business_ is the crucial problem to be addressed. This project thus aims to address the problem of understanding customer behaviour in the retail sector.<br />
-The project intents to discover different analytical insights about the purchase behaviour of the customers through answering the below formulated Research Questions, <br />
+The project intents to discover different analytical insights about the purchase behaviour of the customers through answering the below formulated Research Questions (RQ), <br />
 
 __1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
 _Relevance:_ This will help to understand whether the price is an important factor affecting the majority of customers purchase decisions. <br />
@@ -60,7 +60,17 @@ The dataset to be used is the retail market data of one of the largest Italian r
 The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from the original datasets^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and mapped to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. </font> 
 
 
-__Design Overview:__ <font color ="black"> </font>
+__Design Overview:__ <font color ="black">This section summarizes the algorithms and methods we plan to use in our project. <br />
+  
+__1. Support Vector Machine (SVM)__ <br />
+We will approach RQ1 as a classification task and hence, use SVM to classify whether a customer is willing to travel long distances to purchase products in spite of the high average product price in a shop? <br />
+
+__2. k-means Clustering__ <br />
+RQ2, RQ4 and RQ5 needs us to segment products, customers and shops into multiple clusters. We plan to use k-means clustering to find a solution to the above mentioned research questions.
+
+__3. Naive Bayes__ <br />
+We plan to calculate maximum likelihood estimation of a customer to select a particular shop to purchase a particular product and create a model based on Naive Bayes.
+</font>
 
 __Time Plan:__ <font color ="black"> </font>
 
