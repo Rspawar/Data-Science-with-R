@@ -15,28 +15,28 @@ text-align: justify}
 knitr::opts_chunk$set(echo = TRUE)
 ``` 
 
-### Project Proposal on Customer Behavioural Analytics in the Retail sector 
+### Project Proposal on Customer Behavioural Analytics in the Retail Sector 
 <br> 
-__Project title:__ <font color ="black"> "Customer Behavioural Analytics in the Retail sector" <br /> </font> </font>
+__Project title:__ <font color ="black"> "Customer Behavioural Analytics in the Retail Sector" <br /> </font> </font>
 
-__Names of team members:__<br /> 
+__Names of Team Members:__<br /> 
 <font color ="black">
-1. Nadiia Honcharenko (220681) <br />
+1. Nadiia Honcharenko (220681, nadiia.honcharenko@st.ovgu.de) <br />
 2. Rutuja Shivraj Pawar (220051, rutuja.pawar@ovgu.de) <br />
-3. Shivani Jadhav () <br />
-4. Sumit Kundu () 
+3. Shivani Jadhav (223856, shivani.jadhav@st.ovgu.de) <br />
+4. Sumit Kundu (217453, sumit.kundu@st.ovgu.de) 
 </font>
 
 __Under the Guidance of:__ <font color ="black"> M.Sc. Uli Niemann </font>
 
 __Date:__ <font color ="black"> ```r format(Sys.Date(), "%B %e, %Y")``` </font>
 
-__Background and motivation:__ <font color ="black"> 
+__Background and Motivation:__ <font color ="black"> A customer is a key-centric factor for any business to be successful. Conventional wisdom tells us that the cost of retaining an existing customer is far less than acquiring a new one. In order that a business has a sustainable growth, the retention of its old customer base and expansion of the new customer base is very critical. This demands from a business to understand the behaviour of its customers in relation to the business. Therefore obtaining a 360&deg; view of its customers is crucial for a business looking for a competitive edge in the market. In such a scenario, Customer Behavioural Analytics plays an important role in leveraging data analytics to find meaningful behavioural patterns in the customer-specific business data. <br/>
+Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make buying decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to discover further insights about their behaviour. These meaningful insights will further help a business to implement stratergies leading to an increased revenue through customer satisfaction. 
 
 </font>
 
-__Project objectives:__ <font color ="black"> A customer is a key-centric factor for any business to be successful. Effectively measuring and modeling customer behaviour by understanding what matters the most to them thus devising appropriate strategies can help to enhance the overall customer experience. This eventually helps in the long run towards customer retention and a sustainable growth of the business. Hence, _Understanding the Customer Behavioural Pattern in a Business_ is the crucial problem to be addressed. This project thus aims to address the problem of understanding customer behaviour in the retail sector.<br />
-The project intents to discover different analytical insights about the purchase behaviour of the customers through answering the below formulated Research Questions, <br />
+__Project objectives:__ <font color ="black"> This project aims to address the problem of understanding behaviour of customers of an Italian retail distribution company _Coop_ in a single Italian city. The project intends to discover different analytical insights about the purchase behaviour of the customers through answering the below formulated Research Questions (RQ), <br />
 
 __1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
 _Relevance:_ This will help to understand whether the price is an important factor affecting the majority of customers purchase decisions. <br />
@@ -60,10 +60,121 @@ The dataset to be used is the retail market data of one of the largest Italian r
 The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from the original datasets^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and mapped to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. </font> 
 
 
-__Design overview:__ <font color ="black"> </font>
+__Design overview:__ <font color ="black"> Below are some of the algorithms and methods that we plan to utilize in our project,<br />
 
-__Time plan:__ <font color ="black"> </font>
+__1. Support Vector Machine (SVM)__ <br />
+We will approach RQ1 as a classification task and hence utilize SVM to classify whether a customer is willing to travel long distances or not to purchase products given the high average product price in a shop. <br />
 
+__2. k-means Clustering__ <br />
+RQ2, RQ4 and RQ5 require to segment products, customers and shops into multiple clusters. We plan to utilize k-means clustering to partition the data into clusters and draw analysis from it.<br />
+
+__3. Naive Bayes__ <br />
+RQ3 also requires the calculation of maximum likelihood estimation involving customer, products and shop. Hence we plan to create a model based on Naive Bayes for the estimation.
+
+__4. Apriori algorithm__ <br />
+RQ3 also requires an association to be drawn between customers and shops for different products. Hence we plan to use Apriori algorithm to determine the different association patterns in the data. 
+</font>
+
+__Time plan:__ <font color ="black"> 
+<table>
+<colgroup>
+<col width="22%" />
+<col width="77%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Week</th>
+<th align="left">Responsibilites and Workload Distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">19.11.</td>
+<td align="left"> 
+_Nadiia & Rutuja:_ Data Cleaning <br />
+_Shivani:_ Data Transformation <br /> 
+_Sumit:_ Data Reduction<br />
+</td>
+
+<tr class="even">
+<td align="left">26.11.</td>
+<td align="left">
+_Nadiia, Rutuja, Shivani, Sumit:_ EDA Data Modeling with each team member working on different modeling techniques <br />
+</td>
+</tr>
+
+<tr class="odd">
+<td align="left">03.12.</td>
+<td align="left">
+_Nadiia, Rutuja, Shivani, Sumit:_ EDA Data Visualization with each team member working on different visualization techniques<br />  
+</td>
+</tr>
+
+<tr class="even">
+<td align="left">10.12.</td>
+<td align="left">
+_Nadiia, Rutuja, Shivani, Sumit:_ Website development with each team member working on different webpage creation
+</td>
+</tr>
+
+<tr class="odd">
+<td align="left">17.12.</td>
+<td align="left">
+_Nadiia, Rutuja, Shivani, Sumit:_ Answering different Research Question per member through different machine learning models  
+</td>
+</tr>
+
+<tr class="even">
+<td align="left">24.12.</td>
+<td align="left">
+_Nadiia, Rutuja, Shivani, Sumit:_ Answering different Research Question per member through different machine learning models  
+</td>
+</tr>
+
+<tr class="odd">
+<td align="left">31.12</td>
+<td align="left">
+_Nadiia and Shivani:_ Website Integration with the Project data <br />
+_Rutuja and Sumit:_ Project Screencast creation<br />
+</td>
+</tr>
+
+<tr class="even">
+<td align="left">07.01.</td>
+<td align="left">
+_Nadiia, Rutuja, Shivani, Sumit:_ Final Project Detailing and Polishing  
+</td>
+</tr>
+
+<tr class="odd">
+<td align="left">14.01</td>
+<td align="left">
+_Nadiia, Rutuja, Shivani, Sumit:_ Project Wrap-up<br />
+</td>
+</tr>
+</tbody>
+</table>
+</font>
+
+
+
+
+```{r echo=FALSE, message=FALSE}
+library(vistime)
+data <- read.csv(text="event,group,start,end,color
+                       Data Wrangling,Data Wrangling,2018-11-19,2018-11-26,#90caf9
+                 EDA,EDA,2018-11-26,2018-12-10,#90caf9
+                 Website Development,Website Development,2018-12-10,2018-12-17,#90caf9
+                 Answering RQs,Answering RQs,2018-12-17,2018-12-31,#90caf9
+                 Website & Screencast,Website & Screencast,2018-12-31,2019-01-07,#90caf9
+                 Project Polishing,Project Polishing,2019-01-07,2019-01-14,#90caf9
+                 Project Wrap-up,Project Wrap-up,2019-01-14,2019-01-16,#90caf9"
+                 
+                 )
+
+vistime(data, title="Project Timeline", showLabels = FALSE)
+```
+    
 __GitHub Repository:__ https://github.com/Rspawar/Data-Science-with-R.git 
 
 __References:__
