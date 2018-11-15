@@ -1,7 +1,9 @@
 # Customer Behavioural Analytics in the Retail sector
-# Synopsis
-
 # Motivation
+A customer is a key-centric factor for any business to be successful. Conventional wisdom tells us that the cost of retaining an existing customer is far less than acquiring a new one. In order that a business has a sustainable growth, the retention of its old customer base and expansion of the new customer base is very critical. This demands from a business to understand the behaviour of its customers in relation to the business. Therefore obtaining a 360&deg; view of its customers is crucial for a business looking for a competitive edge in the market. In such a scenario, Customer Behavioural Analytics plays an important role in leveraging data analytics to find meaningful behavioural patterns in the customer-specific business data.
+
+# Synopsis
+This project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make buying decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to discover further insights about their behaviour. These meaningful insights will further help a business to implement stratergies leading to an increased revenue through customer satisfaction. 
 
 # Overview of the Input Dataset
 The dataset used is Supermarket aggr.Customer [1]. The dataset contains the retail market data of one of the largest Italian retail distribution company called <i>Coop</i> for a single Italian city [2].<br />
