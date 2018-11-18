@@ -1,0 +1,59 @@
+---
+Project title: "Customer Behavioural Analytics in the Retail sector"
+output:
+  rmarkdown::html_document:
+    theme: lumen
+bibliography: bibliography.bib 
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+``` 
+
+### Customer Behavioural Analytics in the Retail Sector 
+<br> 
+__Names of Team Members:__<br /> 
+<font color ="black">
+1. Nadiia Honcharenko (220681, nadiia.honcharenko@st.ovgu.de) <br />
+2. Rutuja Shivraj Pawar (220051, rutuja.pawar@ovgu.de) <br />
+3. Shivani Jadhav (223856, shivani.jadhav@st.ovgu.de) <br />
+4. Sumit Kundu (217453, sumit.kundu@st.ovgu.de) 
+</font>
+
+__Under the Guidance of:__ <font color ="black"> M.Sc. Uli Niemann </font>
+
+__Date:__ <font color ="black"> ```r format(Sys.Date(), "%B %e, %Y")``` </font>
+
+__Overview and motivation:__ <font color ="black"> A customer is a key-centric factor for any business to be successful. Conventional wisdom tells us that the cost of retaining an existing customer is far less than acquiring a new one. In order that a business has a sustainable growth, the retention of its old customer base and expansion of the new customer base is very critical. This demands from a business to understand the behaviour of its customers in relation to the business. Therefore obtaining a 360&deg; view of its customers is crucial for a business looking for a competitive edge in the market. In such a scenario, Customer Behavioural Analytics plays an important role in leveraging data analytics to find meaningful behavioural patterns in the customer-specific business data. <br/>
+Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement stratergies leading to an increased revenue through customer satisfaction. 
+
+</font>
+
+__Related work:__
+
+__Initial questions:__
+
+__Data source:__ <font color ="black"> Supermarket aggr.Customer^[https://bigml.com/user/czuriaga/gallery/dataset/5559c2c6200d5a6570000084] <br />
+The dataset to be used is the retail market data of one of the largest Italian retail distribution company called _Coop_ for a single Italian city [@pennacchioli2013explaining].<br />
+The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from the original datasets^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and mapped to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. </font>
+
+---
+# Cleaning to be described here
+---
+
+__Exploratory data analysis:__
+
+__Final analysis:__
+
+__GitHub Repository:__ https://github.com/Rspawar/Data-Science-with-R.git 
+
+__Project Website:__ 
+
+__Project Screencast:__ 
+
+__References:__
