@@ -14,7 +14,8 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 # Output
 
 # Links
-Project Website: <br />
+Project Website:
+
 Project Screencast: 
 
 # Contributors
