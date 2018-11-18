@@ -15,7 +15,7 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 
 # Links
 Project Website: <br />
-Project Screencast
+Project Screencast: 
 
 # Contributors
 Rutuja Shivraj Pawar, Nadiia Honcharenko, Shivani Jadhav, Sumit Kundu
