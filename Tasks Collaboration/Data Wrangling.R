@@ -8,6 +8,12 @@ supermarket <- read_csv("/home/sumit/Data-Science-with-R/Input Dataset/Supermark
 ## View data
 View(supermarket)
 glimpse(supermarket)
+header(supermarket)
+
+
+##Show classes of all columns
+sapply(supermarket, class)
+
 
 
 ##Summary of the data
