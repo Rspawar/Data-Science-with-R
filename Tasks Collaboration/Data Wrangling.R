@@ -11,7 +11,7 @@ Supermarket_aggr_Customer$customer_id<-as.integer(Supermarket_aggr_Customer$cust
 Supermarket_aggr_Customer_complete<-na.omit(Supermarket_aggr_Customer)
 na.action(Supermarket_aggr_Customer_complete)
 
-
+## Supermarket_aggr_Customer_complete is without the missing value
 ## View data
 View(Supermarket_aggr_Customer)
 View(Supermarket_aggr_Customer_complete)
