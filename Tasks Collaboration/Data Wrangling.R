@@ -1,7 +1,7 @@
 library(tidyverse)
 
 ## Read data from a .csv file
-supermarket <- read_csv("/home/sumit/Data-Science-with-R/Input Dataset/SupermarketAgrCustomer.csv")
+supermarket <- read_csv("Input Dataset/Supermarket aggr.Customer.csv")
 
 
 
@@ -27,10 +27,7 @@ dim(supermarket)
 
 
 ## Convert the data type of columns from integer to numerical
-prod_purch <- as.numeric(as.character(supermarket$products_purchased))
-
-## Replace the column in the data frame with the new vector
-supermarket$products_purchased <- products_purchased
+supermarket <- supermarket %>% mutate_if(is.integer, as.numeric)
 
 
 
@@ -44,3 +41,9 @@ total_data = dim(supermarket)[1]
 missing_data_percent = (missing_data/total_data) * 100
 print(missing_data_percent)
 print("per cent of rows have one or more columns containing 'NA' value.")
+
+
+
+## Remove incomplete records from the data
+supermarket <- na.omit(supermarket)
+na.action(supermarket)
