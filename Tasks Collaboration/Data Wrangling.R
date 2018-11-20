@@ -26,6 +26,17 @@ dim(supermarket)
 
 
 
+## Plot the count of feature based on different data types
+data_types <- function(frame) {
+  res <- lapply(frame, class)
+  res_frame <- data.frame(unlist(res))
+  barplot(table(res_frame), main="Data Types", col="steelblue", ylab="Number of Features")
+}
+
+data_types(supermarket)
+
+
+
 ## Convert the data type of columns from integer to numerical
 supermarket <- supermarket %>% mutate_if(is.integer, as.numeric)
 
