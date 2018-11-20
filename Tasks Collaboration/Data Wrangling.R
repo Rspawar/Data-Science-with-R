@@ -1,44 +1,39 @@
 library(tidyverse)
 
 ## Read data from a .csv file
-supermarket <- read_csv("Input Dataset/Supermarket aggr.Customer.csv")
+supermarket <- read_csv("/Home/Data-Science-with-R/Input Dataset/SupermarketAgrCustomer.csv")
+Supermarket_aggr_Customer <- read_csv("Input Dataset/Supermarket aggr.Customer.csv")
 
+##convert all non-numeric values id to numeric
+Supermarket_aggr_Customer$customer_id<-as.integer(Supermarket_aggr_Customer$customer_id)
+
+##remove incomplete records from the data
+Supermarket_aggr_Customer_complete<-na.omit(Supermarket_aggr_Customer)
+na.action(Supermarket_aggr_Customer_complete)
 
 
 ## View data
+View(Supermarket_aggr_Customer)
+View(Supermarket_aggr_Customer_complete)
 View(supermarket)
-glimpse(supermarket)
-header(supermarket)
-
-
-##Show classes of all columns
-sapply(supermarket, class)
-
+glimpse(Supermarket_aggr_Customer)
 
 
 ##Summary of the data
 summary(supermarket)
-
+summary(Supermarket_aggr_Customer)
 
 
 ## Determine the number of rows and columns present in the data frame
 dim(supermarket)
-
-
-
-## Plot the count of feature based on different data types
-data_types <- function(frame) {
-  res <- lapply(frame, class)
-  res_frame <- data.frame(unlist(res))
-  barplot(table(res_frame), main="Data Types", col="steelblue", ylab="Number of Features")
-}
-
-data_types(supermarket)
-
+dim(Supermarket_aggr_Customer)
 
 
 ## Convert the data type of columns from integer to numerical
-supermarket <- supermarket %>% mutate_if(is.integer, as.numeric)
+prod_purch <- as.numeric(as.character(supermarket$products_purchased))
+
+## Replace the column in the data frame with the new vector
+supermarket$products_purchased <- products_purchased
 
 
 
@@ -52,9 +47,3 @@ total_data = dim(supermarket)[1]
 missing_data_percent = (missing_data/total_data) * 100
 print(missing_data_percent)
 print("per cent of rows have one or more columns containing 'NA' value.")
-
-
-
-## Remove incomplete records from the data
-supermarket <- na.omit(supermarket)
-na.action(supermarket)
