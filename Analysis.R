@@ -1,4 +1,6 @@
 library(tidyverse)
 
-supermarket <- read_csv("Dataset/Supermarket.csv")
+supermarket <- read_csv("/home/sumit/R/SupermarketAgrCustomer.csv")
 View(supermarket)
+
+glimpse(supermarket)
