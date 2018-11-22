@@ -10,7 +10,7 @@ supermarket_tbl <- tbl_df(supermarket_data)
 supermarket_tbl
 
 # Select if average distance in row more then average distance in row
-view1 <- arrange(filter(supermarket_tbl, avg_distance_to_shops >= mean(supermarket_tbl$amount_purchased_total)), desc(avg_distance_to_shops))
+view1 <- arrange(filter(supermarket_tbl, avg_distance_to_shops >= mean(supermarket_tbl$avg_distance_to_shops)), desc(avg_distance_to_shops))
 View(view1)
 
 # Show percent of situations, when customers traveled a longer then average distance 
@@ -29,6 +29,14 @@ View(shop_ordered_slice1)
 # Select a columns related to the distance and unique product purchased
 shop_ordered_slice2 <- select(supermarket_tbl, 3,17,4,18,5,19,6,20,7,21)
 View(shop_ordered_slice2)
+
+# Join slices by distance of shops
+
+unordered_bind <- bind_cols(shop_ordered_slice1, shop_ordered_slice2[, grepl( "unique_products_purchased", names(shop_ordered_slice2))  ])
+                                                                   #colnames(shop_ordered_slice2)%in%(c("unique_products_purchased"))])
+jnd_shop_ordered_products <- unordered_bind[,c(1,2,11,3,4,12,5,6,13,7,8,14,8,9,15)]
+View(jnd_shop_ordered_products)
+
 
 # Count correlation between distance and product purchased 
 # cor(select(shop_ordered_slice1, 1,3,5,7,9), select(shop_ordered_slice1,2,4,6,8,10))
