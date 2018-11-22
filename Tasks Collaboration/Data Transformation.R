@@ -37,6 +37,13 @@ unordered_bind <- bind_cols(shop_ordered_slice1, shop_ordered_slice2[, grepl( "u
 jnd_shop_ordered_products <- unordered_bind[,c(1,2,11,3,4,12,5,6,13,7,8,14,8,9,15)]
 View(jnd_shop_ordered_products)
 
+# Select segment from shops and prices
+shop_ordered_slice3 <- select(supermarket_tbl, 3,23,4,24,5,25,6,26,7,27)
+View(shop_ordered_slice3)
+
+# Select segment from shops and average purchase
+shop_ordered_slice4 <- select(supermarket_tbl, 3,29,4,30,5,31,6,32,7,33)
+View(shop_ordered_slice4)
 
 # Count correlation between distance and product purchased 
 # cor(select(shop_ordered_slice1, 1,3,5,7,9), select(shop_ordered_slice1,2,4,6,8,10))
