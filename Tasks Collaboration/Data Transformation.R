@@ -22,8 +22,6 @@ sprintf("%.0f%%", count2/count1 * 100)
 shop_distances <- supermarket_tbl[,3:7]
 View(shop_distances)
 
-View(t(shop_distances))
-
 shop_ordered_slice1 <- select(supermarket_tbl, 3,11,4,12,5,13,6,14,7,15)
 View(shop_ordered_slice1)
 
