@@ -1,5 +1,4 @@
 library(tidyverse)
-library(dplyr)
 
 # Read cleaned dataset from the input csv file
 file_path<-"Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
@@ -44,12 +43,3 @@ View(shop_ordered_slice3)
 # Select segment from shops and average purchase
 shop_ordered_slice4 <- select(supermarket_tbl, 3,29,4,30,5,31,6,32,7,33)
 View(shop_ordered_slice4)
-
-# Count correlation between distance and product purchased 
-# cor(select(shop_ordered_slice1, 1,3,5,7,9), select(shop_ordered_slice1,2,4,6,8,10))
- 
-# Count correlation between distance and product purchased 
-#cor(select(shop_ordered_slice2, 1,3,5,7,9), select(shop_ordered_slice2,2,4,6,8,10))
-
-# Count correlation between product purchased and unique product purchased
-#cor(select(shop_ordered_slice1, 2,4,6,8,10), select(shop_ordered_slice2,2,4,6,8,10))
