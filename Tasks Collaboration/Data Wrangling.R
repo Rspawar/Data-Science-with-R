@@ -57,6 +57,18 @@ names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'shops_used'] <- 
 ## From amount_purchased to amount_purchased_total
 names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'amount_purchased'] <- 'amount_purchased_total'
 
+## From min_distance_to_shops to min_dist_to_custsel_shops
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'min_distance_to_shops'] <- 'min_dist_to_custsel_shops'
+
+## From max_distance_to_shops to max_dist_to_custsel_shops
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'max_distance_to_shops'] <- 'max_dist_to_custsel_shops'
+
+## Altering Columns
+
+
+
+## Adding new columns
+
 # Reorder Columns
 supermarket_tbl_Clean1 <- supermarket_tbl_Clean1[c(1,10,11,12,13,14,15,3,4,2,16,17,18,19,20,5,21,22,23,24,25,6,36,37,38,39,40,9,26,27,28,29,30,7,31,32,33,34,35,8)]
 
