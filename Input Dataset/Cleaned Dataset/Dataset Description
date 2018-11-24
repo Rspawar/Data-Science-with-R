@@ -1,6 +1,5 @@
 Dataset Description
 
-
 1) customer_id: The unique ID of each customer.
 
 2) shops_used_total: The total number of shops used by the customer.
