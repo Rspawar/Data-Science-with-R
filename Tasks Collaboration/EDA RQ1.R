@@ -27,7 +27,7 @@ joined_shops_data <- mutate(shop_1_data, Shop="1") %>%
 
 #Create base for plots
 get_base_for_plot <- function(dataset, caption){
-  plot_base <- ggplot(data=dataset, aes(distance, price)) + ggtitle(caption)
+  plot_base <- ggplot(data = dataset, mapping = aes(x = distance, y = price)) + ggtitle(caption)
   return(plot_base)
 }
 
@@ -52,7 +52,7 @@ colours_shema <- c("Red", "Green", "Yellow", "Pink", "Blue", "Purple", "steelblu
 # two continuous variables.
 # It can be used to compare one continuous and one categorical variable, or two categorical variables
 draw_cov_point_plot <- function(plot_base, colorNum){
-  cov_geom_plot <- plot_base + geom_point(colour=colours_shema[colorNum])
+  cov_geom_plot <- plot_base + geom_point(colour=colours_shema[colorNum], alpha=0.3)
   return(cov_geom_plot)
 } 
 
@@ -65,7 +65,14 @@ pavg_1 <- draw_cov_point_plot(plot_base_avg, 6)
 pmin_1 <- draw_cov_point_plot(plot_base_min_avg, 7)
 pmax_1 <- draw_cov_point_plot(plot_base_max_avg, 8)
 
-pall_1 <- plot_base_joined + geom_point(mapping = aes(colour = Shop))
+pall_1 <- plot_base_joined + geom_point(mapping = aes(colour = Shop), alpha=0.3)
 
-#geom_freq
-# Visualise the distribution of a single continuous variable by dividing the x axis into bins and counting the number of observations in each bin
+# Visualizing distribution
+# It’s common to want to explore the distribution of a continuous variable broken down by a categorical variable.
+# It’s much easier to understand overlapping lines than bars.
+pall_2 <- ggplot(data = joined_shops_data, mapping = aes(x = price, y = ..density..)) + 
+  geom_freqpoly(mapping = aes(colour = Shop), binwidth = 500)
+
+
+
+
