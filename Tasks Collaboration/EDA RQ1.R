@@ -51,21 +51,21 @@ colours_shema <- c("Red", "Green", "Yellow", "Pink", "Blue", "Purple", "steelblu
 # The point geom is used to create scatterplots. The scatterplot is most useful for displaying the relationship between 
 # two continuous variables.
 # It can be used to compare one continuous and one categorical variable, or two categorical variables
-draw_cov_geom_plot <- function(plot_base, colorNum){
+draw_cov_point_plot <- function(plot_base, colorNum){
   cov_geom_plot <- plot_base + geom_point(colour=colours_shema[colorNum])
   return(cov_geom_plot)
 } 
 
-p1_1 <- draw_cov_geom_plot(plot_base_1, 1)
-p2_1 <- draw_cov_geom_plot(plot_base_2, 2)
-p3_1 <- draw_cov_geom_plot(plot_base_3, 3)
-p4_1 <- draw_cov_geom_plot(plot_base_4, 4)
-p5_1 <- draw_cov_geom_plot(plot_base_5, 5)
-pavg_1 <- draw_cov_geom_plot(plot_base_avg, 6)
-pmin_1 <- draw_cov_geom_plot(plot_base_min_avg, 7)
-pmax_1 <- draw_cov_geom_plot(plot_base_max_avg, 8)
+p1_1 <- draw_cov_point_plot(plot_base_1, 1)
+p2_1 <- draw_cov_point_plot(plot_base_2, 2)
+p3_1 <- draw_cov_point_plot(plot_base_3, 3)
+p4_1 <- draw_cov_point_plot(plot_base_4, 4)
+p5_1 <- draw_cov_point_plot(plot_base_5, 5)
+pavg_1 <- draw_cov_point_plot(plot_base_avg, 6)
+pmin_1 <- draw_cov_point_plot(plot_base_min_avg, 7)
+pmax_1 <- draw_cov_point_plot(plot_base_max_avg, 8)
 
 pall_1 <- plot_base_joined + geom_point(mapping = aes(colour = Shop))
 
-#geom_frequently
+#geom_freq
 # Visualise the distribution of a single continuous variable by dividing the x axis into bins and counting the number of observations in each bin
