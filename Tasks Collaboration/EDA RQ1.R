@@ -31,48 +31,60 @@ get_base_for_plot <- function(dataset, caption){
   return(plot_base)
 }
 
-plot_base_1 <- get_base_for_plot(shop_1_data, "Shop 1")
-plot_base_2 <- get_base_for_plot(shop_2_data, "Shop 2")
-plot_base_3 <- get_base_for_plot(shop_3_data, "Shop 3")
-plot_base_4 <- get_base_for_plot(shop_4_data, "Shop 4")
-plot_base_5 <- get_base_for_plot(shop_5_data, "Shop 5")
-plot_base_avg <- get_base_for_plot(shop_avg_data, "Average price comparing with average distance")
-plot_base_min_avg <- get_base_for_plot(shop_agg_min_data, "Average price comparing with min distance") 
-plot_base_max_avg <- get_base_for_plot(shop_agg_max_data, "Average price comparing with max distance") 
-plot_base_joined <- get_base_for_plot(joined_shops_data, "All shops")
-
 #Visualisation part
 colours_shema <- c("Red", "Green", "Yellow", "Pink", "Blue", "Purple", "steelblue1", "tomato1")
 
 #Covariation 
 
-#geom_point
-
 # The point geom is used to create scatterplots. The scatterplot is most useful for displaying the relationship between 
 # two continuous variables.
 # It can be used to compare one continuous and one categorical variable, or two categorical variables
-draw_cov_point_plot <- function(plot_base, colorNum){
-  cov_geom_plot <- plot_base + geom_point(colour=colours_shema[colorNum], alpha=0.3)
+add_geom_point <- function(colorNum){
+  geom_p <- geom_point(colour=colours_shema[colorNum], alpha=0.3)
+  return(geom_p)
+}
+
+draw_cov_point_plot <- function(dataset, colorNum, caption){
+  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum)
   return(cov_geom_plot)
 } 
 
-p1_1 <- draw_cov_point_plot(plot_base_1, 1)
-p2_1 <- draw_cov_point_plot(plot_base_2, 2)
-p3_1 <- draw_cov_point_plot(plot_base_3, 3)
-p4_1 <- draw_cov_point_plot(plot_base_4, 4)
-p5_1 <- draw_cov_point_plot(plot_base_5, 5)
-pavg_1 <- draw_cov_point_plot(plot_base_avg, 6)
-pmin_1 <- draw_cov_point_plot(plot_base_min_avg, 7)
-pmax_1 <- draw_cov_point_plot(plot_base_max_avg, 8)
+p1_1 <- draw_cov_point_plot(shop_1_data, 1, "Shop 1")
+p2_1 <- draw_cov_point_plot(shop_2_data, 2, "Shop 2")
+p3_1 <- draw_cov_point_plot(shop_3_data, 3, "Shop 3")
+p4_1 <- draw_cov_point_plot(shop_4_data, 4, "Shop 4")
+p5_1 <- draw_cov_point_plot(shop_5_data, 5, "Shop 5")
+pavg_1 <- draw_cov_point_plot(shop_avg_data, 6, "Average price with average distance")
+pmin_1 <- draw_cov_point_plot(shop_agg_min_data, 7, "Average price with min distance")
+pmax_1 <- draw_cov_point_plot(shop_agg_max_data, 8, "Average price with max distance")
 
-pall_1 <- plot_base_joined + geom_point(mapping = aes(colour = Shop), alpha=0.3)
+pall_1 <- get_base_for_plot(joined_shops_data, "All shops") + geom_point(mapping = aes(colour = Shop), alpha=0.3)
+
+# Missing values
+# Cover the situation when average price is 0
+
+draw_missing_values_plot  <- function(dataset, colorNum, caption){
+  dataset_with_na <- dataset %>% 
+    mutate(price = ifelse(price == 0, NA, price))%>% 
+    mutate(missed = is.na(price))
+  missing_values_plot <- get_base_for_plot(dataset_with_na, caption) + 
+    add_geom_point(colorNum)
+  return(missing_values_plot)
+}
+
+p1_2 <- draw_missing_values_plot(shop_1_data, 1, "Shop 1")
+p2_2 <- draw_missing_values_plot(shop_2_data, 2, "Shop 2")
+p3_2 <- draw_missing_values_plot(shop_3_data, 3, "Shop 3")
+p4_2 <- draw_missing_values_plot(shop_4_data, 4, "Shop 4")
+p5_2 <- draw_missing_values_plot(shop_5_data, 5, "Shop 5")
+
+pavg_2 <- draw_missing_values_plot(shop_avg_data, 6, "Average price with average distance")
 
 # Visualizing distribution
 # It’s common to want to explore the distribution of a continuous variable broken down by a categorical variable.
+
 # It’s much easier to understand overlapping lines than bars.
 pall_2 <- ggplot(data = joined_shops_data, mapping = aes(x = price, y = ..density..)) + 
   geom_freqpoly(mapping = aes(colour = Shop), binwidth = 500)
-
-
 
 
