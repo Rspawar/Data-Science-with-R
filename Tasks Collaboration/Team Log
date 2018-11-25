@@ -12,11 +12,10 @@ Columns: distance_shop_1, distance_shop_2, distance_shop_3, distance_shop_4, dis
 avg_product_price_shop_3, avg_product_price_shop_4, avg_product_price_shop_5, avg_purchased_product_price_allShops.
 
 Visualising distributions
-
-Unusual values
-
-Covariation(frequency) 
+Missing values
 Covariation (Two continuous variables) 
+Pattern 
+
 Shivani
 
 
