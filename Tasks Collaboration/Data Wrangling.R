@@ -12,6 +12,9 @@ View(supermarket_tbl)
 # Check the dimension of the input dataset and the variables
 plot_str(supermarket_tbl)
 
+# Introduce data 
+introduce(supermarket_tbl)
+
 # Header Info with data types
 sapply(supermarket_tbl, class)
 
@@ -32,9 +35,6 @@ plot_missing(supermarket_tbl)
 supermarket_tbl_Clean1<-na.omit(supermarket_tbl)
 na.action(supermarket_tbl_Clean1)
 View(supermarket_tbl_Clean1)
-
-## Plot missing values after NA removal (Should have no missing values 0%)
-plot_missing(supermarket_tbl_Clean1)
 
 ## Counting incomplete cases, (rows of a data frame where one or more columns contain NA (Should be 0))
 missing_data_count = sum(!complete.cases(supermarket_tbl_Clean1))
@@ -131,18 +131,34 @@ write.csv(supermarket_tbl_Clean1, file = clean_filepath, row.names = FALSE)
 
 ##### Data Exploration
 
-# Analyse Continuous Variables in the dataset (Univariate Analysis)
+# After Cleaning statistics
 
+# Creation of Data Statistics Report (Data Reporting)
+create_report(supermarket_tbl_Clean1)
+
+## Check the dimension of the input dataset and the variables (Functions as in the generated report file)
+plot_str(supermarket_tbl_Clean1)
+
+## Introduce data 
+introduce(supermarket_tbl_Clean1)
+plot_intro(supermarket_tbl_Clean1)
+
+## Plot missing values after NA removal (Should have no missing values 0%)
+plot_missing(supermarket_tbl_Clean1)
+
+# Analyse Continuous Variables in the dataset (Univariate Analysis)
 plot_histogram(supermarket_tbl_Clean1)
 
-# Correlation analysis (Multivariate Analysis)
+# Correlation analysis (Multivariate Analysis, Continuous features only)
+plot_correlation(supermarket_tbl_Clean1, type = "c")
 
-plot_correlation(supermarket_tbl_Clean1, type = 'continuous','Review.Date')
+# Principal Component Analysis (works best on cleaned data)
+plot_prcomp(supermarket_tbl_Clean1, variance_cap = 1)
+
+# Quantile-Quantile plot to visualize the deviation from a specific probability distribution.
+plot_qq(supermarket_tbl_Clean1)
 
 # No Discrete features found in the dataset hence plot_bar(supermarket_tbl_Clean1) cannot be used
-
-# Creation of Data Statistics Report
-create_report(supermarket_tbl_Clean1)
 
 ##### Data Statistics
 
