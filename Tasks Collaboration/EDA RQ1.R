@@ -61,6 +61,15 @@ pmax_1 <- draw_cov_point_plot(shop_agg_max_data, 8, "Average price with max dist
 
 pall_1 <- get_base_for_plot(joined_shops_data, "All shops") + geom_point(mapping = aes(colour = Shop), alpha=0.3)
 
+p1_1
+p2_1
+p3_1
+p4_1
+p5_1
+pavg_1
+pmin_1
+pmax_1
+pall_1
 # Missing values
 # Covers the situation when average price is 0
 
@@ -81,6 +90,12 @@ p5_2 <- draw_missing_values_plot(shop_5_data, 5, "Shop 5")
 
 pavg_2 <- draw_missing_values_plot(shop_avg_data, 6, "Average price with average distance")
 
+p1_2
+p2_2
+p3_2
+p4_2
+p5_2
+pavg_2
 # Visualizing distribution
 # It’s common to want to explore the distribution of a continuous variable broken down by a categorical variable.
 
@@ -90,6 +105,8 @@ pavg_3 <- ggplot(data = shop_avg_data, mapping = aes(x = price, y = ..density..)
 pall_2 <- ggplot(data = joined_shops_data, mapping = aes(x = price, y = ..density..)) + 
   geom_freqpoly(mapping = aes(colour = Shop), binwidth = 500) + ggtitle("Common average price distribution")
 
+pavg_3
+pall_2
 #Pattern visualisation
 # It’s possible to use a model to remove the very strong relationship between price and distance
 # so we can explore the subtleties that remain. The following code fits a model that predicts price from dependencies and then computes the residuals (the difference between the predicted value and the actual value). 
@@ -105,7 +122,9 @@ joined_shops_data2 <- joined_shops_without_null %>%
 pall_3 <- ggplot(data = joined_shops_data2) + 
   geom_point(mapping = aes(x = price, y = resid), colour=colours_shema[6], alpha=0.3) + ggtitle("Average price pattern")
 
+pall_3
 # Once you’ve removed the strong relationship between distance and price, you can see what you expect in the relationship between shop and price relative other external factors (better quality of products, products alternative, shop location and so on)
 
 pall_4 <- ggplot(data = joined_shops_data2) + 
   geom_boxplot(mapping = aes(x = Shop, y = resid), color=colours_shema[6]) + ggtitle("Average price pattern")
+pall_4
