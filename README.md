@@ -14,7 +14,10 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 1. Install the following packages in Rstudio
 
 ```
-   install.packages("pacman")
+   install.packages("pacman")   
+   
+```
+```
    pacman::p_load(char = c(
    "tidyverse",
    "DataExplorer",
