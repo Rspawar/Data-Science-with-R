@@ -35,6 +35,29 @@ Consequently, this project aims to understand the consumer behaviour in the reta
 </font>
 
 __Related work:__
+<font color ="black"> 
+The Article "Explaining the Product Range Effect in Purchase Data" proposes an analytic framework based on big data to measure the personal utility function and proves that this function has a stronger
+effect on customer behavior than the price. It introduces, defines a concept, shows a presence of
+customer range effect. According to this paper so-called range effect the more sophisticated the
+needs they satisfy, the more cost the customers are willing to pay to buy them, in terms of distance to travel more than in terms of the price of the item itself. For this research were used a customers data from a database of a large supermarket chain in Italy, based on recognizing of a clients by their membershipcards. It was made several assumptions for this study, for example:<br />
+- customers wants to minimized their travel length <br />
+- they will travel more to purchase products that are more expensive <br />
+- product sophistication can be used to describe the average customer behavior <br />
+- behaviour depends from the frequency with which a product needs to be purchased <br />
+- customer may decide to buy or not buy a given product because it is close enough or too far away from the shop <br />
+and so on. <br />
+This were several start research questions set to limit the scope of the study and explain the existance of the range effect during shopping. Based on the mining, that customers modify their
+shopping behavior according to their relative position, the authors show, that the price
+plays a small role in predicting the distance a customer will travel for purchasing a product, by increasing it. If a product is needed more frequently then it drives (down) the distance a
+customer will travel to buy it, regardless of the price. Than they generalize the range effect reasons only to a few factors and provide evidences that the product and the customer sophistication are variables able to better explain the distance traveled by customers, what gave them an opportunity to create a predictions of customer behavior.
+<br />
+(some notes for our project) <br />
+- we have a compressed dataset, not a dataset from this paper <br />
+- we are trying to reseach each relation between distancy and external factors as far as data allows <br />
+- the analysis in paper based on the more factors, such as popularity, product category, product buyied frequency, marketing category, shop size,
+which are not available for us. Therefore we making our analysis based on common and already weighed results <br />
+
+</font>
 
 __Initial questions:__
 
