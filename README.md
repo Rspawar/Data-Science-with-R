@@ -14,8 +14,7 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 1. Install the following packages in Rstudio
 
 ```
-   install.packages("pacman")   
-   
+   install.packages("pacman")    
 ```
 ```
    pacman::p_load(char = c(
@@ -26,7 +25,6 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
    "deldir",
    "e1071",
    ))
-   
 ```
 
 2. Open and Run the Customer_Behavioural_Analytics_in_the_Retail_sector.rmd file in Rstudio
