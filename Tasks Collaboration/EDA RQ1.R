@@ -111,7 +111,7 @@ pall_2 <- ggplot(data = joined_shops_data, mapping = aes(x = price, y = ..densit
   geom_freqpoly(mapping = aes(colour = Shop), binwidth = 500) + ggtitle("Common average price distribution")
 
 comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
-                                     nrow=2, ncol=3, 
+                                     nrow=2, ncol=1, 
                                      top="Distribution of an average price")
 
 comb_vis_distibution
