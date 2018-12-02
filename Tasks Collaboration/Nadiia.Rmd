@@ -1,0 +1,43 @@
+---
+title: "Nadiia"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Related Work Summary
+
+The Article "Explaining the Product Range Effect in Purchase Data" proposes an analytic framework based on big data to measure the personal utility function and proves that this function has a stronger
+effect on customer behavior than the price. It introduces, defines a concept, shows a presence of
+customer range effect. According to this paper so-called range effect the more sophisticated the
+needs they satisfy, the more cost the customers are willing to pay to buy them, in terms of distance to travel more than in terms of the price of the item itself. For this research were used a customers data from a database of a large supermarket chain in Italy, based on recognizing of a clients by their membershipcards. It was made several assumptions for this study, for example:<br />
+  - customers wants to minimized their travel length <br />
+  - they will travel more to purchase products that are more expensive <br />
+  - product sophistication can be used to describe the average customer behavior <br />
+  - behaviour depends from the frequency with which a product needs to be purchased <br />
+  - customer may decide to buy or not buy a given product because it is close enough or too far away from the shop <br />
+  and so on. <br />
+  This were several start research questions set to limit the scope of the study and explain the existance of the range effect during shopping. Based on the mining, that customers modify their
+shopping behavior according to their relative position, the authors show, that the price
+plays a small role in predicting the distance a customer will travel for purchasing a product, by increasing it. If a product is needed more frequently then it drives (down) the distance a
+customer will travel to buy it, regardless of the price. Than they generalize the range effect reasons only to a few factors and provide evidences that the product and the customer sophistication are variables able to better explain the distance traveled by customers, what gave them an opportunity to create a predictions of customer behavior.
+<br />
+  (some notes for our project) <br />
+  - we have a compressed dataset, not a dataset from this paper <br />
+  - we are trying to reseach each relation between distancy and external factors as far as data allows <br />
+  - the analysis in paper based on the more factors, such as popularity, product category, product buyied frequency, marketing category, shop size,
+which are not available for us. Therefore we making our analysis based on common and already weighed results 
+
+EDA
+
+Reserch question 1
+<br />
+  In the first question, we are trying to find out whether there is a relationship between long distances and the average price tag in the store. In order to better understand, check the existence of this dependence is to investigate separately the data that relate to distances and average prices.
+First of all, it is worth checking the existence of a certain relationship between price and distance, which is well reflected by the covariance.
+Based on the scatterplot, it can be noted, that the average price is close enough to zero, therefore, it makes a sense to check zero values in the current dataset and its influence. In this context, zero values are equal to the missing values. Therefore, we replaced the zero values with the missing ones and verified by plotting, if some values are deleted. The scatterplots were constructed again and we tried to compare them with those that were obtained for covarience visualisation earlier.
+Further, it was interesting to consider the density of the distribution of the average cost for each individual shop in order to understand their variations. It is convenient to use lines for displaing the distribution, since in this way it will be easier to observe the intersection of the quantities.
+Since it became clear from the first part of the analysis, that exists the strong relationship between distance and average cost, than it should be to explore the subtleties that remain. For this it should be created some model, that predicts price from dependencies and then computes the residuals (the difference between the predicted value and the actual value). The residuals give us a view of the price, once the effect of distance has been removedTo do this, we will use the technique of building a template and display it with scatterplot.Once the strong relationship between distance and price had been removed, relationship between shop and price relative other external factors (better quality of products, products alternative and so on) became noticable.
