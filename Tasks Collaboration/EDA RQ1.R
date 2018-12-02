@@ -2,6 +2,7 @@ library(dplyr)
 library(tidyverse)
 library(ggplot2)
 library(modelr)
+library(gridExtra)
 
 #Splitting the data
 get_slice_for_shop <- function(col1, col2){
@@ -61,15 +62,20 @@ pmax_1 <- draw_cov_point_plot(shop_agg_max_data, 8, "Average price with max dist
 
 pall_1 <- get_base_for_plot(joined_shops_data, "All shops") + geom_point(mapping = aes(colour = Shop), alpha=0.3)
 
-p1_1
-p2_1
-p3_1
-p4_1
-p5_1
-pavg_1
-pmin_1
-pmax_1
-pall_1
+comb_cov_shops <- grid.arrange(p1_1, p2_1, p3_1, p4_1, p5_1, 
+                               nrow=2, ncol=3, 
+                               top="Covariation between distances and average prices")
+comb_cov_aggrs <- grid.arrange(pmin_1, pmax_1,
+                               nrow=2,
+                               top= "Covariation between min/max distances and average prices")
+comb_cov_avg <- grid.arrange(pall_1, pavg_1,
+                               nrow=2,
+                               top= "Covariation between distances and average prices (aggregetions)")
+
+comb_cov_shops
+comb_cov_aggrs
+comb_cov_avg
+
 # Missing values
 # Covers the situation when average price is 0
 
@@ -90,12 +96,11 @@ p5_2 <- draw_missing_values_plot(shop_5_data, 5, "Shop 5")
 
 pavg_2 <- draw_missing_values_plot(shop_avg_data, 6, "Average price with average distance")
 
-p1_2
-p2_2
-p3_2
-p4_2
-p5_2
-pavg_2
+comb_missing_vals <- grid.arrange(p1_2, p2_2, p3_2, p4_2, p5_2, pavg_2,
+                               nrow=2, ncol=3, 
+                               top="Covariation between distances and average prices without missing values")
+
+comb_missing_vals
 # Visualizing distribution
 # It’s common to want to explore the distribution of a continuous variable broken down by a categorical variable.
 
@@ -105,8 +110,11 @@ pavg_3 <- ggplot(data = shop_avg_data, mapping = aes(x = price, y = ..density..)
 pall_2 <- ggplot(data = joined_shops_data, mapping = aes(x = price, y = ..density..)) + 
   geom_freqpoly(mapping = aes(colour = Shop), binwidth = 500) + ggtitle("Common average price distribution")
 
-pavg_3
-pall_2
+comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
+                                     nrow=2, ncol=3, 
+                                     top="Distribution of an average price")
+
+comb_vis_distibution
 #Pattern visualisation
 # It’s possible to use a model to remove the very strong relationship between price and distance
 # so we can explore the subtleties that remain. The following code fits a model that predicts price from dependencies and then computes the residuals (the difference between the predicted value and the actual value). 
