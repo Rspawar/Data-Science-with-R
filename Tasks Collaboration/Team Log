@@ -1,5 +1,6 @@
+----------
 Rutuja
-
+----------
 EDA on the whole dataset with all columns included
 RQ4 related to Customer Segmentation
 
@@ -7,9 +8,10 @@ RQ4 related to Customer Segmentation
 
 
 
-
+----------
 Nadiia
-RQ: 1
+----------
+RQ1
 Columns: distance_shop_1, distance_shop_2, distance_shop_3, distance_shop_4, distance_shop_5, min_dist_to_custSel_shops, max_dist_to_custSel_shops, avg_distance_to_all_shops, avg_product_price_shop_1, avg_product_price_shop_2,
 avg_product_price_shop_3, avg_product_price_shop_4, avg_product_price_shop_5, avg_purchased_product_price_allShops.
 
@@ -18,11 +20,14 @@ Missing values
 Covariation (Two continuous variables) 
 Pattern 
 
+----------
 Shivani
+----------
 
 
 
 
-
-
+----------
 Sumit
+----------
+RQ5 and EDAs related to it.
