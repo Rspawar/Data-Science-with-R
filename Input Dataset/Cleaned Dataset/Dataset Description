@@ -1,0 +1,94 @@
+Dataset Description
+
+1) customer_id: The unique ID of each customer.
+
+2) shops_used_total: The total number of shops used by the customer.
+
+3) distance_shop_1: The distance between the customer’s house and the location of shop 1. 
+The distance calculated is in meters as a straight line so that it does not take into account the road graph.
+
+4) distance_shop_2: The distance between the customer’s house and the location of shop 2. 
+The distance calculated is in meters as a straight line so that it does not take into account the road graph.
+
+5) distance_shop_3: The distance between the customer’s house and the location of shop 3. 
+The distance calculated is in meters as a straight line so that it does not take into account the road graph.
+
+6) distance_shop_4: The distance between the customer’s house and the location of shop 4. 
+The distance calculated is in meters as a straight line so that it does not take into account the road graph.
+
+7) distance_shop_5: The distance between the customer’s house and the location of shop 5. 
+The distance calculated is in meters as a straight line so that it does not take into account the road graph.
+
+8) min_dist_to_custSel_shops: The minimum value of the distance between the distances of the shops selected 
+by the customer in meters.
+
+9) max_dist_to_custSel_shops: The maximum value of the distance between the distances of the shops selected 
+by the customer in meters.
+
+10) avg_distance_to_all_shops: The weighted average distance calculated to all shops in meters.
+
+11) products_purchased_shop_1: The number of products purchased by the customer from shop 1.
+
+12) products_purchased_shop_2: The number of products purchased by the customer from shop 2.
+
+13) products_purchased_shop_3: The number of products purchased by the customer from shop 3.
+
+14) products_purchased_shop_4: The number of products purchased by the customer from shop 4.
+
+15) products_purchased_shop_5: The number of products purchased by the customer from shop 5.
+
+16) products_purchased_total: The total number of products purchased by the customer from his/her selected shops.
+
+17) unique_products_purchased_shop_1: The number of unique products purchased by the customer from shop 1.
+
+18) unique_products_purchased_shop_2: The number of unique products purchased by the customer from shop 2.
+
+19) unique_products_purchased_shop_3: The number of unique products purchased by the customer from shop 3.
+
+20) unique_products_purchased_shop_4: The number of unique products purchased by the customer from shop 4.
+
+21) unique_products_purchased_shop_5: The number of unique products purchased by the customer from shop 5.
+
+22) unique_products_purchased_total_exclCommon: The total number of unique products purchased by the customer 
+from his/her selected shops excluding the common unique products between the shops.
+
+23) avg_product_price_shop_1: The average product price in shop 1 in Euro.  
+
+24) avg_product_price_shop_2: The average product price in shop 2 in Euro. 
+
+25) avg_product_price_shop_3: The average product price in shop 3 in Euro.
+
+26) avg_product_price_shop_4: The average product price in shop 4 in Euro.
+
+27) avg_product_price_shop_5: The average product price in shop 5 in Euro.
+
+28) avg_purchased_product_price_allShops: The average product price among the average price of the products 
+purchased by the customer from his/her selected shops calculated in Euro.
+
+29) amount_purchased_shop_1: The amount spent by the customer through his/her purchased in shop 1 in Euro. 
+
+30) amount_purchased_shop_2: The amount spent by the customer through his/her purchased in shop 2 in Euro.
+
+31) amount_purchased_shop_3: The amount spent by the customer through his/her purchased in shop 3 in Euro.
+
+32) amount_purchased_shop_4: The amount spent by the customer through his/her purchased in shop 4 in Euro.
+
+33) amount_purchased_shop_5: The amount spent by the customer through his/her purchased in shop 5 in Euro.
+
+34) amount_purchased_total: The total amount spent by the customer through purchase from his/her selected 
+shops calculated in Euro. 
+
+35) avg_purchase_amount_shop_1: The average amount spent by the customer in shop 1 calculated in Euro.
+
+36) avg_purchase_amount_shop_2: The average amount spent by the customer in shop 2 calculated in Euro.
+
+37) avg_purchase_amount_shop_3: The average amount spent by the customer in shop 3 calculated in Euro.
+
+38) avg_purchase_amount_shop_4: The average amount spent by the customer in shop 4 calculated in Euro.
+
+39) avg_purchase_amount_shop_5: The average amount spent by the customer in shop 5 calculated in Euro.
+
+40) avg_purchase_amount_allShops: The average amount spent by the customer through purchase from his/her selected 
+shops calculated in Euro.
+
+

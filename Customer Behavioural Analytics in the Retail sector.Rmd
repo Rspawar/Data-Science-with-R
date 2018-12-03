@@ -15,45 +15,444 @@ text-align: justify}
 knitr::opts_chunk$set(echo = TRUE)
 ``` 
 
-### Customer Behavioural Analytics in the Retail Sector 
-<br> 
-__Names of Team Members:__<br /> 
-<font color ="black">
+<h1> Customer Behavioural Analytics in the Retail Sector </h1></br>
+
+<font color ="black"><h4><b>Team CuBA</b></h4>
 1. Nadiia Honcharenko (220681, nadiia.honcharenko@st.ovgu.de) <br />
 2. Rutuja Shivraj Pawar (220051, rutuja.pawar@ovgu.de) <br />
 3. Shivani Jadhav (223856, shivani.jadhav@st.ovgu.de) <br />
 4. Sumit Kundu (217453, sumit.kundu@st.ovgu.de) 
-</font>
 
-__Under the Guidance of:__ <font color ="black"> M.Sc. Uli Niemann </font>
+<h4><b>Under the Guidance of</b></h4> M.Sc. Uli Niemann
 
-__Date:__ <font color ="black"> ```r format(Sys.Date(), "%B %e, %Y")``` </font>
+<h4><b>1. Overview and Motivation</b></h4>
 
-__Overview and motivation:__ <font color ="black"> A customer is a key-centric factor for any business to be successful. Conventional wisdom tells us that the cost of retaining an existing customer is far less than acquiring a new one. In order that a business has a sustainable growth, the retention of its old customer base and expansion of the new customer base is very critical. This demands from a business to understand the behaviour of its customers in relation to the business. Therefore obtaining a 360&deg; view of its customers is crucial for a business looking for a competitive edge in the market. In such a scenario, Customer Behavioural Analytics plays an important role in leveraging data analytics to find meaningful behavioural patterns in the customer-specific business data. <br/>
+<font color ="black"> A customer is a key-centric factor for any business to be successful. Conventional wisdom tells us that the cost of retaining an existing customer is far less than acquiring a new one. In order that a business has a sustainable growth, the retention of its old customer base and expansion of the new customer base is very critical. This demands from a business to understand the behaviour of its customers in relation to the business. Therefore obtaining a 360&deg; view of its customers is crucial for a business looking for a competitive edge in the market. In such a scenario, Customer Behavioural Analytics plays an important role in leveraging data analytics to find meaningful behavioural patterns in the customer-specific business data. <br/>
 Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement stratergies leading to an increased revenue through customer satisfaction. 
 
-</font>
+<h4><b>2. Project Objective</b></h4>
 
-__Related work:__
+This project aims to address the problem of understanding behaviour of customers of an Italian retail distribution company _Coop_ in a single Italian city. The project intends to discover different analytical insights about the purchase behaviour of the customers through answering different formulated Research Questions (RQ)
 
-__Initial questions:__
+<h4><b>3. Data Source</h4></b>
 
-__Data source:__ <font color ="black"> Supermarket aggr.Customer^[https://bigml.com/user/czuriaga/gallery/dataset/5559c2c6200d5a6570000084] <br />
+Supermarket aggr.Customer^[https://bigml.com/user/czuriaga/gallery/dataset/5559c2c6200d5a6570000084] <br />
 The dataset to be used is the retail market data of one of the largest Italian retail distribution company called _Coop_ for a single Italian city [@pennacchioli2013explaining].<br />
-The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from the original datasets^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and mapped to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. </font>
+The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from the original datasets^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and mapped to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. 
 
----
-# Cleaning to be described here
----
+<h4><b>4. Related Work</h4></b>
 
-__Exploratory data analysis:__
 
-__Final analysis:__
+<h4><b>5. Initial Questions</h4></b>
 
-__GitHub Repository:__ https://github.com/Rspawar/Data-Science-with-R.git 
+Below are the RQs which were formulated at the initial stages of the project based on a primary understanding of the data but without a detailed Exploratory Data Analysis, 
 
-__Project Website:__ 
+__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+_Relevance:_ This will help to understand whether the price is an important factor affecting the majority of customers purchase decisions. <br />
 
-__Project Screencast:__ 
+__2. Which are the products for which customers are ready to travel long distances and for which products they select the closest shop?__ <br />
+_Relevance:_ This will help to understand the nature of the products in the context of proximity. It is assumed that customers will select closest shops to buy daily products like grocery but may travel long distances to buy one-time-purchase products like kitchen equipment. As Data Science is results-driven and not based solely on intuition, this question can help to verify this assumption.<br />
 
-__References:__
+__3. What is the maximum likelihood of a customer to select a particular shop to purchase a particular product?__ <br />
+_Relevance:_ This will help to understand that which shops in the retail chain are in demand for a particular product. This can further facilitate better stock management to meet customer demands.<br />
+
+__4. What is the ranking of the shops in terms of attracting more customers and thus generating more revenue and what is their individual customer base?__<br />
+_Relevance:_ This will help to understand the most popular shops in the retail chain and target different shop-level marketing schemes to the appropriate customers through customer segmentation. <br />
+
+__5. Which are the customers that are most profitable in terms of revenue generation?__<br />
+_Relevance:_ This will help to understand the customers with potential high Customer Lifetime Value and target appropriate loyalty programs to generate satisfied loyal customers as advocates for the business.
+
+<h4><b>6. Data Wrangling</h4></b>
+
+Data Wrangling consists of different steps transforming data from raw form into a clean form which is appropriate and accurate for data analysis. Below are the different steps which were carried out as a part of Data Wrangling,  
+
+__1) Examination of the input dataset structure__
+
+__Visualize the input dataset__ 
+
+```{r echo=TRUE, message=FALSE}
+library(tidyverse)
+library(DataExplorer)
+
+# Read data from the input csv file
+file_path<- "Input Dataset/Supermarket aggr.Customer.csv"
+supermarket_data <- read_csv(file_path)
+
+# Converts data to tbl class. as tbl’s are easier to examine than data frames and View data set in spreadsheet-like display
+supermarket_tbl<-tbl_df(supermarket_data)
+
+# Check the dimension of the input dataset and the variables through a plot
+plot_str(supermarket_tbl)
+
+``` 
+
+__Generate the input dataset statistics__
+
+```{r echo=TRUE, message=FALSE}
+# Data Statistics
+introduce(supermarket_tbl)
+
+```
+
+__Generate the input dataset header information__
+
+```{r echo=TRUE, message=FALSE}
+# Header Info with data types
+sapply(supermarket_tbl, class)
+
+```
+
+__Generate the input dataset summary__
+
+```{r echo=TRUE, message=FALSE}
+# Data Summary
+summary(supermarket_tbl)
+
+```
+
+__Visualize the data types in the input dataset__ 
+
+```{r echo=TRUE, message=FALSE}
+# Plot the count of feature based on different data types (Majority of them are Numeric)
+data_types <- function(frame) {
+  res <- lapply(frame, class)
+  res_frame <- data.frame(unlist(res))
+  barplot(table(res_frame), main="Data Types", col="steelblue", ylab="Number of Features")
+}
+data_types(supermarket_tbl)
+```
+
+__2) Input dataset cleaning and processing__
+
+__Visualize the missing values in the input dataset__
+
+```{r echo=TRUE, message=FALSE}
+# Plot missing values in the dataset
+plot_missing(supermarket_tbl)
+
+```
+
+__Eliminate the mising values in the input dataset__
+
+```{r echo=TRUE, message=FALSE}
+# Eliminate the missing values in the dataset
+supermarket_tbl_Clean1<-na.omit(supermarket_tbl)
+na.action(supermarket_tbl_Clean1)
+
+# Percentage of data missing (Should be 0%) 
+missing_data_count = sum(!complete.cases(supermarket_tbl_Clean1))
+total_data = dim(supermarket_tbl_Clean1)[1]
+missing_data_percent = (missing_data_count/total_data) * 100
+missing_data_percent
+```
+
+__Eliminate the duplicate rows in the input dataset__
+
+```{r echo=TRUE, message=FALSE}
+# Eliminate duplicate rows
+distinct(supermarket_tbl_Clean1)
+```
+
+__Round the decimal values in the input dataset__
+
+```{r echo=TRUE, message=FALSE}
+# Round the decimal value columns upto 4 decimal places
+is.num <- sapply(supermarket_tbl_Clean1, is.numeric)
+supermarket_tbl_Clean1[is.num] <- lapply(supermarket_tbl_Clean1[is.num], round, 4)
+```
+
+__Rename the column names in the input dataset__
+
+```{r echo=TRUE, message=FALSE}
+# Rename column names
+
+## From products_purchased to products_purchased_total
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'products_purchased'] <- 'products_purchased_total'
+
+## From shops_used to shops_used_total
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'shops_used'] <- 'shops_used_total'
+
+## From amount_purchased to amount_purchased_total
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'amount_purchased'] <- 'amount_purchased_total'
+
+## From min_distance_to_shops to min_dist_to_custSel_shops
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'min_distance_to_shops'] <- 'min_dist_to_custSel_shops'
+
+## From max_distance_to_shops to max_dist_to_custSel_shops
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'max_distance_to_shops'] <- 'max_dist_to_custSel_shops'
+
+## From unique_products_purchased to unique_products_purchased_total_exclCommon
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'unique_products_purchased'] <- 'unique_products_purchased_total_exclCommon'
+
+## From avg_distance_to_shops to avg_distance_to_all_shops
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_distance_to_shops'] <- 'avg_distance_to_all_shops'
+
+## From avg_price_shop_1 to avg_product_price_shop_1
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_price_shop_1'] <- 'avg_product_price_shop_1'
+
+## From avg_price_shop_2 to avg_product_price_shop_2
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_price_shop_2'] <- 'avg_product_price_shop_2'
+
+## From avg_price_shop_3 to avg_product_price_shop_3
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_price_shop_3'] <- 'avg_product_price_shop_3'
+
+## From avg_price_shop_4 to avg_product_price_shop_4
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_price_shop_4'] <- 'avg_product_price_shop_4'
+
+## From avg_price_shop_5 to avg_product_price_shop_5
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_price_shop_5'] <- 'avg_product_price_shop_5'
+
+## From avg_price to avg_purchased_product_price_allShops
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_price'] <- 'avg_purchased_product_price_allShops'
+
+## From avg_purchase_shop_1 to avg_purchase_amount_shop_1
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_purchase_shop_1'] <- 'avg_purchase_amount_shop_1'
+
+## From avg_purchase_shop_2 to avg_purchase_amount_shop_1
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_purchase_shop_2'] <- 'avg_purchase_amount_shop_2'
+
+## From avg_purchase_shop_3 to avg_purchase_amount_shop_3
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_purchase_shop_3'] <- 'avg_purchase_amount_shop_3'
+
+## From avg_purchase_shop_4 to avg_purchase_amount_shop_4
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_purchase_shop_4'] <- 'avg_purchase_amount_shop_4'
+
+## From avg_purchase_shop_5 to avg_purchase_amount_shop_5
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_purchase_shop_5'] <- 'avg_purchase_amount_shop_5'
+
+## From avg_purchase to avg_purchase_amount_allShops
+names(supermarket_tbl_Clean1)[names(supermarket_tbl_Clean1) == 'avg_purchase'] <- 'avg_purchase_amount_allShops'
+```
+
+__Reorder the columns in the input dataset__
+
+```{r echo=TRUE, message=FALSE}
+# Reorder Columns
+supermarket_tbl_Clean1 <- supermarket_tbl_Clean1[c(1,10,11,12,13,14,15,3,4,2,16,17,18,19,20,5,21,22,23,24,25,6,36,37,38,39,40,9,26,27,28,29,30,7,31,32,33,34,35,8)]
+```
+
+__Write the cleaned dataset tbl to a CSV file__ 
+
+```{r echo=TRUE, message=FALSE}
+# Write the cleaned data tbl to csv
+clean_filepath = "~/R GitHub/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
+write.csv(supermarket_tbl_Clean1, file = clean_filepath, row.names = FALSE)
+```
+
+__3) Exploration of the cleaned dataset__
+
+__Visualize the cleaned dataset__
+ 
+```{r echo=TRUE, message=FALSE}
+# Check the dimension of the cleaned dataset and the variables
+plot_str(supermarket_tbl_Clean1)
+```
+
+__Generate the cleaned dataset statistics__
+
+```{r echo=TRUE, message=FALSE}
+# Cleaned data Statistics 
+introduce(supermarket_tbl_Clean1)
+```
+
+__Visualize the cleaned dataset statistics__
+
+```{r echo=TRUE, message=FALSE}
+# Cleaned data Statistics plot
+plot_intro(supermarket_tbl_Clean1)
+```
+
+__Visualize the missing values in the cleaned dataset__
+
+```{r echo=TRUE, message=FALSE}
+## Plot missing values in the cleaned dataset after NA removal (Should have no missing values 0%)
+plot_missing(supermarket_tbl_Clean1)
+```
+
+__Analyze the Continuous Variables in the cleaned dataset as a Histogram__
+
+```{r echo=TRUE, message=FALSE}
+# Analyze Continuous Variables in the cleaned dataset (Univariate Analysis)
+plot_histogram(supermarket_tbl_Clean1)
+```
+
+__Examine the corelated features in the cleaned dataset through Correlation Analysis__
+
+```{r echo=TRUE, message=FALSE}
+# Correlation analysis (Multivariate Analysis, On Continuous features only) to examine corelated features in the cleaned dataset
+plot_correlation(supermarket_tbl_Clean1, type = "c")
+```
+
+__Examine the variance-covariance structure and identify strong patterns in the cleaned dataset through Principal Component Analysis__
+
+```{r echo=TRUE, message=FALSE}
+# Principal Component Analysis to understand the variance-covariance structure and identify strong patterns in the cleaned dataset
+plot_prcomp(supermarket_tbl_Clean1, variance_cap = 1)
+```
+
+__Visualize the deviation from a specific probability distribution in the cleaned dataset through Quantile-Quantile plot__
+
+```{r echo=TRUE, message=FALSE}
+# Quantile-Quantile plot to visualize the deviation from a specific probability distribution in the cleaned dataset
+plot_qq(supermarket_tbl_Clean1)
+```
+
+<h4><b>7. Exploratory Data Analysis</h4></b>
+
+Exploratory Data Analysis (EDA) is the process of visualizing the main characteristics in the data before the formal modeling on the data to discover data patterns and verify the initial primary assumptions made on the data. Below are the visualizations of the EDA carried out,  
+
+__1) Visualize the highest revenue generating shops, shops selling the highest number of products, shops selling the highest number of unique products and the relation between them__
+
+```{r echo=TRUE, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+library("RColorBrewer")
+
+file_path<- "Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
+supermarket_data_clean <- read_csv(file_path)
+
+Shop<- c(1,2,3,4,5)
+
+# Revenue generation by Shops 1-5
+slice1<-select(supermarket_data_clean, 29,30,31,32,33)
+
+amountS1<-sum(slice1$amount_purchased_shop_1)
+amountS2<-sum(slice1$amount_purchased_shop_2)
+amountS3<-sum(slice1$amount_purchased_shop_3)
+amountS4<-sum(slice1$amount_purchased_shop_4)
+amountS5<-sum(slice1$amount_purchased_shop_5)
+
+# create data frame for Revenue generation
+Revenue_Generated<- c(amountS1,amountS2,amountS3,amountS4,amountS5)
+Revenue<- data.frame(Shop, Revenue_Generated)
+rownames(Revenue) <- NULL
+
+# Products Sold by Shops 1-5
+slice2<-select(supermarket_data_clean, 11,12,13,14,15)
+
+productsS1<-sum(slice2$products_purchased_shop_1)
+productsS2<-sum(slice2$products_purchased_shop_2)
+productsS3<-sum(slice2$products_purchased_shop_3)
+productsS4<-sum(slice2$products_purchased_shop_4)
+productsS5<-sum(slice2$products_purchased_shop_5)
+
+# create data frame for Products Sold
+Products_Purchased<- c(productsS1,productsS2,productsS3,productsS4,productsS5)
+ProductsSold<- data.frame(Shop, Products_Purchased)
+rownames(ProductsSold) <- NULL
+
+# Unique products Sold by Shops 1-5
+slice3<-select(supermarket_data_clean, 17,18,19,20,21)
+
+uproductsS1<-sum(slice3$unique_products_purchased_shop_1)
+uproductsS2<-sum(slice3$unique_products_purchased_shop_2)
+uproductsS3<-sum(slice3$unique_products_purchased_shop_3)
+uproductsS4<-sum(slice3$unique_products_purchased_shop_4)
+uproductsS5<-sum(slice3$unique_products_purchased_shop_5)
+
+# create data frame for Unique products Sold
+UProducts_Purchased<- c(uproductsS1,uproductsS2,uproductsS3,uproductsS4,uproductsS5)
+UProductsSold<- data.frame(Shop, UProducts_Purchased)
+rownames(UProductsSold) <- NULL
+
+# Plot a Bar graph to depict the above calculated data
+Legends <-c(rep("Revenue Generated", 5), rep("Products Sold", 5), rep("Unique Products Sold", 5))
+values <-c(Revenue_Generated, Products_Purchased, UProducts_Purchased)
+mydata <-data.frame(Shop, values)
+
+p <-ggplot(mydata, aes(Shop, values))
+p +geom_bar(stat = "identity", aes(fill = Legends), position = "dodge") +
+  xlab("Shop") + ylab("Total") +
+  ggtitle("Relation between Revenue Generated, Products Sold and Unique Products Sold") +
+  theme_bw()
+
+```
+
+_Analysis:_ As visualized, the shops ordered based on the their highest Revenue Generated are Shop 1, 2, 3, 5, 4.
+The shops ordered based on the their highest amount of Products Sold are Shop 1, 2, 3, 5, 4.
+The shops ordered based on the their highest amount of Unique Products Sold are Shop 1, 2, 3, 4 & 5 (are on the same level).
+The relation between these parameters as visualized based on the shop order can be determined as the shop generating the highest revenue has the highest amount of products sold (unique included). So in the dataset, the relation between the revenue generated and the products sold is directly proportional to each other. The ordering of the shops is mostly stable here at Shop 1, 2, 3, 5, 4.
+
+__2) Visualize the approximate customer base count for the different shops__
+
+```{r echo=TRUE, message=FALSE}
+# Approximate Customer Base for Shops 1-5
+
+C1<-slice2$products_purchased_shop_1
+custS1<-length(which(C1 !=0))
+
+C2<-slice2$products_purchased_shop_2
+custS2<-length(which(C2 !=0))
+
+C3<-slice2$products_purchased_shop_3
+custS3<-length(which(C3 !=0))
+
+C4<-slice2$products_purchased_shop_4
+custS4<-length(which(C4 !=0))
+
+C5<-slice2$products_purchased_shop_5
+custS5<-length(which(C5 !=0))
+
+# create data frame for Approximate Customer Base
+Customers<- c(custS1,custS2,custS3,custS4,custS5)
+TotalCustomers<- data.frame(Shop, Customers)
+rownames(TotalCustomers) <- NULL
+
+# Plot a Bar graph to depict the approximate Customer Base
+values <-c(Customers)
+mydata <-data.frame(Shop, values)
+
+p <-ggplot(mydata, aes(Shop, values))
+p +geom_bar(stat = "identity", fill = brewer.pal(n = 5, name = "Set1"), position = "dodge") +
+  xlab("Shop") + ylab("Total") +
+  ggtitle("Customer Base") + 
+  theme_bw()
+
+```
+
+_Analysis:_ As visualized, the shops ordered based on the their highest approximate customer base are Shop 1, 2, 3, 5, 4. So the highest approximate customer base for a shop determines its popularity in terms of a customer's product purchase from the shop. The ordering of the shops is here as Shop 1, 2, 3, 5, 4.  
+
+3)
+
+_Analysis:_ 
+
+4)
+
+_Analysis:_ 
+
+5)
+
+_Analysis:_ 
+
+<h4><b>8. Final Research Questions</h4></b>
+
+Exploratory Data Analysis provided a feasibility check on the Initial RQs formulated. The EDA phase helped to get a better understanding of the data in relation with the project objective. Hence this lead to the modification, removal or addition of new RQ. Below is the final set of RQ formulated which will be answered through this project,
+
+__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+_Relevance:_ This will help to understand whether the price is an important factor affecting the majority of customers purchase decisions. <br />
+
+__2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
+_Relevance:_ This will help to understand the important factors that contribute towards the customers willing to travel long-distances to purchase products in spite of the high average product price in a shop, in turn better understanding the purchase behaviour of the customers<br />
+
+__3. What is the maximum likelihood of a customer to select a particular shop to purchase a particular product?__ <br />
+_Relevance:_ This will help to understand that which shops in the retail chain are in demand for a particular product. This can further facilitate better stock management to meet customer demands.<br />
+
+__4. What are the different customer segments based on their purchase behaviour?__<br />
+_Relevance:_ This will help to understand the groups of similar customer based on their purchase behviour and target different shop-level marketing schemes to the appropriate customers.<br />
+
+__5. Which are the Top 100 customers that are most profitable in terms of revenue generation?__<br />
+_Relevance:_ This will help to understand the customers with potential high Customer Lifetime Value and target appropriate loyalty programs to generate satisfied loyal customers as advocates for the business.
+
+<h4><b>9. Final Analysis</h4></b>
+
+<h4><b>10. Important Links</h4></b>
+
+<b>1. GitHub Repository</b> https://github.com/Rspawar/Data-Science-with-R.git 
+
+<b>2. Project Website</b>
+
+<b>3. Project Screencast</b>
+
+<h4><b>Date</b></h4> ```r format(Sys.Date(), "%B %e, %Y")``` 
+
+<h4><b>References</h4></b></font>

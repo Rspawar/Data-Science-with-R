@@ -11,7 +11,29 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 
 # Installation and Run
 
+1. Install the following packages in Rstudio
+
+```
+   install.packages("pacman")    
+```
+```
+   pacman::p_load(char = c(
+   "tidyverse",
+   "DataExplorer",
+   "corrplot",
+   "corrr",
+   "deldir",
+   "e1071",
+   ))
+```
+
+2. Open and Run the Customer_Behavioural_Analytics_in_the_Retail_sector.rmd file in Rstudio
+
+3. Select Knit to html_document to generate the detailed Analysis Report Customer_Behavioural_Analytics_in_the_Retail_sector.html
+
 # Output
+
+The output is a detailed Analysis Report rendered as a HTML file Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 # Links
 Project Website:
