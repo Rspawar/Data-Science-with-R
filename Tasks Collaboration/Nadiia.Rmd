@@ -50,9 +50,16 @@ library(ggplot2)
 library(modelr)
 library(gridExtra)
 
+file_path <- "D:/Data-Science-with-R/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
+cleared_supermarket_data<-read_csv(file_path)
+cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
+
+shop_ordered_slice <- select(cleared_supermarked_tbl, 3,23,4,24,5,25,6,26,7,27) %>% 
+  bind_cols(cleared_supermarked_tbl[,8:10], cleared_supermarked_tbl[,28])
+
 # Splitting the data
 get_slice_for_shop <- function(col1, col2){
-  shop_slice <- shop_ordered_slice3_ext[,col1:col2]
+  shop_slice <- shop_ordered_slice[,col1:col2]
   colnames(shop_slice) <- c("distance","price")
   return(shop_slice)
 }
@@ -115,9 +122,6 @@ comb_cov_avg <- grid.arrange(pall_1, pavg_1,
                                nrow=2,
                                top= "Covariation between distances and average prices (aggregetions)")
 
-comb_cov_shops
-comb_cov_aggrs
-comb_cov_avg
 ```
 _Analysis:_ As visualized, there are a strong dependencies between long distances and the average price in the store. Also it can be noticed, that the average price is close enough to zero, therefore, it makes a sense to check zero values in the current dataset and its influence.
 
@@ -144,30 +148,30 @@ comb_missing_vals <- grid.arrange(p1_2, p2_2, p3_2, p4_2, p5_2, pavg_2,
                                nrow=2, ncol=3, 
                                top="Covariation between distances and average prices without missing values")
 
-comb_compare_missing_vals <- grid.arrange(p1_2,p1_1, p2_2,p2_1, p3_2, p3_1, p4_2, p4_1, 
-                                  p5_2, p5_1, pavg_2, pavg_1,
-                               nrow=6, ncol=2, 
-                               top="Comparision of covariation between distances and average prices(missing values)")
+# comb_compare_missing_vals <- grid.arrange(p1_2,p1_1, p2_2,p2_1, p3_2, p3_1, p4_2, p4_1, 
+#                                   p5_2, p5_1, pavg_2, pavg_1,
+#                                nrow=6, ncol=2,
+#                                top="Comparision of covariation between distances and average prices(missing values)")
 
-comb_missing_vals
-comb_compare_missing_vals
+
 ```
 
 _Analysis:_ As visualized, there are zero values in the current dataset and in this context, zero values are equal to the missing. But zero values dont't influence on the tendency in the relation between price and distance.
 
 __3) Visualization of the distribution density  of the average price __
 ```{r echo=TRUE, message=FALSE}
+# Normilizing of average price for common average data
+dt_avg <- transform(shop_avg_data, price = pnorm(price))
 
-pavg_3 <- ggplot(data = shop_avg_data, mapping = aes(x = price, y = ..density..)) + 
-  geom_freqpoly(colour=colours_shema[6], binwidth = 500) + ggtitle("Average price distribution")
-pall_2 <- ggplot(data = joined_shops_data, mapping = aes(x = price, y = ..density..)) + 
-  geom_freqpoly(mapping = aes(colour = Shop), binwidth = 500) + ggtitle("Common average price distribution")
+pavg_3 <- ggplot(data = dt_avg, mapping = aes(x = price, y = ..density..)) +     geom_freqpoly(colour=colours_shema[6], binwidth = 0.1) + ggtitle("Average price distribution")
+
+# Normilizing of average price for shops
+dt_all <- transform(joined_shops_data, price = pnorm(price))
+pall_2 <- ggplot(data = dt_all, mapping = aes(x = price, y = ..density..)) + geom_freqpoly(mapping = aes(colour = Shop), binwidth = 0.1) + ggtitle("Common average price distribution")
 
 comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
-                                     nrow=2, ncol=1, 
+                                     nrow=2, ncol=1,
                                      top="Distribution of an average price")
-
-comb_vis_distibution
 
 ```
 _Analysis:_ As visualized, according to our data the average price is identically distributed for the each store. 
