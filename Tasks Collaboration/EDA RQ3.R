@@ -24,4 +24,8 @@ customer_value_shop<-data.frame(slice1$customer_id,value_ratio_shop_1,value_rati
 
 #convert all nan values to 0
 customer_value_shop[is.na(customer_value_shop)] <- 0
+<<<<<<< HEAD
 View(customer_value_shop)
+=======
+View(customer_value_shop)
+>>>>>>> 14ec35239da2286060b02f9524c8a3a31b053016
