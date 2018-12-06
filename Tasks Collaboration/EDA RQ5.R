@@ -113,7 +113,7 @@ shop_customer_segment_count <-data.frame(shops, customer_segments, counts)
 ## Change datatype of columns to numerical
 shop_customer_segment_count <- shop_customer_segment_count %>% mutate_if(is.integer, as.numeric) %>% mutate_if(is.factor, as.numeric)
 
-## Plot the count of customers for each shop based on customer segments (mid - 1, mid - 3, low - 2)
+## Plot the count of customers for each shop based on customer segments (high - 1, mid - 3, low - 2)
 qplot(shops, counts, data = shop_customer_segment_count, color = customer_segments)
 qplot(shops, counts, data = shop_customer_segment_count, color = customer_segments, facets = .~ customer_segments)
 
