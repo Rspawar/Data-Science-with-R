@@ -2,9 +2,136 @@
 title: "Sumit"
 output: html_document
 ---
+__7) Visualize the customer base for each shop based on different customer segments__
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+In today's world of cut throat competition, it's very important for retail chains to expand their existing customer base. While acquiring new customers is important, retaining them leads to a growth in the profit margin. Retain chains are in constant need of formulating ways to increase their brand awareness.
+
+One such way is to recognise the most loyal customers and reward them. We have formulated loyality in terms of amount of money spent and number of products bought.
+
+```{r echo=TRUE, include=TRUE}
+library(tidyverse)
+library(ggplot2)
+library("RColorBrewer")
+
+
+file_path<- "/home/sumit/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
+supermarket_data_clean <- read_csv(file_path)
 ```
 
-## R Markdown
+```{r}
+## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
+prod_purch_ratio_shop_1 <- with(supermarket_data_clean, products_purchased_shop_1/products_purchased_total)
+prod_purch_ratio_shop_2 <- with(supermarket_data_clean, products_purchased_shop_2/products_purchased_total)
+prod_purch_ratio_shop_3 <- with(supermarket_data_clean, products_purchased_shop_3/products_purchased_total)
+prod_purch_ratio_shop_4 <- with(supermarket_data_clean, products_purchased_shop_4/products_purchased_total)
+prod_purch_ratio_shop_5 <- with(supermarket_data_clean, products_purchased_shop_5/products_purchased_total)
+
+## Ratio of amount spent at each shop (amount spent by a customer at a shop over total amount spent by that customer)
+amt_purch_ratio_shop_1 <- with(supermarket_data_clean, amount_purchased_shop_1/amount_purchased_total)
+amt_purch_ratio_shop_2 <- with(supermarket_data_clean, amount_purchased_shop_2/amount_purchased_total)
+amt_purch_ratio_shop_3 <- with(supermarket_data_clean, amount_purchased_shop_3/amount_purchased_total)
+amt_purch_ratio_shop_4 <- with(supermarket_data_clean, amount_purchased_shop_4/amount_purchased_total)
+amt_purch_ratio_shop_5 <- with(supermarket_data_clean, amount_purchased_shop_5/amount_purchased_total)
+
+## Loyality of customer to a shop (Ratio of products purchased from each shop times Ratio of amount spent at each shop)
+loyality_shop_1 <- prod_purch_ratio_shop_1 * amt_purch_ratio_shop_1
+loyality_shop_2 <- prod_purch_ratio_shop_2 * amt_purch_ratio_shop_2
+loyality_shop_3 <- prod_purch_ratio_shop_3 * amt_purch_ratio_shop_3
+loyality_shop_4 <- prod_purch_ratio_shop_4 * amt_purch_ratio_shop_4
+loyality_shop_5 <- prod_purch_ratio_shop_5 * amt_purch_ratio_shop_5
+
+
+## Data frames based on calculated values
+prod_purch_ratio_shop <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_1, prod_purch_ratio_shop_2, prod_purch_ratio_shop_3, prod_purch_ratio_shop_4, prod_purch_ratio_shop_5)
+amt_purch_ratio_shop <- data.frame(supermarket_data_clean$customer_id, amt_purch_ratio_shop_1, amt_purch_ratio_shop_2, amt_purch_ratio_shop_3, amt_purch_ratio_shop_4, amt_purch_ratio_shop_5)
+loyality <- data.frame(supermarket_data_clean$customer_id, loyality_shop_1, loyality_shop_2, loyality_shop_3, loyality_shop_4, loyality_shop_5)
+
+## Data frames as per shop nos
+shop_1 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_1, amt_purch_ratio_shop_1, loyality_shop_1)
+shop_2 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_2, amt_purch_ratio_shop_2, loyality_shop_2)
+shop_3 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_3, amt_purch_ratio_shop_3, loyality_shop_3)
+shop_4 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_4, amt_purch_ratio_shop_4, loyality_shop_4)
+shop_5 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_5, amt_purch_ratio_shop_5, loyality_shop_5)
+
+
+## Customer segments for Shop 1 based on Loyality Score
+high_end_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0.9), ]
+mid_range_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0.50 & shop_1$loyality_shop_1 <= 0.9), ]
+low_end_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0 & shop_1$loyality_shop_1 <= 0.5), ]
+
+## Customer segments for Shop 2 based on Loyality Score
+high_end_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0.9), ]
+mid_range_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0.50 & shop_2$loyality_shop_2 <= 0.9), ]
+low_end_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0 & shop_2$loyality_shop_2 <= 0.5), ]
+
+## Customer segments for Shop 3 based on Loyality Score
+high_end_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0.9), ]
+mid_range_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0.50 & shop_3$loyality_shop_3 <= 0.9), ]
+low_end_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0 & shop_3$loyality_shop_3 <= 0.5), ]
+
+## Customer segments for Shop 4 based on Loyality Score
+high_end_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0.9), ]
+mid_range_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0.50 & shop_4$loyality_shop_4 <= 0.9), ]
+low_end_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0 & shop_4$loyality_shop_4 <= 0.5), ]
+
+## Customer segments for Shop 5 based on Loyality Score
+high_end_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0.9), ]
+mid_range_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0.50 & shop_5$loyality_shop_5 <= 0.9), ]
+low_end_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0 & shop_5$loyality_shop_5 <= 0.5), ]
+
+
+## Number of customers in each segment for Shop 1
+count_high_end_shop_1 <- nrow(high_end_shop_1)
+count_mid_range_shop_1 <- nrow(mid_range_shop_1)
+count_low_end_shop_1 <- nrow(low_end_shop_1)
+
+## Number of customers in each segment for Shop 2
+count_high_end_shop_2 <- nrow(high_end_shop_2)
+count_mid_range_shop_2 <- nrow(mid_range_shop_2)
+count_low_end_shop_2 <- nrow(low_end_shop_2)
+
+## Number of customers in each segment for Shop 3
+count_high_end_shop_3 <- nrow(high_end_shop_3)
+count_mid_range_shop_3 <- nrow(mid_range_shop_3)
+count_low_end_shop_3 <- nrow(low_end_shop_3)
+
+## Number of customers in each segment for Shop 4
+count_high_end_shop_4 <- nrow(high_end_shop_4)
+count_mid_range_shop_4 <- nrow(mid_range_shop_4)
+count_low_end_shop_4 <- nrow(low_end_shop_4)
+
+## Number of customers in each segment for Shop 5
+count_high_end_shop_5 <- nrow(high_end_shop_5)
+count_mid_range_shop_5 <- nrow(mid_range_shop_5)
+count_low_end_shop_5 <- nrow(low_end_shop_5)
+
+## Setting up values
+shops <- c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5)
+
+customer_segments <- c("high", "med", "low", "high", "med", "low", "high", "med", "low", "high", "med", "low", "high", "med", "low")
+
+count_shop_1 <- c(count_high_end_shop_1, count_mid_range_shop_1, count_low_end_shop_1)
+count_shop_2 <- c(count_high_end_shop_2, count_mid_range_shop_2, count_low_end_shop_2)
+count_shop_3 <- c(count_high_end_shop_3, count_mid_range_shop_3, count_low_end_shop_3)
+count_shop_4 <- c(count_high_end_shop_4, count_mid_range_shop_4, count_low_end_shop_4)
+count_shop_5 <- c(count_high_end_shop_5, count_mid_range_shop_5, count_low_end_shop_5)
+
+counts <- c(count_shop_1, count_shop_2, count_shop_3, count_shop_4, count_shop_5)
+
+
+## Count of customers based on the three customer segments (high, mid, low)
+shop_customer_segment_count <-data.frame(shops, customer_segments, counts)
+
+## Change datatype of columns to numerical
+shop_customer_segment_count <- shop_customer_segment_count %>% mutate_if(is.integer, as.numeric) %>% mutate_if(is.factor, as.numeric)
+
+## Plot the count of customers for each shop based on customer segments (high - 1, mid - 3, low - 2)
+qplot(shops, counts, data = shop_customer_segment_count, color = customer_segments)
+```
+
+```{r}
+## Plot the count of customers for each segment
+qplot(customer_segments, counts, data = shop_customer_segment_count)
+```
+
+__Analysis:__ As visualized, the customers can be categorized on the basis of three different customer segemnts i.e. high, mid and low in terms of their loyality towards the shops and promotional offers can be customised for each segment.  

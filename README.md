@@ -6,8 +6,8 @@ A customer is a key-centric factor for any business to be successful. Convention
 This project aims to understand the purchase behaviour of customers in the retail sector specifically of an Italian retail distribution company <i>Coop</i> in a single Italian city. Decoding the consumer behaviour is based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also discovers existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement strategies leading to an increased revenue through customer satisfaction. 
 
 # Overview of the Input Dataset
-The dataset used is Supermarket aggr.Customer [1]. The dataset contains the retail market data of one of the largest Italian retail distribution company called <i>Coop</i> for a single Italian city [2].<br />
-The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from the original datasets [2,3] and mapped to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size.
+The dataset used is Supermarket aggr.Customer [1]. The dataset contains the retail market data of one of the largest Italian retail distribution company called <i>Coop</i> for a single Italian city.<br />
+The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from customer and information from shops [2] [3] and pivoted to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size.
 
 # Installation and Run
 

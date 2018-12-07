@@ -160,14 +160,17 @@ _Analysis:_ As visualized, there are zero values in the current dataset and in t
 
 __3) Visualization of the distribution density  of the average price __
 ```{r echo=TRUE, message=FALSE}
+# Normilizing of average price for common average data
+dt_avg <- transform(shop_avg_data, price = pnorm(price))
 
-pavg_3 <- ggplot(data = shop_avg_data, mapping = aes(x = price, y = ..density..)) + 
-  geom_freqpoly(colour=colours_shema[6], binwidth = 500) + ggtitle("Average price distribution")
-pall_2 <- ggplot(data = joined_shops_data, mapping = aes(x = price, y = ..density..)) + 
-  geom_freqpoly(mapping = aes(colour = Shop), binwidth = 500) + ggtitle("Common average price distribution")
+pavg_3 <- ggplot(data = dt_avg, mapping = aes(x = price, y = ..density..)) +     geom_freqpoly(colour=colours_shema[6], binwidth = 0.1) + ggtitle("Average price distribution")
+
+# Normilizing of average price for shops
+dt_all <- transform(joined_shops_data, price = pnorm(price))
+pall_2 <- ggplot(data = dt_all, mapping = aes(x = price, y = ..density..)) + geom_freqpoly(mapping = aes(colour = Shop), binwidth = 0.1) + ggtitle("Common average price distribution")
 
 comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
-                                     nrow=2, ncol=1, 
+                                     nrow=2, ncol=1,
                                      top="Distribution of an average price")
 
 ```

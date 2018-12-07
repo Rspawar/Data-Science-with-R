@@ -476,7 +476,7 @@ pavg_1 <- draw_cov_point_plot(shop_avg_data, 6, "Average price with average dist
 pmin_1 <- draw_cov_point_plot(shop_agg_min_data, 7, "Average price with min distance")
 pmax_1 <- draw_cov_point_plot(shop_agg_max_data, 8, "Average price with max distance")
 
-pall_1 <- get_base_for_plot(joined_shops_data, "All shops") + geom_point(mapping = aes(colour = Shop), alpha=0.3)
+pall_1 <- get_base_for_plot(joined_shops_data, "All shops") + geom_point(mapping = aes(colour = Shop), alpha=0.3) 
 
 comb_cov_shops <- grid.arrange(p1_1, p2_1, p3_1, p4_1, p5_1, 
                                nrow=2, ncol=3, 
@@ -527,11 +527,16 @@ _Analysis:_ As visualized, there is a data gap for the value of average price in
 __5) Visualize the distribution density of the average price across shops__
 
 ```{r echo=TRUE, message=FALSE}
+# Normilizing of average price for common average data
+dt_avg <- transform(shop_avg_data, price = pnorm(price))
 
-pavg_3 <- ggplot(data = shop_avg_data, mapping = aes(x = price, y = ..density..)) + 
-  geom_freqpoly(colour=colours_shema[6], binwidth = 500) + ggtitle("Average price distribution")
-pall_2 <- ggplot(data = joined_shops_data, mapping = aes(x = price, y = ..density..)) + 
-  geom_freqpoly(mapping = aes(colour = Shop), binwidth = 500) + ggtitle("Common average price distribution")
+pavg_3 <- ggplot(data = dt_avg, mapping = aes(x = price, y = ..density..)) +
+  geom_freqpoly(colour=colours_shema[6], binwidth = 0.1) + ggtitle("Average price distribution")
+
+# Normilizing of average price for shops
+dt_all <- transform(joined_shops_data, price = pnorm(price))
+pall_2 <- ggplot(data = dt_all, mapping = aes(x = price, y = ..density..)) + 
+  geom_freqpoly(mapping = aes(colour = Shop), binwidth = 0.1) + ggtitle("Common average price distribution")
 
 comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
                                      nrow=2, ncol=1, 
