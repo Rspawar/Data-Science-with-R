@@ -304,7 +304,6 @@ Exploratory Data Analysis (EDA) is the process of visualizing the main character
 __1) Visualize the highest revenue generating shops, shops selling the highest number of products, shops selling the highest number of unique products and the relation between them__
 
 ```{r echo=TRUE, message=FALSE}
-library(tidyverse)
 library(ggplot2)
 library("RColorBrewer")
 
@@ -542,7 +541,7 @@ comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
 
 _Analysis:_ As visualized, according to the data the average price is identically distributed for each shop. 
 
-__6) Visualize patterns for the average cost__
+__6) Visualize patterns for the average price__
 
 ```{r echo=TRUE, message=FALSE}
 joined_shops_without_null <- filter(joined_shops_data, price != 0)
@@ -575,8 +574,8 @@ _Relevance:_ This will help to understand whether the price is an important fact
 __2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
 _Relevance:_ This will help to understand the important factors that contribute towards the customers willing to travel long-distances to purchase products in spite of the high average product price in a shop, in turn better understanding the purchase behaviour of the customers<br />
 
-__3. What is the maximum likelihood of a customer to select a particular shop to purchase a particular product?__ <br />
-_Relevance:_ This will help to understand that which shops in the retail chain are in demand for a particular product. This can further facilitate better stock management to meet customer demands.<br />
+__3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
+_Relevance:_ This will help to understand that which shops in the retail chain are in demand and predict their estimated customer base. This can further facilitate better stock management to meet customer demands.<br />
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
 _Relevance:_ This will help to understand the groups of similar customer based on their purchase behviour and target different shop-level marketing schemes to the appropriate customers.<br />
@@ -585,6 +584,46 @@ __5. Which are the Top 100 customers that are most profitable in terms of revenu
 _Relevance:_ This will help to understand the customers with potential high Customer Lifetime Value and target appropriate loyalty programs to generate satisfied loyal customers as advocates for the business.
 
 <h4><b>9. Final Analysis</h4></b>
+
+__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+
+_Algorithms selected:_
+
+_Comparision of the selected algorithms:_
+
+_Analysis:_
+
+__2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
+
+_Algorithms selected:_
+
+_Comparision of the selected algorithms:_
+
+_Analysis:_
+
+__3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
+
+_Algorithms selected:_
+
+_Comparision of the selected algorithms:_
+
+_Analysis:_
+
+__4. What are the different customer segments based on their purchase behaviour?__<br />
+
+_Algorithms selected:_
+
+_Comparision of the selected algorithms:_
+
+_Analysis:_
+
+__5. Which are the Top 100 customers that are most profitable in terms of revenue generation?__<br />
+
+_Algorithms selected:_
+
+_Comparision of the selected algorithms:_
+
+_Analysis:_
 
 <h4><b>10. Important Links</h4></b>
 
