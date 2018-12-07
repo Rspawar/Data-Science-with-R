@@ -37,11 +37,13 @@ This project aims to address the problem of understanding behaviour of customers
 <h4><b>3. Data Source</h4></b>
 
 Supermarket aggr.Customer^[https://bigml.com/user/czuriaga/gallery/dataset/5559c2c6200d5a6570000084] <br />
-The dataset to be used is the retail market data of one of the largest Italian retail distribution company called _Coop_ for a single Italian city [@pennacchioli2013explaining].<br />
-The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from the original datasets^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and mapped to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. 
+The dataset to be used is the retail market data of one of the largest Italian retail distribution company called _Coop_ for a single Italian city.<br />
+The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from customer and information from shops^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and pivoted to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. 
 
-<h4><b>4. Related Work</h4></b>
+<h4><b>4. Related Work and its Comparision to the Project</h4></b>
 
+The paper [@pennacchioli2013explaining] studies and highlights the product range effect illustrating that the customers are focussed more on the needs satisfied by the product. If the satisfaction is more, customers are ready to travel long distances to purchase them and even pay more. The study is based on the creation of a data mining framework and introduction of a new measurement called as product sophistication to study the range effect. The paper also studies the effect of the introduced measure on the accuracy of predicting the shop selected by the customer to buy a particular product. Hence this paper studies the customer behaviour in the retail sector majorly based on this range effect.<br />
+However, on the contrary, our analysis is not carried out on the same datasets as used in the paper but our dataset contains data aggregated from customer and information from shops and pivoted to new columns. As we have new columns in our dataset, the perspective of our analysis becomes different. Based on our data and understanding its different features, we framed different Research Questions to be answered from the data. These research questions do not focus only on one aspect (as the range effect in the paper), but attempt to decode the customer behaviour in different ways. Unlike the methodology used in the paper, this project obtains customer behavioural insights through the application of machine learning algorithms on the data. Through this, the project thus studies the consumer nature to determine whether customers are ready to travel long distances in spite of the high average price in a shop and what are the factors that contribute to their long distance travel. Additionally, likelihood of a customer to select a particular shop, different customer segments and discovering top 100 profitable customers is also studied in the scope of the project.
 
 <h4><b>5. Initial Questions</h4></b>
 
@@ -544,7 +546,7 @@ comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
 ```
 
 
-_Analysis:_ As visualized, according to the data the average price is identically distributed for each shop. 
+_Analysis:_ As visualized, according to the data the average price is varyingly distributed in each shop. 
 
 __6) Visualize patterns for the average price__
 
@@ -568,6 +570,128 @@ pall_4
 ```
 
 _Analysis:_ As visualized, the residuals gave us a view of the average price after removing the distance effect. Once the strong relationship between distance and price has been removed, relationship to other external factors become noticable.
+
+__7) Visualize the customer base for each shop based on different customer segments__
+
+```{r echo=TRUE, message=FALSE}
+## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
+prod_purch_ratio_shop_1 <- with(supermarket_data_clean, products_purchased_shop_1/products_purchased_total)
+prod_purch_ratio_shop_2 <- with(supermarket_data_clean, products_purchased_shop_2/products_purchased_total)
+prod_purch_ratio_shop_3 <- with(supermarket_data_clean, products_purchased_shop_3/products_purchased_total)
+prod_purch_ratio_shop_4 <- with(supermarket_data_clean, products_purchased_shop_4/products_purchased_total)
+prod_purch_ratio_shop_5 <- with(supermarket_data_clean, products_purchased_shop_5/products_purchased_total)
+
+## Ratio of amount spent at each shop (amount spent by a customer at a shop over total amount spent by that customer)
+amt_purch_ratio_shop_1 <- with(supermarket_data_clean, amount_purchased_shop_1/amount_purchased_total)
+amt_purch_ratio_shop_2 <- with(supermarket_data_clean, amount_purchased_shop_2/amount_purchased_total)
+amt_purch_ratio_shop_3 <- with(supermarket_data_clean, amount_purchased_shop_3/amount_purchased_total)
+amt_purch_ratio_shop_4 <- with(supermarket_data_clean, amount_purchased_shop_4/amount_purchased_total)
+amt_purch_ratio_shop_5 <- with(supermarket_data_clean, amount_purchased_shop_5/amount_purchased_total)
+
+## Loyality of customer to a shop (Ratio of products purchased from each shop times Ratio of amount spent at each shop)
+loyality_shop_1 <- prod_purch_ratio_shop_1 * amt_purch_ratio_shop_1
+loyality_shop_2 <- prod_purch_ratio_shop_2 * amt_purch_ratio_shop_2
+loyality_shop_3 <- prod_purch_ratio_shop_3 * amt_purch_ratio_shop_3
+loyality_shop_4 <- prod_purch_ratio_shop_4 * amt_purch_ratio_shop_4
+loyality_shop_5 <- prod_purch_ratio_shop_5 * amt_purch_ratio_shop_5
+
+
+## Data frames based on calculated values
+prod_purch_ratio_shop <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_1, prod_purch_ratio_shop_2, prod_purch_ratio_shop_3, prod_purch_ratio_shop_4, prod_purch_ratio_shop_5)
+amt_purch_ratio_shop <- data.frame(supermarket_data_clean$customer_id, amt_purch_ratio_shop_1, amt_purch_ratio_shop_2, amt_purch_ratio_shop_3, amt_purch_ratio_shop_4, amt_purch_ratio_shop_5)
+loyality <- data.frame(supermarket_data_clean$customer_id, loyality_shop_1, loyality_shop_2, loyality_shop_3, loyality_shop_4, loyality_shop_5)
+
+## Data frames as per shop nos
+shop_1 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_1, amt_purch_ratio_shop_1, loyality_shop_1)
+shop_2 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_2, amt_purch_ratio_shop_2, loyality_shop_2)
+shop_3 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_3, amt_purch_ratio_shop_3, loyality_shop_3)
+shop_4 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_4, amt_purch_ratio_shop_4, loyality_shop_4)
+shop_5 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_5, amt_purch_ratio_shop_5, loyality_shop_5)
+
+
+## Customer segments for Shop 1 based on Loyality Score
+high_end_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0.9), ]
+mid_range_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0.50 & shop_1$loyality_shop_1 <= 0.9), ]
+low_end_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0 & shop_1$loyality_shop_1 <= 0.5), ]
+
+## Customer segments for Shop 2 based on Loyality Score
+high_end_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0.9), ]
+mid_range_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0.50 & shop_2$loyality_shop_2 <= 0.9), ]
+low_end_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0 & shop_2$loyality_shop_2 <= 0.5), ]
+
+## Customer segments for Shop 3 based on Loyality Score
+high_end_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0.9), ]
+mid_range_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0.50 & shop_3$loyality_shop_3 <= 0.9), ]
+low_end_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0 & shop_3$loyality_shop_3 <= 0.5), ]
+
+## Customer segments for Shop 4 based on Loyality Score
+high_end_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0.9), ]
+mid_range_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0.50 & shop_4$loyality_shop_4 <= 0.9), ]
+low_end_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0 & shop_4$loyality_shop_4 <= 0.5), ]
+
+## Customer segments for Shop 5 based on Loyality Score
+high_end_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0.9), ]
+mid_range_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0.50 & shop_5$loyality_shop_5 <= 0.9), ]
+low_end_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0 & shop_5$loyality_shop_5 <= 0.5), ]
+
+
+## Number of customers in each segment for Shop 1
+count_high_end_shop_1 <- nrow(high_end_shop_1)
+count_mid_range_shop_1 <- nrow(mid_range_shop_1)
+count_low_end_shop_1 <- nrow(low_end_shop_1)
+
+## Number of customers in each segment for Shop 2
+count_high_end_shop_2 <- nrow(high_end_shop_2)
+count_mid_range_shop_2 <- nrow(mid_range_shop_2)
+count_low_end_shop_2 <- nrow(low_end_shop_2)
+
+## Number of customers in each segment for Shop 3
+count_high_end_shop_3 <- nrow(high_end_shop_3)
+count_mid_range_shop_3 <- nrow(mid_range_shop_3)
+count_low_end_shop_3 <- nrow(low_end_shop_3)
+
+## Number of customers in each segment for Shop 4
+count_high_end_shop_4 <- nrow(high_end_shop_4)
+count_mid_range_shop_4 <- nrow(mid_range_shop_4)
+count_low_end_shop_4 <- nrow(low_end_shop_4)
+
+## Number of customers in each segment for Shop 5
+count_high_end_shop_5 <- nrow(high_end_shop_5)
+count_mid_range_shop_5 <- nrow(mid_range_shop_5)
+count_low_end_shop_5 <- nrow(low_end_shop_5)
+
+## Setting up values
+shops <- c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5)
+
+customer_segments <- c("high", "med", "low", "high", "med", "low", "high", "med", "low", "high", "med", "low", "high", "med", "low")
+
+count_shop_1 <- c(count_high_end_shop_1, count_mid_range_shop_1, count_low_end_shop_1)
+count_shop_2 <- c(count_high_end_shop_2, count_mid_range_shop_2, count_low_end_shop_2)
+count_shop_3 <- c(count_high_end_shop_3, count_mid_range_shop_3, count_low_end_shop_3)
+count_shop_4 <- c(count_high_end_shop_4, count_mid_range_shop_4, count_low_end_shop_4)
+count_shop_5 <- c(count_high_end_shop_5, count_mid_range_shop_5, count_low_end_shop_5)
+
+counts <- c(count_shop_1, count_shop_2, count_shop_3, count_shop_4, count_shop_5)
+
+
+## Count of customers based on the three customer segments (high, mid, low)
+shop_customer_segment_count <-data.frame(shops, customer_segments, counts)
+
+## Change datatype of columns to numerical
+shop_customer_segment_count <- shop_customer_segment_count %>% mutate_if(is.integer, as.numeric) %>% mutate_if(is.factor, as.numeric)
+
+## Plot the count of customers for each shop based on customer segments (high - 1, mid - 3, low - 2)
+qplot(shops, counts, data = shop_customer_segment_count, size=counts, color = customer_segments) + 
+    scale_size_continuous(range = c(3, 8))
+```
+
+```{r echo=TRUE, message=FALSE}
+## Plot the count of customers for each segment
+qplot(customer_segments, counts, data = shop_customer_segment_count, size=counts, color = counts) + 
+    scale_size_continuous(range = c(3, 8))
+```
+
+__Analysis:__ As visualized, the customers can be categorized on the basis of three different customer segements i.e. high, mid and low in terms of their loyality towards the shops and promotional offers can be customised for each segment. 
 
 <h4><b>8. Final Research Questions</h4></b>
 
@@ -637,6 +761,12 @@ _Analysis:_
 <b>2. Project Website</b>
 
 <b>3. Project Screencast</b>
+
+<b>4. Project Presentation</b>
+
+<b>5. Complete Analysis Report as RMarkdown file</b> https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer%20Behavioural%20Analytics%20in%20the%20Retail%20sector.Rmd
+
+<b>6. complete Analysis Report as HTML file</b> https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 <h4><b>Date</b></h4> ```r format(Sys.Date(), "%B %e, %Y")``` 
 
