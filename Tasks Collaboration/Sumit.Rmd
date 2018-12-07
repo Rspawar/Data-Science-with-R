@@ -2,9 +2,11 @@
 title: "Sumit"
 output: html_document
 ---
-RQ5: Customers that are most profitable in terms of revenue generation
+__7) Visualize the customer base for each shop based on different customer segments__
 
-In order to find the solution to the above mentioned RQ, we have formulated loyality in terms of the ratio of products purchased and ratio of amount of money spent.
+In today's world of cut throat competition, it's very important for retail chains to expand their existing customer base. While acquiring new customers is important, retaining them leads to a growth in the profit margin. Retain chains are in constant need of formulating ways to increase their brand awareness.
+
+One such way is to recognise the most loyal customers and reward them. We have formulated loyality in terms of amount of money spent and number of products bought.
 
 ```{r echo=TRUE, include=TRUE}
 library(tidyverse)
@@ -12,10 +14,11 @@ library(ggplot2)
 library("RColorBrewer")
 
 
-file_path<- "Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
+file_path<- "/home/sumit/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
 supermarket_data_clean <- read_csv(file_path)
+```
 
-
+```{r}
 ## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
 prod_purch_ratio_shop_1 <- with(supermarket_data_clean, products_purchased_shop_1/products_purchased_total)
 prod_purch_ratio_shop_2 <- with(supermarket_data_clean, products_purchased_shop_2/products_purchased_total)
@@ -121,18 +124,14 @@ shop_customer_segment_count <-data.frame(shops, customer_segments, counts)
 
 ## Change datatype of columns to numerical
 shop_customer_segment_count <- shop_customer_segment_count %>% mutate_if(is.integer, as.numeric) %>% mutate_if(is.factor, as.numeric)
-```
 
-This graph plots the count of customers for each shop based on three different customer segments (high, mid, low)
-```{r}
 ## Plot the count of customers for each shop based on customer segments (high - 1, mid - 3, low - 2)
 qplot(shops, counts, data = shop_customer_segment_count, color = customer_segments)
-qplot(shops, counts, data = shop_customer_segment_count, color = customer_segments, facets = .~ customer_segments)
 ```
 
-This graph plots the count of customers for each cutomer segment (high, mid, low)
 ```{r}
 ## Plot the count of customers for each segment
 qplot(customer_segments, counts, data = shop_customer_segment_count)
 ```
 
+__Analysis:__ As visualized, the customers can be categorized on the basis of three different customer segemnts i.e. high, mid and low in terms of their loyality towards the shops and promotional offers can be customised for each segment.  

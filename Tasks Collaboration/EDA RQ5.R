@@ -117,6 +117,7 @@ shop_customer_segment_count <- shop_customer_segment_count %>% mutate_if(is.inte
 qplot(shops, counts, data = shop_customer_segment_count, color = customer_segments)
 qplot(shops, counts, data = shop_customer_segment_count, color = customer_segments, facets = .~ customer_segments)
 
+
 ## Plot the count of customers for each segment
 qplot(customer_segments, counts, data = shop_customer_segment_count)
 
