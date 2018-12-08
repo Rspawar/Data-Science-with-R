@@ -5,7 +5,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyverse)
 
-cleared_supermarket_data<-read_csv("Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv")
+cleared_supermarket_data <- read_csv("Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv")
 cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
 
 shop_ordered_slice <- select(cleared_supermarked_tbl, 3,23,4,24,5,25,6,26,7,27) %>% 
