@@ -691,7 +691,7 @@ qplot(customer_segments, counts, data = shop_customer_segment_count, size=counts
     scale_size_continuous(range = c(3, 8))
 ```
 
-__Analysis:__ As visualized, the customers can be categorized on the basis of three different customer segements i.e. high, mid and low in terms of their loyality towards the shops and promotional offers can be customised for each segment. 
+_Analysis:_ As visualized, the customers can be categorized on the basis of three different customer segements i.e. high, mid and low in terms of their loyality towards the shops and promotional offers can be customised for each segment. 
 
 <h4><b>8. Final Research Questions</h4></b>
 
@@ -756,17 +756,25 @@ _Analysis:_
 
 <h4><b>10. Important Links</h4></b>
 
-<b>1. GitHub Repository</b> https://github.com/Rspawar/Data-Science-with-R.git 
+<b>1. GitHub Repository</b> 
 
-<b>2. Project Website</b>
+https://github.com/Rspawar/Data-Science-with-R.git 
+
+<b>2. Project Website</b> 
+
+https://sites.google.com/view/customerbehaviouralanalytics
 
 <b>3. Project Screencast</b>
 
 <b>4. Project Presentation</b>
 
-<b>5. Complete Analysis Report as RMarkdown file</b> https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer%20Behavioural%20Analytics%20in%20the%20Retail%20sector.Rmd
+<b>5. Complete Analysis Report as RMarkdown file</b>
 
-<b>6. complete Analysis Report as HTML file</b> https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html
+https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer%20Behavioural%20Analytics%20in%20the%20Retail%20sector.Rmd
+
+<b>6. complete Analysis Report as HTML file</b>
+
+https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 <h4><b>Date</b></h4> ```r format(Sys.Date(), "%B %e, %Y")``` 
 
