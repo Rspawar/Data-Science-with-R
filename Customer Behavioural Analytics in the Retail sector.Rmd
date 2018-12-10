@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 <h4><b>1. Overview and Motivation</b></h4>
 
 <font color ="black"> A customer is a key-centric factor for any business to be successful. Conventional wisdom tells us that the cost of retaining an existing customer is far less than acquiring a new one. In order that a business has a sustainable growth, the retention of its old customer base and expansion of the new customer base is very critical. This demands from a business to understand the behaviour of its customers in relation to the business. Therefore obtaining a 360&deg; view of its customers is crucial for a business looking for a competitive edge in the market. In such a scenario, Customer Behavioural Analytics plays an important role in leveraging data analytics to find meaningful behavioural patterns in the customer-specific business data. <br/>
-Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement stratergies leading to an increased revenue through customer satisfaction. 
+Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement strategies leading to an increased revenue through customer satisfaction. 
 
 <h4><b>2. Project Objective</b></h4>
 
@@ -126,13 +126,6 @@ data_types(supermarket_tbl)
 
 __2) Input dataset cleaning and processing__
 
-__Visualize the missing values in the input dataset__
-
-```{r echo=TRUE, message=FALSE}
-# Plot missing values in the dataset
-plot_missing(supermarket_tbl)
-
-```
 
 __Eliminate the mising values in the input dataset__
 
@@ -467,9 +460,11 @@ add_geom_point <- function(colorNum){
 
 #draw scatter plot with plot base
 draw_cov_point_plot <- function(dataset, colorNum, caption){
-  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum) + geom_smooth()
+  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum) +       
+    scale_y_continuous(trans="log2")+ 
+    geom_smooth(stat = 'smooth', color = 'Black', method = 'gam', formula = y ~ s(x, bs = "cs")) 
   return(cov_geom_plot)
-} 
+}
 
 p1_1 <- draw_cov_point_plot(shop_1_data, 1, "Shop 1")
 p2_1 <- draw_cov_point_plot(shop_2_data, 2, "Shop 2")
@@ -490,37 +485,22 @@ comb_cov_aggrs <- grid.arrange(pmin_1, pmax_1,
                                top= "Covariation between min/max distances and average prices")
 comb_cov_avg <- grid.arrange(pall_1, pavg_1,
                                nrow=2,
-                               top= "Covariation between distances and average prices (aggregetions)")
+                               top= "Covariation between distances and average prices (aggregeted)")
 
 ```
 
-_Analysis:_ As visualized, there are strong dependencies between long average distance and the average price in a shop. Also it can be viewed, that the average price is close enough to zero, therefore it makes a sense to check for zero values for price in the current dataset and its influence.
+_Analysis:_ There are strong dependencies between long average distance and the average price in a shop. Also the average price is close enough to zero, therefore it makes a sense to check for zero values for price in the current dataset and its influence.
 
 __4) Visualize data gap for average price in each shop__
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-draw_missing_values_plot  <- function(dataset, colorNum, caption){
-  dataset_with_na <- dataset %>% 
-    mutate(price = ifelse(price == 0, NA, price))%>% 
-    mutate(missed = is.na(price))
-  missing_values_plot <- get_base_for_plot(dataset_with_na, caption) + 
-    add_geom_point(colorNum)
-  return(missing_values_plot)
-}
 
-p1_2 <- draw_missing_values_plot(shop_1_data, 1, "Shop 1")
-p2_2 <- draw_missing_values_plot(shop_2_data, 2, "Shop 2")
-p3_2 <- draw_missing_values_plot(shop_3_data, 3, "Shop 3")
-p4_2 <- draw_missing_values_plot(shop_4_data, 4, "Shop 4")
-p5_2 <- draw_missing_values_plot(shop_5_data, 5, "Shop 5")
-
-pavg_2 <- draw_missing_values_plot(shop_avg_data, 6, "Avg price with avg dist")
-
-comb_missing_vals <- grid.arrange(p1_2, p2_2, p3_2, p4_2, p5_2, pavg_2,
-                               nrow=2, ncol=3, 
-                               top="Covariation between distances and average prices without considering the data gap")
-
-
+prices <- shop_ordered_slice[,seq(2, 10 ,2)]
+names(prices) <- c("Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5")
+dataset_with_na <- data.frame(sapply(prices, function(x) { 
+    na_if(x,0)
+            } ))
+pavg_2 <- plot_missing(dataset_with_na) + ggtitle("Gaps in shop prices")
 
 
 ```
