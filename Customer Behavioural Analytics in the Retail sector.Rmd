@@ -418,8 +418,10 @@ __3) Visualize the relationship between average prices and distances to the shop
 ```{r echo=TRUE, message=FALSE}
 library(modelr)
 library(gridExtra)
+library(tidyverse)
+library(dplyr)
 
-cleared_supermarket_data<-read_csv(file_path)
+cleared_supermarket_data <- read_csv(file_path)
 cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
 
 shop_ordered_slice <- select(cleared_supermarked_tbl, 3,23,4,24,5,25,6,26,7,27) %>% 
@@ -465,7 +467,7 @@ add_geom_point <- function(colorNum){
 
 #draw scatter plot with plot base
 draw_cov_point_plot <- function(dataset, colorNum, caption){
-  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum)
+  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum) + geom_smooth()
   return(cov_geom_plot)
 } 
 
@@ -526,52 +528,24 @@ comb_missing_vals <- grid.arrange(p1_2, p2_2, p3_2, p4_2, p5_2, pavg_2,
 
 _Analysis:_ As visualized, there is a data gap for the value of average price in each shop. The value for average price in a shop for a customer is only filled in the dataset if the particular customer prefers the shop, else it is left as zero. This can be considered as a data gap but at the same time it is an information which is never utilized during analysis, meaning that the customer does not choose that particular shop in the first place. But this data gap does not affect on the tendency of the relationship between price and distance.
 
-__5) Visualize the distribution density of the average price across shops__
-
-```{r echo=TRUE, message=FALSE}
-# Normilizing of average price for common average data
-dt_avg <- transform(shop_avg_data, price = pnorm(price))
-
-pavg_3 <- ggplot(data = dt_avg, mapping = aes(x = price, y = ..density..)) +
-  geom_freqpoly(colour=colours_shema[6], binwidth = 0.1) + ggtitle("Average price distribution")
-
-# Normilizing of average price for shops
-dt_all <- transform(joined_shops_data, price = pnorm(price))
-pall_2 <- ggplot(data = dt_all, mapping = aes(x = price, y = ..density..)) + 
-  geom_freqpoly(mapping = aes(colour = Shop), binwidth = 0.1) + ggtitle("Common average price distribution")
-
-comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
-                                     nrow=2, ncol=1, 
-                                     top="Distribution of average price across shops")
-```
-
-
-_Analysis:_ As visualized, according to the data the average price is varyingly distributed in each shop. 
-
-__6) Visualize patterns for the average price__
+__5) Visualize patterns for the average price__
 
 ```{r echo=TRUE, message=FALSE}
 joined_shops_without_null <- filter(joined_shops_data, price != 0)
-mod <- lm(log(price) ~ log(distance), data = joined_shops_without_null)
+mod <- lm(log(price) ~ distance, data = joined_shops_without_null)
 
 joined_shops_data2 <- joined_shops_without_null %>% 
   add_residuals(mod) %>% 
   mutate(resid = exp(resid))
 
-
-pall_3 <- ggplot(data = joined_shops_data2) + 
-  geom_point(mapping = aes(x = price, y = resid), colour=colours_shema[6], alpha=0.3) + ggtitle("Average price pattern")
-
-pall_3
-
-pall_4 <- ggplot(data = joined_shops_data2) + 
-  geom_boxplot(mapping = aes(x = Shop, y = resid), color=colours_shema[6]) + ggtitle("Average price pattern")
+pall_4 <- ggplot(data = joined_shops_data2, aes(x = Shop, y = resid)) + 
+  geom_bar(stat = "identity", fill = colours_shema[6]) + ggtitle("Average price pattern")
 pall_4
 ```
 
 _Analysis:_ As visualized, the residuals gave us a view of the average price after removing the distance effect. Once the strong relationship between distance and price has been removed, relationship to other external factors become noticable.
 
-__7) Visualize the customer base for each shop based on different customer segments__
+__6) Visualize the customer base for each shop based on different customer segments__
 
 ```{r echo=TRUE, message=FALSE}
 ## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
