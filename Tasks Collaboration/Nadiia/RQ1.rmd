@@ -1,0 +1,141 @@
+---
+title: "RQ1"
+author: "Nadiia Honcharenko"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r echo=TRUE, message=FALSE}
+library(caret)
+library(randomForest)
+library(e1071)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+
+# Creating of useful functions
+create_conf_matrix <- function(refLabels, predictLabels, positiveLabel){
+  conf_matrix <- confusionMatrix(
+    refLabels, # reference labels
+    predictLabels, # predicted labels
+    positive = positiveLabel, # label that corresponds to a "positive" results (optional)
+    dnn = c("actual", "predicted") # names of the confusion matrix dimensions  (optional)
+  )
+  return (conf_matrix)
+}
+
+get_evaluation <- function(refLabels, predictLabels, positiveLabel){
+  conf_matrix <- create_conf_matrix(refLabels, predictLabels, positiveLabel)
+  conf_matrix
+  print(conf_matrix$overall["Accuracy"])
+  print(conf_matrix$byClass["Sensitivity"])
+  print(conf_matrix$byClass["Specificity"])
+  ## todo add another evaluations
+}
+
+# Data preparation
+cleared_supermarket_data <- read_csv("D:/Data-Science-with-R/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv")
+cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
+
+shop_ordered_slice <- select(cleared_supermarked_tbl, 3,23,4,24,5,25,6,26,7,27) %>% 
+  bind_cols(cleared_supermarked_tbl[,8:10], cleared_supermarked_tbl[,28])
+
+distance_separator <- mean(shop_ordered_slice[["avg_distance_to_all_shops"]])
+
+set.seed(101)
+row_count <- nrow(shop_ordered_slice)
+train_index <- sample(row_count, round(0.7 * row_count))
+
+rq1_dataset <- shop_ordered_slice %>%
+  select(11,12,13,14)%>%
+  mutate(label=factor(ifelse(max_dist_to_custSel_shops > distance_separator, "y", "n"))) %>%
+  rename(average_distance = avg_distance_to_all_shops, 
+         average_price = avg_purchased_product_price_allShops) %>%
+  select(average_distance, average_price, label) %>%
+  mutate(in_train = if_else(row_number() %in% train_index, TRUE, FALSE))
+
+
+# splitting data to test and training
+train_ds <- rq1_dataset %>% 
+  filter(in_train) %>% 
+  select(average_distance, average_price)
+y_train <- rq1_dataset %>% 
+  filter(in_train) %>%
+  pull(label)
+y_test <- rq1_dataset %>% 
+  filter(!in_train) %>% 
+  pull(label)
+
+test_ds <- rq1_dataset %>% 
+  filter(!in_train) %>% 
+  select(average_distance, average_price)
+
+create_random_forest_fit <- function(ntree){
+  fit <- randomForest(y_train ~ ., cbind(train_ds,y_train), ntree=ntree)
+  return(fit)
+}
+
+draw_plot_for_classes <- function(data, predicted, title){
+  plot_data <- data %>% mutate(label = as.factor(predicted))
+  ggplot(plot_data, aes(average_distance, average_price, color = label)) +
+    geom_point(alpha = .75) +
+    xlab("Distance") + ylab("Price") +
+    # geom_smooth(method=lm) +
+    coord_trans(x ="sqrt", y="log10") +
+    theme_bw()+
+    ggtitle(title)
+}
+
+classify_with_fit <- function(fit, title){
+  train_predicted <- predict(fit, train_ds, type = "class")
+  print("Evaluation for the training")
+  get_evaluation(y_train, train_predicted, "y")
+  predicted <- predict(fit, test_ds, type = "class")
+  print("Evaluation for the tests")
+  get_evaluation(y_test, predicted, "y")
+  draw_plot_for_classes(test_ds, predicted, title)
+}
+
+#plot(test_ds, col = c("red","blue")[as.numeric(yclass_test)], pch = 20, cex = 1.3)
+```
+
+## Classification
+
+### Classification with KNN
+
+```{r echo=TRUE, message=FALSE}
+# train knn classifier
+
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+knnTrain <- train(y_train ~ ., data = cbind(train_ds,y_train), method = "knn", 
+                trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
+plot(knnTrain)
+
+#classify with best params
+knnFit <- knn3(train_ds, y_train, k = 39)
+classify_with_fit(knnFit, "KNN classification")
+```
+
+### Classification with SVM
+First and foremost when it’s a two class classification problem and the no of features is less, svm works better than other algorithms
+```{r echo=TRUE, message=FALSE}
+#tune SVM
+tuneSvm <- tune(svm, y_train ~ ., data = cbind(train_ds,y_train), ranges = list(gamma = 2^(-1:1)),
+     cost = 2^(2:4), tunecontrol = tune.control(sampling = "fix"))
+summary(tuneSvm)
+plot(tuneSvm)
+#classify with best params
+svmFit <- svm(y_train ~ ., data = cbind(train_ds,y_train), kernel = "radial", 
+           cost = 1, gamma = 2,
+           scale=TRUE, cachesize=95)
+
+plot(svmFit, cbind(train_ds,y_train))
+classify_with_fit(svmFit, "SVM classification")
+```
