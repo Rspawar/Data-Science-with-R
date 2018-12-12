@@ -54,7 +54,7 @@ train_index <- sample(row_count, round(0.7 * row_count))
 
 rq1_dataset <- shop_ordered_slice %>%
   select(11,12,13,14)%>%
-  mutate(label=factor(ifelse(max_dist_to_custSel_shops > distance_separator, "y", "n"))) %>%
+  mutate(label=factor(ifelse((max_dist_to_custSel_shops > distance_separator), "y", "n"))) %>%
   rename(average_distance = avg_distance_to_all_shops, 
          average_price = avg_purchased_product_price_allShops) %>%
   select(average_distance, average_price, label) %>%
@@ -107,7 +107,27 @@ classify_with_fit <- function(fit, title){
 
 ## Classification
 
-### Classification with KNN
+__1) Classification with SVM __
+
+_Why SVM?:_ According to the several papers and studies, in the event that the relationship between two variables is non-linear and we are handling a two class classification problem,  nothing is going to be nearly as accurate as SVM.
+
+```{r echo=TRUE, message=FALSE}
+#tune SVM
+tuneSvm <- tune(svm, y_train ~ ., data = cbind(train_ds,y_train), ranges = list(gamma = 2^(-1:1)),
+     cost = 2^(2:4), tunecontrol = tune.control(sampling = "fix"))
+summary(tuneSvm)
+plot(tuneSvm)
+#classify with best params
+svmFit <- svm(y_train ~ ., data = cbind(train_ds,y_train), kernel = "radial", 
+           cost = 1, gamma = 2,
+           scale=TRUE, cachesize=95)
+
+plot(svmFit, cbind(train_ds,y_train))
+classify_with_fit(svmFit, "SVM classification")
+```
+
+__2) Classification with K-nearest neighbor __
+_Why k-NN?:_ Generally runs K-nearest neighbor algorithm slower and has lower accuracy in comparision with SVM, but it’s got some nice practical qualities. It’s easy to train, because k-NN is ranked as a lazy algorithmus and there’s no training. Consequently it's easy to use, and it’s easy to understand the results. However k-NN classification is used more in the industry than an academic might think.
 
 ```{r echo=TRUE, message=FALSE}
 # train knn classifier
@@ -123,19 +143,10 @@ knnFit <- knn3(train_ds, y_train, k = 39)
 classify_with_fit(knnFit, "KNN classification")
 ```
 
-### Classification with SVM
-First and foremost when it’s a two class classification problem and the no of features is less, svm works better than other algorithms
-```{r echo=TRUE, message=FALSE}
-#tune SVM
-tuneSvm <- tune(svm, y_train ~ ., data = cbind(train_ds,y_train), ranges = list(gamma = 2^(-1:1)),
-     cost = 2^(2:4), tunecontrol = tune.control(sampling = "fix"))
-summary(tuneSvm)
-plot(tuneSvm)
-#classify with best params
-svmFit <- svm(y_train ~ ., data = cbind(train_ds,y_train), kernel = "radial", 
-           cost = 1, gamma = 2,
-           scale=TRUE, cachesize=95)
+__2) Classification with Random Forest __
+_Why Random Forest?:_ In comparision with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. This algorithm is also very hard to beat in terms of performance. And on top of that, RF can handle a lot of different feature types, like binary, categorical and numerical.
 
-plot(svmFit, cbind(train_ds,y_train))
-classify_with_fit(svmFit, "SVM classification")
+```{r echo=TRUE, message=FALSE}
+randomFit <- randomForest(y_train ~ ., cbind(train_ds,y_train), ntree=500)
+classify_with_fit(randomFit, "Random Forest")
 ```
