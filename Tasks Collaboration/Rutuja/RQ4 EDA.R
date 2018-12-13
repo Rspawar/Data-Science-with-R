@@ -97,15 +97,15 @@ mydata <-data.frame(Shop, values)
 p <-ggplot(mydata, aes(Shop, values))
 p +geom_bar(stat = "identity", aes(fill = Legends), position = "dodge") +
   xlab("Shop") + ylab("Total") +
-  ggtitle("Relation between Revenue Generated, Products Sold, Unique Products Sold across Shops") +
-  theme_bw()
+  ggtitle("Relation between Revenue and Products Sold") +
+  theme_bw() + scale_y_continuous(labels = scales::comma)
 
 # Customer Base
 values <-c(Customers)
 mydata <-data.frame(Shop, values)
 
 p <-ggplot(mydata, aes(Shop, values))
-p +geom_bar(stat = "identity", fill = brewer.pal(n = 5, name = "Set1"), position = "dodge") +
+p +geom_bar(stat = "identity", fill = "gray" , position = "dodge", color = "black") +
   xlab("Shop") + ylab("Total") +
   ggtitle("Customer Base") + 
   theme_bw()

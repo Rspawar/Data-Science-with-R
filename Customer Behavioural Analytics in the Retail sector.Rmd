@@ -47,7 +47,7 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 
 #Related Work
 
-The paper [@pennacchioli2013explaining] studies and highlights the product range effect illustrating that the customers are focussed more on the needs satisfied by the product. If the satisfaction is higher, customers are ready to travel long distances to purchase them and even pay more. The study is based on the creation of a data mining framework and introduction of a new measurement called as "product sophistication" to study the range effect. The paper also studies the effect of the introduced measure on the accuracy of predicting the shop selected by the customer to buy a particular product. Hence this paper studies the customer behaviour in the retail sector majorly based on this range effect.<br />
+The paper [@pennacchioli2013explaining] studies and highlights the product range effect illustrating that the customers are focussed more on the needs satisfied by the product. The range effect highlights that if the satisfaction is higher, customers are ready to travel long distances to purchase them and thus pay more than the price of the product itself. The study is based on the creation of a data mining framework and introduction of a new measurement called as "product sophistication" to study the range effect. The paper also studies the effect of the introduced measure on the accuracy of predicting the shop selected by the customer to buy a particular product. Hence this paper studies the customer behaviour in the retail sector majorly based on this range effect.<br />
 However, on the contrary, our analysis is not carried out on the same datasets as used in the paper but our dataset contains data aggregated from customer and information from shops and pivoted to new columns. As we have new columns in our dataset, the perspective of our analysis becomes different. Based on our data and understanding its different features, we framed different Research Questions to be answered from the data. These research questions do not focus only on one aspect (as the range effect in the paper), but attempt to decode the customer behaviour in different ways. Unlike the methodology used in the paper, this project obtains customer behavioural insights through the application of machine learning algorithms on the data. Through this, the project thus studies the consumer nature to determine whether customers are ready to travel long distances in spite of the high average price in a shop and what are the factors that contribute to their long distance travel. Additionally, the likelihood of a customer to select a particular shop, different customer segments and discovering the top-100 profitable customers is also studied in the scope of the project.
 
 #Initial Questions
@@ -82,8 +82,8 @@ library(tidyverse)
 library(DataExplorer)
 
 # Read data from the input csv file
-file_path<- "Input Dataset/Supermarket aggr.Customer.csv"
-supermarket_data <- read_csv(file_path)
+filepath<- "Input Dataset/Supermarket aggr.Customer.csv"
+supermarket_data <- read_csv(filepath)
 
 # Converts data to tbl class. as tbl’s are easier to examine than data frames and View data set in spreadsheet-like display
 supermarket_tbl<-tbl_df(supermarket_data)
@@ -395,7 +395,7 @@ _Analysis:_ As visualized, the shops ordered based on the their highest approxim
 
 __3) Visualize the relationship between average prices and distances to the shop__
 
-```{r echo=TRUE, message=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(modelr)
 library(gridExtra)
 
@@ -445,7 +445,9 @@ add_geom_point <- function(colorNum){
 
 #draw scatter plot with plot base
 draw_cov_point_plot <- function(dataset, colorNum, caption){
-  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum)
+  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum) +       
+  scale_y_continuous(trans="log2")+ 
+  geom_smooth(stat = 'smooth', color = 'Black', method = 'gam', formula = y ~ s(x, bs = "cs")) 
   return(cov_geom_plot)
 } 
 
@@ -477,32 +479,14 @@ _Analysis:_ There are strong dependencies between long average distance and the 
 __4) Visualize data gap for average price in each shop__
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-draw_missing_values_plot  <- function(dataset, colorNum, caption){
-  dataset_with_na <- dataset %>% 
-    mutate(price = ifelse(price == 0, NA, price))%>% 
-    mutate(missed = is.na(price))
-  missing_values_plot <- get_base_for_plot(dataset_with_na, caption) + 
-    add_geom_point(colorNum)
-  return(missing_values_plot)
-}
-
-p1_2 <- draw_missing_values_plot(shop_1_data, 1, "Shop 1")
-p2_2 <- draw_missing_values_plot(shop_2_data, 2, "Shop 2")
-p3_2 <- draw_missing_values_plot(shop_3_data, 3, "Shop 3")
-p4_2 <- draw_missing_values_plot(shop_4_data, 4, "Shop 4")
-p5_2 <- draw_missing_values_plot(shop_5_data, 5, "Shop 5")
-
-pavg_2 <- draw_missing_values_plot(shop_avg_data, 6, "Avg price with avg dist")
-
-comb_missing_vals <- grid.arrange(p1_2, p2_2, p3_2, p4_2, p5_2, pavg_2,
-                               nrow=2, ncol=3, 
-                               top="Covariation between distances and average prices without considering the data gap")
-
-
-
+prices <- shop_ordered_slice[,seq(2, 10 ,2)]
+names(prices) <- c("Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5")
+dataset_with_na <- data.frame(sapply(prices, function(x) { 
+    na_if(x,0)
+            } ))
+pavg_2 <- plot_missing(dataset_with_na) + ggtitle("Gaps in shop prices")
 
 ```
-
 
 _Analysis:_ As visualized, there is a data gap for the value of average price in each shop. The value for average price in a shop for a customer is only filled in the dataset if the particular customer prefers the shop, else it is left as zero. This can be considered as a data gap but at the same time it is an information which is never utilized during analysis, meaning that the customer does not choose that particular shop in the first place. But this data gap does not affect on the tendency of the relationship between price and distance.
 
@@ -698,41 +682,201 @@ __1. Are customers willing to travel long distances to purchase products in spit
 
 _Algorithms selected:_
 
-_Comparision of the selected algorithms:_
+_Reason for Algorithm Selections:_
 
-_Analysis:_
+_Analysis_
+
+_Observations:_
+Thus, the research question is answered by
+
+_Business Utilization:_ These insights obtained can be further utilized by the business to 
 
 __2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
 
 _Algorithms selected:_
 
-_Comparision of the selected algorithms:_
+_Reason for Algorithm Selections:_
 
-_Analysis:_
+_Analysis_
+
+_Observations:_
+Thus, the research question is answered by
+
+_Business Utilization:_ These insights obtained can be further utilized by the business to 
 
 __3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
 
 _Algorithms selected:_
 
-_Comparision of the selected algorithms:_
+_Reason for Algorithm Selections:_
 
-_Analysis:_
+_Analysis_
+
+_Observations:_
+Thus, the research question is answered by
+
+_Business Utilization:_ These insights obtained can be further utilized by the business to 
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
 
-_Algorithms selected:_
+_Algorithms selected:_ K-means, Pricipal Component Analysis (PCA)
 
-_Comparision of the selected algorithms:_
+_Reason for Algorithm Selections:_ K-means clustering is a very simple and fast algorithm. It is the popular method used for customer segmentation and specially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Comparing with hierarchical and model based clustering methods, they were not able to function on the large input dataset being used due to their requirements to calculate a full distance matrix exhibiting limited scalability and big memory requirements. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
 
-_Analysis:_
+PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and  transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data). PCA is used here for this research question as a valuable cross-check to k-means cluster determination.
+
+_Analysis_
+
+_1) Estimating the optimal number of clusters_
+
+K-means requires to specify the number of clusters prior to the algorithm start. Determining the optimal number of clusters is crucial to output better results.
+
+```{r echo=TRUE, message=FALSE}
+library(cluster)
+library(factoextra)
+library("metricsgraphics")
+
+# Read file contents
+supermarket_data_clean <- read.csv("Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv")
+
+# Prepare data frames for clustering
+# Select only the rows customer_id, amount_purchased_shop_1, 2, 3, 4, 5
+cluster.slice.temp <- supermarket_data_clean[,c(1,29,30,31,32,33)]
+# Remover customer_id from the clustering data frame 
+cluster.slice.data <- supermarket_data_clean[,c(29,30,31,32,33)]
+
+# Scale the data and Determine the ideal number of clusters
+cluster.slice.scale <- scale(cluster.slice.data)
+
+wssplot <- function(data, nc=15, seed=1234){
+  wss <- (nrow(data)-1)*sum(apply(data,2,var))
+  for (i in 2:nc){
+    set.seed(seed)
+    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+  plot(1:nc, wss, type="b", xlab="Number of Clusters",
+       ylab="Within groups sum of squares")}
+
+wssplot(cluster.slice.scale)
+
+```
+
+The above plot depicts a sharp decrease from values 1 to 4 for number of clusters with a slight decrease from 4 to 5 which estimates a 4-cluster or 5-cluster solution.
+
+_2) Perform K-means clustering with number of clusters as 4 and 5_
+
+```{r echo=TRUE, message=FALSE}
+
+# Perform k-means on cluster values as 4 and 5
+
+set.seed(123) # fix the random starting clusters
+kclust4 <- kmeans(cluster.slice.data, 4, nstart = 25)
+
+set.seed(123) # fix the random starting clusters
+kclust5 <- kmeans(cluster.slice.data, 5, nstart = 25)
+
+```
+
+_3) Perform PCA to visualize the clusters_
+
+PCA with 5 cluster K-means
+
+```{r echo=TRUE, message=FALSE}
+
+cluster.pc5 <- prcomp(cluster.slice.data, center = FALSE, scale. = FALSE)$x %>% as.data.frame()
+cluster.pc5$kmeans.cluster <- kclust5$cluster
+
+mjs_plot(cluster.pc5, x=PC1, y=PC2) %>%
+  mjs_point(color_accessor=kmeans.cluster) %>%
+  mjs_labs(x="Principal Component 1", y="Principal Component 2")
+```
+
+PCA with 4 cluster K-means
+
+```{r echo=TRUE, message=FALSE}
+
+cluster.pc4 <- prcomp(cluster.slice.data, center = FALSE, scale. = FALSE)$x %>% as.data.frame()
+cluster.pc4$kmeans.cluster <- kclust4$cluster
+
+mjs_plot(cluster.pc4, x=PC1, y=PC2) %>%
+  mjs_point(color_accessor=kmeans.cluster) %>%
+  mjs_labs(x="Principal Component 1", y="Principal Component 2")
+```
+
+Comparing the above two plots determines that a 5 cluster solution will be an ideal estimate for K-means clustering.
+
+_4) Visualize the different separable clusters in the data_
+
+```{r echo=TRUE, message=FALSE}
+
+fviz_cluster(kclust5, data = cluster.slice.data, geom = "point",
+             stand = FALSE, ellipse.type = "norm") + 
+  ggtitle(label='Customer Clusters')
+
+```
+
+_5) Cluster Analysis_
+
+Determine the different customers belonging to each cluster
+
+```{r echo=TRUE, message=FALSE}
+
+## retrieve customer ID's in each cluster
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 1,])))
+
+```
+
+```{r echo=TRUE, message=FALSE, results="hide"}
+
+## retrieve customer ID's in each cluster
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 2,])))
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 3,])))
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 4,])))
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 5,])))
+```
+
+_6) Customer Segmentation_
+
+```{r echo=TRUE, message=FALSE}
+
+#Customer segmentation through aggeration of results by mean
+cluster.slice.kmeans.aggregate <- aggregate(cluster.slice.data, by = list(kclust5$cluster), mean)
+
+cluster<-c(cluster.slice.kmeans.aggregate$Group.1)
+shop1<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_1)
+shop2<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_2)
+shop3<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_3)
+shop4<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_4)
+shop5<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_5)
+
+# Plot a Bar graph
+Legends <-c(rep("Customers Shop 1", 5), rep("Customers Shop 2", 5), rep("Customers Shop 3", 5), rep("Customers Shop 4", 5), rep("Customers Shop 5", 5))
+values <-c(shop1,shop2,shop3,shop4,shop5)
+mydata <-data.frame(cluster, values)
+
+p <-ggplot(mydata, aes(cluster, values))
+p +geom_bar(stat = "identity", aes(fill = Legends)) +
+  xlab("Cluster") + ylab("Total") +
+  ggtitle("Customer Segmentation") +
+  theme_bw() + scale_y_continuous(labels = scales::comma)
+
+```
+
+_Observations:_ Clustering the data based on the customers purchase behaviour i.e. the shops they shop the most revelead 5 separable clusters to analyze. Cluster analysis, helped to identify the customers in each cluster based on their customer IDs. This is useful to understand the different customers that build the customer base in each cluster. Further, Customer Segmentation facilitated to identify the customers of different shops in each segment (cluster). This further helped to divide the cluster and attach meaning to it. Thus, the research question is answered by identifying five customer segments based on their purchase behaviour and further partitioning these segments by determining the specific customers belonging to the five different shops.     
+
+_Usefulness:_ Detection of clusters can help the business to develop a specific strategy for each cluster base. Clustering can also be used to understand the purchase behaviour of customers by keeping a track of customers over months and detecting the number of customers moving from one cluster to other. This helps the business to better organize strategies to increase revenue at different shops. Customer Segmentation insights obtained can be further utilized by the business to better focus their marketing efforts to the right customers. Eg. Discounts and offers related to a particular shop can be sent to only the customers who usually purchase at the particular shop without bothering the customers of other shops. Thus, targeting the right customers for the right deals can help to cut-down the marketing costs, generate more revenue and increase customer satisfaction.  
 
 __5. Which are the Top 100 customers that are most profitable in terms of revenue generation?__<br />
 
 _Algorithms selected:_
 
-_Comparision of the selected algorithms:_
+_Reason for Algorithm Selections:_
 
-_Analysis:_
+_Analysis_
+
+_Observations:_
+Thus, the research question is answered by
+
+_Business Utilization:_ These insights obtained can be further utilized by the business to 
 
 #Important Links
 
