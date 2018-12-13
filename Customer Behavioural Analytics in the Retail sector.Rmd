@@ -689,7 +689,7 @@ __Analysis__
 __Observations:__
 Thus, the research question is answered by
 
-__Business Utilization:__ These insights obtained can be further utilized by the business to 
+__Applications:__ These insights obtained can be further utilized by the business to 
 
 __2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
 
@@ -702,7 +702,7 @@ __Analysis__
 __Observations:__
 Thus, the research question is answered by
 
-__Business Utilization:__ These insights obtained can be further utilized by the business to
+__Applications:__ These insights obtained can be further utilized by the business to
 
 __3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
 
@@ -715,7 +715,7 @@ __Analysis__
 __Observations:__
 Thus, the research question is answered by
 
-__Business Utilization:__ These insights obtained can be further utilized by the business to 
+__Applications:__ These insights obtained can be further utilized by the business to 
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
 
@@ -863,7 +863,7 @@ p +geom_bar(stat = "identity", aes(fill = Legends)) +
 
 __Observations:__ Clustering the data based on the purchase behaviour of customers i.e. from the shops they shop the most, revealed 5 separable clusters to analyze. Cluster analysis, helped to identify the customers in each cluster based on their customer IDs. This is useful to understand the different customers that build the customer base in each cluster. Further, Customer Segmentation facilitated to identify the customers of different shops in each segment (cluster). This further helped to divide the cluster and attach meaning to it. Thus, the research question is answered by identifying five customer segments based on their purchase behaviour and further partitioning these segments by determining the specific customers belonging to the five different shops.     
 
-__Usefulness:__ Detection of clusters can help the business to develop a specific strategy for each cluster base. Clustering can also be used to understand the purchase behaviour of customers by keeping a track of customers over months and detecting the number of customers moving from one cluster to other. This helps the business to better organize strategies to increase revenue at different shops. Customer Segmentation insights obtained can be further utilized by the business to better focus their marketing efforts on the right customers. Eg. Discounts and offers related to a particular shop can be sent to only the customers who usually purchase at the particular shop without bothering the customers of other shops. Thus, targeting the right customers for the right deals can help to cut-down the marketing costs, generate more revenue and increase customer satisfaction.  
+__Applications:__ Detection of clusters can help the business to develop a specific strategy for each cluster base. Clustering can also be used to understand the purchase behaviour of customers by keeping a track of customers over months and detecting the number of customers moving from one cluster to other. This helps the business to better organize strategies to increase revenue at different shops. Customer Segmentation insights obtained can be further utilized by the business to better focus their marketing efforts on the right customers. Eg. Discounts and offers related to a particular shop can be sent to only the customers who usually purchase at the particular shop without bothering the customers of other shops. Thus, targeting the right customers for the right deals can help to cut-down the marketing costs, generate more revenue and increase customer satisfaction.  
 
 __5. Which are the Top 100 customers that are most profitable in terms of revenue generation?__<br />
 
@@ -876,7 +876,7 @@ __Analysis__
 __Observations:__
 Thus, the research question is answered by
 
-__Business Utilization:__ These insights obtained can be further utilized by the business to
+__Applications:__ These insights obtained can be further utilized by the business to
 
 #Important Links
 
