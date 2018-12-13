@@ -787,7 +787,7 @@ cluster.pc5$kmeans.cluster <- kclust5$cluster
 
 mjs_plot(cluster.pc5, x=PC1, y=PC2) %>%
   mjs_point(color_accessor=kmeans.cluster) %>%
-  mjs_labs(x="Principal Component 1", y="Principal Component 2")
+  mjs_labs(x="Principal Comp 1", y="Principal Comp 2")
 ```
 
 PCA with 4 cluster K-means
@@ -799,7 +799,7 @@ cluster.pc4$kmeans.cluster <- kclust4$cluster
 
 mjs_plot(cluster.pc4, x=PC1, y=PC2) %>%
   mjs_point(color_accessor=kmeans.cluster) %>%
-  mjs_labs(x="Principal Component 1", y="Principal Component 2")
+  mjs_labs(x="Principal Comp 1", y="Principal Comp 2")
 ```
 
 Comparing the above two plots determines that a 5 cluster solution will be an ideal estimate for K-means clustering.

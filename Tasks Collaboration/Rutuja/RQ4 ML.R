@@ -14,7 +14,7 @@ supermarket_data_clean <- read.csv("Input Dataset/Cleaned Dataset/Supermarket_Da
 # Prepare data frames for clustering
 cluster.slice.temp <- supermarket_data_clean[,c(1,29,30,31,32,33)]
 cluster.slice.data <- supermarket_data_clean[,c(29,30,31,32,33)]
-cluster.slice <- supermarket_data_clean_matrix[,c(1,29,30,31,32,33)]
+#cluster.slice <- supermarket_data_clean_matrix[,c(1,29,30,31,32,33)]
 #rownames(cluster.slice) <- supermarket_data_clean[,1]
 #cluster.slice <- cluster.slice[,-1]
 
@@ -48,9 +48,9 @@ cluster.pc <- prcomp(cluster.slice.data, center = FALSE, scale. = FALSE)$x %>% a
 
 cluster.pc$kmeans.cluster <- final$cluster
 
-p1<-mjs_plot(cluster.pc, x=PC1, y=PC2) %>%
+mjs_plot(cluster.pc, x=PC1, y=PC2) %>%
   mjs_point(color_accessor=kmeans.cluster) %>%
-  mjs_labs(x="principal comp 1", y="principal comp 2")
+  mjs_labs(x="principal component 1", y="principal component 2")
 
 fviz_cluster(final, data = cluster.slice.data, geom = "point",
              stand = FALSE, ellipse.type = "norm") + 
