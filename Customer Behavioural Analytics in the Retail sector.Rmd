@@ -680,54 +680,54 @@ _Relevance:_ This will help to understand the customers with potential high Cust
 
 __1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
 
-_Algorithms selected:_
+__Algorithms selected:__
 
-_Reason for Algorithm Selections:_
+__Reason for Algorithm Selections:__
 
-_Analysis_
+__Analysis__
 
-_Observations:_
+__Observations:__
 Thus, the research question is answered by
 
-_Business Utilization:_ These insights obtained can be further utilized by the business to 
+__Business Utilization:__ These insights obtained can be further utilized by the business to 
 
 __2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
 
-_Algorithms selected:_
+__Algorithms selected:__
 
-_Reason for Algorithm Selections:_
+__Reason for Algorithm Selections:__
 
-_Analysis_
+__Analysis__
 
-_Observations:_
+__Observations:__
 Thus, the research question is answered by
 
-_Business Utilization:_ These insights obtained can be further utilized by the business to 
+__Business Utilization:__ These insights obtained can be further utilized by the business to
 
 __3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
 
-_Algorithms selected:_
+__Algorithms selected:__
 
-_Reason for Algorithm Selections:_
+__Reason for Algorithm Selections:__
 
-_Analysis_
+__Analysis__
 
-_Observations:_
+__Observations:__
 Thus, the research question is answered by
 
-_Business Utilization:_ These insights obtained can be further utilized by the business to 
+__Business Utilization:__ These insights obtained can be further utilized by the business to 
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
 
-_Algorithms selected:_ K-means, Pricipal Component Analysis (PCA)
+__Algorithms selected:__ K-means, Pricipal Component Analysis (PCA)
 
-_Reason for Algorithm Selections:_ K-means clustering is a very simple and fast algorithm. It is the popular method used for customer segmentation and specially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Comparing with hierarchical and model based clustering methods, they were not able to function on the large input dataset being used due to their requirements to calculate a full distance matrix exhibiting limited scalability and big memory requirements. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
+__Reason for Algorithm Selections:__ K-means clustering is a very simple and fast algorithm. It is the popular method used for customer segmentation and specially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Comparing with hierarchical and model based clustering methods, they were not able to function on the large input dataset being used due to their requirements to calculate a full distance matrix exhibiting limited scalability and big memory requirements. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
 
 PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and  transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data). PCA is used here for this research question as a valuable cross-check to k-means cluster determination.
 
-_Analysis_
+__Analysis__
 
-_1) Estimating the optimal number of clusters_
+__1) Estimating the optimal number of clusters__
 
 K-means requires to specify the number of clusters prior to the algorithm start. Determining the optimal number of clusters is crucial to output better results.
 
@@ -762,7 +762,7 @@ wssplot(cluster.slice.scale)
 
 The above plot depicts a sharp decrease from values 1 to 4 for number of clusters with a slight decrease from 4 to 5 which estimates a 4-cluster or 5-cluster solution.
 
-_2) Perform K-means clustering with number of clusters as 4 and 5_
+__2) Perform K-means clustering with number of clusters as 4 and 5__
 
 ```{r echo=TRUE, message=FALSE}
 
@@ -776,7 +776,7 @@ kclust5 <- kmeans(cluster.slice.data, 5, nstart = 25)
 
 ```
 
-_3) Perform PCA to visualize the clusters_
+__3) Perform PCA to visualize the clusters__
 
 PCA with 5 cluster K-means
 
@@ -804,7 +804,7 @@ mjs_plot(cluster.pc4, x=PC1, y=PC2) %>%
 
 Comparing the above two plots determines that a 5 cluster solution will be an ideal estimate for K-means clustering.
 
-_4) Visualize the different separable clusters in the data_
+__4) Visualize the different separable clusters in the data__
 
 ```{r echo=TRUE, message=FALSE}
 
@@ -814,7 +814,7 @@ fviz_cluster(kclust5, data = cluster.slice.data, geom = "point",
 
 ```
 
-_5) Cluster Analysis_
+__5) Cluster Analysis__
 
 Determine the different customers belonging to each cluster
 
@@ -834,7 +834,7 @@ head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 4,])))
 head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 5,])))
 ```
 
-_6) Customer Segmentation_
+__6) Customer Segmentation__
 
 ```{r echo=TRUE, message=FALSE}
 
@@ -861,22 +861,22 @@ p +geom_bar(stat = "identity", aes(fill = Legends)) +
 
 ```
 
-_Observations:_ Clustering the data based on the customers purchase behaviour i.e. the shops they shop the most revelead 5 separable clusters to analyze. Cluster analysis, helped to identify the customers in each cluster based on their customer IDs. This is useful to understand the different customers that build the customer base in each cluster. Further, Customer Segmentation facilitated to identify the customers of different shops in each segment (cluster). This further helped to divide the cluster and attach meaning to it. Thus, the research question is answered by identifying five customer segments based on their purchase behaviour and further partitioning these segments by determining the specific customers belonging to the five different shops.     
+__Observations:__ Clustering the data based on the purchase behaviour of customers i.e. from the shops they shop the most, revealed 5 separable clusters to analyze. Cluster analysis, helped to identify the customers in each cluster based on their customer IDs. This is useful to understand the different customers that build the customer base in each cluster. Further, Customer Segmentation facilitated to identify the customers of different shops in each segment (cluster). This further helped to divide the cluster and attach meaning to it. Thus, the research question is answered by identifying five customer segments based on their purchase behaviour and further partitioning these segments by determining the specific customers belonging to the five different shops.     
 
-_Usefulness:_ Detection of clusters can help the business to develop a specific strategy for each cluster base. Clustering can also be used to understand the purchase behaviour of customers by keeping a track of customers over months and detecting the number of customers moving from one cluster to other. This helps the business to better organize strategies to increase revenue at different shops. Customer Segmentation insights obtained can be further utilized by the business to better focus their marketing efforts to the right customers. Eg. Discounts and offers related to a particular shop can be sent to only the customers who usually purchase at the particular shop without bothering the customers of other shops. Thus, targeting the right customers for the right deals can help to cut-down the marketing costs, generate more revenue and increase customer satisfaction.  
+__Usefulness:__ Detection of clusters can help the business to develop a specific strategy for each cluster base. Clustering can also be used to understand the purchase behaviour of customers by keeping a track of customers over months and detecting the number of customers moving from one cluster to other. This helps the business to better organize strategies to increase revenue at different shops. Customer Segmentation insights obtained can be further utilized by the business to better focus their marketing efforts on the right customers. Eg. Discounts and offers related to a particular shop can be sent to only the customers who usually purchase at the particular shop without bothering the customers of other shops. Thus, targeting the right customers for the right deals can help to cut-down the marketing costs, generate more revenue and increase customer satisfaction.  
 
 __5. Which are the Top 100 customers that are most profitable in terms of revenue generation?__<br />
 
-_Algorithms selected:_
+__Algorithms selected:__
 
-_Reason for Algorithm Selections:_
+__Reason for Algorithm Selections:__
 
-_Analysis_
+__Analysis__
 
-_Observations:_
+__Observations:__
 Thus, the research question is answered by
 
-_Business Utilization:_ These insights obtained can be further utilized by the business to 
+__Business Utilization:__ These insights obtained can be further utilized by the business to
 
 #Important Links
 
