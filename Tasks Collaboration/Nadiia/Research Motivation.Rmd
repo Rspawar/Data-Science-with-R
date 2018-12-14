@@ -1,0 +1,46 @@
+---
+title: "Research Motivation"
+author: "Nadiia Honcharenko"
+date: '25.11.2018 '
+output: html_document
+---
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data Transformation section
+
+In the part of data transformation task is used already cleaned datset, which was created from the initial data. 
+Cause using data contains only numbers, for a better understanding of them were made several views with the help of the basic functions from the libraries dplyr and tidyverse. This slices will be used after for answering on the research questions.
+Also at this stage of working on the project, it was important to gain an understanding of the R language and therefore different functionalities were used to create the tables.
+
+## Views 
+
+# EDA modelling and visualisation
+
+**Purpose**
+*Get a better understanding of the data to the answering on the research questions.*
+
+## Research question 1
+
+
+### Columns
+* distance_shop_1
+* distance_shop_2
+* distance_shop_3
+* distance_shop_4
+* distance_shop_5 
+* min_dist_to_custSel_shops
+* max_dist_to_custSel_shops
+* avg_distance_to_all_shops
+* avg_product_price_shop_1
+* avg_product_price_shop_2
+* avg_product_price_shop_3
+* avg_product_price_shop_4
+* avg_product_price_shop_5
+* avg_purchased_product_price_allShops

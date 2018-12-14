@@ -2,7 +2,15 @@
 Project title: "Customer Behavioural Analytics in the Retail sector"
 output:
   rmarkdown::html_document:
-    theme: lumen
+      toc: true
+      toc_depth: 3  
+      number_sections: false 
+      theme: lumen  
+      df_print: paged
+      toc_float: 
+        collapsed: true
+        smooth_scroll: true 
+    
 bibliography: bibliography.bib 
 ---
 
@@ -11,39 +19,38 @@ body {
 text-align: justify}
 </style>
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-``` 
-
-<h1> Customer Behavioural Analytics in the Retail Sector </h1></br>
-
+#Customer Behavioural Analytics in the Retail Sector
+</br>
 <font color ="black"><h4><b>Team CuBA</b></h4>
-1. Nadiia Honcharenko (220681, nadiia.honcharenko@st.ovgu.de) <br />
-2. Rutuja Shivraj Pawar (220051, rutuja.pawar@ovgu.de) <br />
-3. Shivani Jadhav (223856, shivani.jadhav@st.ovgu.de) <br />
-4. Sumit Kundu (217453, sumit.kundu@st.ovgu.de) 
+Nadiia Honcharenko (220681, nadiia.honcharenko@st.ovgu.de) <br />
+Rutuja Shivraj Pawar (220051, rutuja.pawar@ovgu.de) <br />
+Shivani Jadhav (223856, shivani.jadhav@st.ovgu.de) <br />
+Sumit Kundu (217453, sumit.kundu@st.ovgu.de) 
 
-<h4><b>Under the Guidance of</b></h4> M.Sc. Uli Niemann
+<h4><b>Under the Guidance of</b></h4> 
+M.Sc. Uli Niemann
 
-<h4><b>1. Overview and Motivation</b></h4>
+#Overview and Motivation
 
 <font color ="black"> A customer is a key-centric factor for any business to be successful. Conventional wisdom tells us that the cost of retaining an existing customer is far less than acquiring a new one. In order that a business has a sustainable growth, the retention of its old customer base and expansion of the new customer base is very critical. This demands from a business to understand the behaviour of its customers in relation to the business. Therefore obtaining a 360&deg; view of its customers is crucial for a business looking for a competitive edge in the market. In such a scenario, Customer Behavioural Analytics plays an important role in leveraging data analytics to find meaningful behavioural patterns in the customer-specific business data. <br/>
-Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement stratergies leading to an increased revenue through customer satisfaction. 
+Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement strategies leading to an increased revenue through customer satisfaction. 
 
-<h4><b>2. Project Objective</b></h4>
+#Project Objective
 
 This project aims to address the problem of understanding behaviour of customers of an Italian retail distribution company _Coop_ in a single Italian city. The project intends to discover different analytical insights about the purchase behaviour of the customers through answering different formulated Research Questions (RQ)
 
-<h4><b>3. Data Source</h4></b>
+#Data Source
 
 Supermarket aggr.Customer^[https://bigml.com/user/czuriaga/gallery/dataset/5559c2c6200d5a6570000084] <br />
-The dataset to be used is the retail market data of one of the largest Italian retail distribution company called _Coop_ for a single Italian city [@pennacchioli2013explaining].<br />
-The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from the original datasets^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and mapped to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. 
+The dataset to be used is the retail market data of one of the largest Italian retail distribution company called _Coop_ for a single Italian city.<br />
+The Supermarket aggr.Customer dataset used for the analysis contains data aggregated from customer and information from shops^[http://www.michelecoscia.com/?page_id=379] [@pennacchioli2013explaining] and pivoted to new columns. The dataset thus contains 40 features with 60,366 instances and is approximately 14.0 MB in size. 
 
-<h4><b>4. Related Work</h4></b>
+#Related Work
 
+The paper [@pennacchioli2013explaining] studies and highlights the product range effect illustrating that the customers are focussed more on the needs satisfied by the product. The range effect highlights that if the satisfaction is higher, customers are ready to travel long distances to purchase them and thus pay more than the price of the product itself. The study is based on the creation of a data mining framework and introduction of a new measurement called as "product sophistication" to study the range effect. The paper also studies the effect of the introduced measure on the accuracy of predicting the shop selected by the customer to buy a particular product. Hence this paper studies the customer behaviour in the retail sector majorly based on this range effect.<br />
+However, on the contrary, our analysis is not carried out on the same datasets as used in the paper but our dataset contains data aggregated from customer and information from shops and pivoted to new columns. As we have new columns in our dataset, the perspective of our analysis becomes different. Based on our data and understanding its different features, we framed different Research Questions to be answered from the data. These research questions do not focus only on one aspect (as the range effect in the paper), but attempt to decode the customer behaviour in different ways. Unlike the methodology used in the paper, this project obtains customer behavioural insights through the application of machine learning algorithms on the data. Through this, the project thus studies the consumer nature to determine whether customers are ready to travel long distances in spite of the high average price in a shop and what are the factors that contribute to their long distance travel. Additionally, the likelihood of a customer to select a particular shop, different customer segments and discovering the top-100 profitable customers is also studied in the scope of the project.
 
-<h4><b>5. Initial Questions</h4></b>
+#Initial Questions
 
 Below are the RQs which were formulated at the initial stages of the project based on a primary understanding of the data but without a detailed Exploratory Data Analysis, 
 
@@ -62,11 +69,11 @@ _Relevance:_ This will help to understand the most popular shops in the retail c
 __5. Which are the customers that are most profitable in terms of revenue generation?__<br />
 _Relevance:_ This will help to understand the customers with potential high Customer Lifetime Value and target appropriate loyalty programs to generate satisfied loyal customers as advocates for the business.
 
-<h4><b>6. Data Wrangling</h4></b>
+#Data Wrangling
 
 Data Wrangling consists of different steps transforming data from raw form into a clean form which is appropriate and accurate for data analysis. Below are the different steps which were carried out as a part of Data Wrangling,  
 
-__1) Examination of the input dataset structure__
+###Examination of Input Dataset 
 
 __Visualize the input dataset__ 
 
@@ -75,62 +82,36 @@ library(tidyverse)
 library(DataExplorer)
 
 # Read data from the input csv file
-file_path<- "Input Dataset/Supermarket aggr.Customer.csv"
-supermarket_data <- read_csv(file_path)
+filepath<- "Input Dataset/Supermarket aggr.Customer.csv"
+supermarket_data <- read_csv(filepath)
 
 # Converts data to tbl class. as tbl’s are easier to examine than data frames and View data set in spreadsheet-like display
 supermarket_tbl<-tbl_df(supermarket_data)
+```
 
+```{r echo=TRUE}
 # Check the dimension of the input dataset and the variables through a plot
 plot_str(supermarket_tbl)
-
 ``` 
 
 __Generate the input dataset statistics__
 
 ```{r echo=TRUE, message=FALSE}
 # Data Statistics
-introduce(supermarket_tbl)
-
-```
-
-__Generate the input dataset header information__
-
-```{r echo=TRUE, message=FALSE}
-# Header Info with data types
-sapply(supermarket_tbl, class)
-
+gather(introduce(supermarket_tbl))
 ```
 
 __Generate the input dataset summary__
 
 ```{r echo=TRUE, message=FALSE}
-# Data Summary
-summary(supermarket_tbl)
-
+# Data Summary, p0 = min value, p100 = max value
+library(skimr)
+skim_with(integer = list(hist = NULL, p25 = NULL, p50 = NULL, p75 = NULL))
+skim_with(numeric = list(hist = NULL, p25 = NULL, p50 = NULL, p75 = NULL))
+skim(supermarket_tbl) %>%  skimr::kable()
 ```
 
-__Visualize the data types in the input dataset__ 
-
-```{r echo=TRUE, message=FALSE}
-# Plot the count of feature based on different data types (Majority of them are Numeric)
-data_types <- function(frame) {
-  res <- lapply(frame, class)
-  res_frame <- data.frame(unlist(res))
-  barplot(table(res_frame), main="Data Types", col="steelblue", ylab="Number of Features")
-}
-data_types(supermarket_tbl)
-```
-
-__2) Input dataset cleaning and processing__
-
-__Visualize the missing values in the input dataset__
-
-```{r echo=TRUE, message=FALSE}
-# Plot missing values in the dataset
-plot_missing(supermarket_tbl)
-
-```
+###Dataset Cleaning and Processing
 
 __Eliminate the mising values in the input dataset__
 
@@ -239,11 +220,11 @@ clean_filepath = "~/R GitHub/Data-Science-with-R/Input Dataset/Cleaned Dataset/S
 write.csv(supermarket_tbl_Clean1, file = clean_filepath, row.names = FALSE)
 ```
 
-__3) Exploration of the cleaned dataset__
+###Exploration of Cleaned Dataset
 
 __Visualize the cleaned dataset__
  
-```{r echo=TRUE, message=FALSE}
+```{r echo=TRUE}
 # Check the dimension of the cleaned dataset and the variables
 plot_str(supermarket_tbl_Clean1)
 ```
@@ -252,21 +233,7 @@ __Generate the cleaned dataset statistics__
 
 ```{r echo=TRUE, message=FALSE}
 # Cleaned data Statistics 
-introduce(supermarket_tbl_Clean1)
-```
-
-__Visualize the cleaned dataset statistics__
-
-```{r echo=TRUE, message=FALSE}
-# Cleaned data Statistics plot
-plot_intro(supermarket_tbl_Clean1)
-```
-
-__Visualize the missing values in the cleaned dataset__
-
-```{r echo=TRUE, message=FALSE}
-## Plot missing values in the cleaned dataset after NA removal (Should have no missing values 0%)
-plot_missing(supermarket_tbl_Clean1)
+gather(introduce(supermarket_tbl_Clean1))
 ```
 
 __Analyze the Continuous Variables in the cleaned dataset as a Histogram__
@@ -276,19 +243,28 @@ __Analyze the Continuous Variables in the cleaned dataset as a Histogram__
 plot_histogram(supermarket_tbl_Clean1)
 ```
 
+_Interpretation:_ The histograms plotted depict the distribution of each continuous variable in the dataset. These plots can be used to understand the data spread, whether the data is symmetric or skewed and graphically summarize the univariate dataset distribution.
+
 __Examine the corelated features in the cleaned dataset through Correlation Analysis__
 
 ```{r echo=TRUE, message=FALSE}
 # Correlation analysis (Multivariate Analysis, On Continuous features only) to examine corelated features in the cleaned dataset
-plot_correlation(supermarket_tbl_Clean1, type = "c")
+library(ggcorrplot)
+corr <- round(cor(supermarket_tbl_Clean1), 1)
+
+ggcorrplot(corr, outline.col = "white") +geom_tile(height=1.8, width=1.8) +
+  scale_fill_gradient2(low="blue", mid="white", high="red") +
+  theme_minimal() +
+  coord_equal() +
+  labs(x="",y="",fill="Correlation coefficient") +
+  theme(axis.text.x=element_text(size=7, angle=90, vjust=1, hjust=1, 
+                                 margin=margin(-3,0,0,0)),
+        axis.text.y=element_text(size=7, margin=margin(0,-3,0,0)),
+        panel.grid.major=element_blank()) 
+
 ```
 
-__Examine the variance-covariance structure and identify strong patterns in the cleaned dataset through Principal Component Analysis__
-
-```{r echo=TRUE, message=FALSE}
-# Principal Component Analysis to understand the variance-covariance structure and identify strong patterns in the cleaned dataset
-plot_prcomp(supermarket_tbl_Clean1, variance_cap = 1)
-```
+_Interpretation:_ The Correlation plot depicts the association between the variables in the dataset and the degree of association between them is displayed by the variation in the correlation coefficient color. The plot helps to understand the relationship between the different variables in the dataset.
 
 __Visualize the deviation from a specific probability distribution in the cleaned dataset through Quantile-Quantile plot__
 
@@ -297,16 +273,18 @@ __Visualize the deviation from a specific probability distribution in the cleane
 plot_qq(supermarket_tbl_Clean1)
 ```
 
-<h4><b>7. Exploratory Data Analysis</h4></b>
+_Interpretation:_ The Quantile-Quantile plot compares two probability distributions through plotting their quantiles against each other. This plot depicts if both set of quantiles are from the same distribution (points form a roughly straight line), helping to further understand the data distribution.
+
+#Exploratory Data Analysis
 
 Exploratory Data Analysis (EDA) is the process of visualizing the main characteristics in the data before the formal modeling on the data to discover data patterns and verify the initial primary assumptions made on the data. Below are the visualizations of the EDA carried out,  
 
 __1) Visualize the highest revenue generating shops, shops selling the highest number of products, shops selling the highest number of unique products and the relation between them__
 
 ```{r echo=TRUE, message=FALSE}
-library(tidyverse)
 library(ggplot2)
-library("RColorBrewer")
+library(RColorBrewer)
+library(scales)
 
 file_path<- "Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
 supermarket_data_clean <- read_csv(file_path)
@@ -314,6 +292,7 @@ supermarket_data_clean <- read_csv(file_path)
 Shop<- c(1,2,3,4,5)
 
 # Revenue generation by Shops 1-5
+# columns selected: amount_purchased_shop_1, 2, 3, 4, 5
 slice1<-select(supermarket_data_clean, 29,30,31,32,33)
 
 amountS1<-sum(slice1$amount_purchased_shop_1)
@@ -328,6 +307,7 @@ Revenue<- data.frame(Shop, Revenue_Generated)
 rownames(Revenue) <- NULL
 
 # Products Sold by Shops 1-5
+# columns selected: products_purchased_shop_1, 2, 3, 4, 5
 slice2<-select(supermarket_data_clean, 11,12,13,14,15)
 
 productsS1<-sum(slice2$products_purchased_shop_1)
@@ -342,6 +322,7 @@ ProductsSold<- data.frame(Shop, Products_Purchased)
 rownames(ProductsSold) <- NULL
 
 # Unique products Sold by Shops 1-5
+# columns selected: unique_products_purchased_shop_1,2,3,4,5
 slice3<-select(supermarket_data_clean, 17,18,19,20,21)
 
 uproductsS1<-sum(slice3$unique_products_purchased_shop_1)
@@ -363,8 +344,8 @@ mydata <-data.frame(Shop, values)
 p <-ggplot(mydata, aes(Shop, values))
 p +geom_bar(stat = "identity", aes(fill = Legends), position = "dodge") +
   xlab("Shop") + ylab("Total") +
-  ggtitle("Relation between Revenue Generated, Products Sold and Unique Products Sold") +
-  theme_bw()
+  ggtitle("Relation between Revenue and Products Sold") +
+  theme_bw() + scale_y_continuous(labels = scales::comma)
 
 ```
 
@@ -403,7 +384,7 @@ values <-c(Customers)
 mydata <-data.frame(Shop, values)
 
 p <-ggplot(mydata, aes(Shop, values))
-p +geom_bar(stat = "identity", fill = brewer.pal(n = 5, name = "Set1"), position = "dodge") +
+p +geom_bar(stat = "identity", fill = "gray" , position = "dodge", color = "black") +
   xlab("Shop") + ylab("Total") +
   ggtitle("Customer Base") + 
   theme_bw()
@@ -414,7 +395,7 @@ _Analysis:_ As visualized, the shops ordered based on the their highest approxim
 
 __3) Visualize the relationship between average prices and distances to the shop__
 
-```{r echo=TRUE, message=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(modelr)
 library(gridExtra)
 
@@ -464,7 +445,9 @@ add_geom_point <- function(colorNum){
 
 #draw scatter plot with plot base
 draw_cov_point_plot <- function(dataset, colorNum, caption){
-  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum)
+  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum) +       
+  scale_y_continuous(trans="log2")+ 
+  geom_smooth(stat = 'smooth', color = 'Black', method = 'gam', formula = y ~ s(x, bs = "cs")) 
   return(cov_geom_plot)
 } 
 
@@ -487,41 +470,23 @@ comb_cov_aggrs <- grid.arrange(pmin_1, pmax_1,
                                top= "Covariation between min/max distances and average prices")
 comb_cov_avg <- grid.arrange(pall_1, pavg_1,
                                nrow=2,
-                               top= "Covariation between distances and average prices (aggregetions)")
+                               top= "Covariation between distances and average prices (aggregated)")
 
 ```
 
-_Analysis:_ As visualized, there are strong dependencies between long average distance and the average price in a shop. Also it can be viewed, that the average price is close enough to zero, therefore it makes a sense to check for zero values for price in the current dataset and its influence.
+_Analysis:_ There are strong dependencies between long average distance and the average price in a shop. Also the average price is close enough to zero, therefore it makes a sense to check for zero values for price in the current dataset and its influence.
 
 __4) Visualize data gap for average price in each shop__
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-draw_missing_values_plot  <- function(dataset, colorNum, caption){
-  dataset_with_na <- dataset %>% 
-    mutate(price = ifelse(price == 0, NA, price))%>% 
-    mutate(missed = is.na(price))
-  missing_values_plot <- get_base_for_plot(dataset_with_na, caption) + 
-    add_geom_point(colorNum)
-  return(missing_values_plot)
-}
-
-p1_2 <- draw_missing_values_plot(shop_1_data, 1, "Shop 1")
-p2_2 <- draw_missing_values_plot(shop_2_data, 2, "Shop 2")
-p3_2 <- draw_missing_values_plot(shop_3_data, 3, "Shop 3")
-p4_2 <- draw_missing_values_plot(shop_4_data, 4, "Shop 4")
-p5_2 <- draw_missing_values_plot(shop_5_data, 5, "Shop 5")
-
-pavg_2 <- draw_missing_values_plot(shop_avg_data, 6, "Avg price with avg dist")
-
-comb_missing_vals <- grid.arrange(p1_2, p2_2, p3_2, p4_2, p5_2, pavg_2,
-                               nrow=2, ncol=3, 
-                               top="Covariation between distances and average prices without considering the data gap")
-
-
-
+prices <- shop_ordered_slice[,seq(2, 10 ,2)]
+names(prices) <- c("Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5")
+dataset_with_na <- data.frame(sapply(prices, function(x) { 
+    na_if(x,0)
+            } ))
+pavg_2 <- plot_missing(dataset_with_na) + ggtitle("Gaps in shop prices")
 
 ```
-
 
 _Analysis:_ As visualized, there is a data gap for the value of average price in each shop. The value for average price in a shop for a customer is only filled in the dataset if the particular customer prefers the shop, else it is left as zero. This can be considered as a data gap but at the same time it is an information which is never utilized during analysis, meaning that the customer does not choose that particular shop in the first place. But this data gap does not affect on the tendency of the relationship between price and distance.
 
@@ -545,9 +510,9 @@ comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
 ```
 
 
-_Analysis:_ As visualized, according to the data the average price is identically distributed for each shop. 
+_Analysis:_ As visualized, according to the data the average price is varyingly distributed in each shop. 
 
-__6) Visualize patterns for the average cost__
+__6) Visualize patterns for the average price__
 
 ```{r echo=TRUE, message=FALSE}
 joined_shops_without_null <- filter(joined_shops_data, price != 0)
@@ -570,7 +535,129 @@ pall_4
 
 _Analysis:_ As visualized, the residuals gave us a view of the average price after removing the distance effect. Once the strong relationship between distance and price has been removed, relationship to other external factors become noticable.
 
-<h4><b>8. Final Research Questions</h4></b>
+__7) Visualize the customer base for each shop based on different customer segments__
+
+```{r echo=TRUE, message=FALSE}
+## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
+prod_purch_ratio_shop_1 <- with(supermarket_data_clean, products_purchased_shop_1/products_purchased_total)
+prod_purch_ratio_shop_2 <- with(supermarket_data_clean, products_purchased_shop_2/products_purchased_total)
+prod_purch_ratio_shop_3 <- with(supermarket_data_clean, products_purchased_shop_3/products_purchased_total)
+prod_purch_ratio_shop_4 <- with(supermarket_data_clean, products_purchased_shop_4/products_purchased_total)
+prod_purch_ratio_shop_5 <- with(supermarket_data_clean, products_purchased_shop_5/products_purchased_total)
+
+## Ratio of amount spent at each shop (amount spent by a customer at a shop over total amount spent by that customer)
+amt_purch_ratio_shop_1 <- with(supermarket_data_clean, amount_purchased_shop_1/amount_purchased_total)
+amt_purch_ratio_shop_2 <- with(supermarket_data_clean, amount_purchased_shop_2/amount_purchased_total)
+amt_purch_ratio_shop_3 <- with(supermarket_data_clean, amount_purchased_shop_3/amount_purchased_total)
+amt_purch_ratio_shop_4 <- with(supermarket_data_clean, amount_purchased_shop_4/amount_purchased_total)
+amt_purch_ratio_shop_5 <- with(supermarket_data_clean, amount_purchased_shop_5/amount_purchased_total)
+
+## Loyality of customer to a shop (Ratio of products purchased from each shop times Ratio of amount spent at each shop)
+loyality_shop_1 <- prod_purch_ratio_shop_1 * amt_purch_ratio_shop_1
+loyality_shop_2 <- prod_purch_ratio_shop_2 * amt_purch_ratio_shop_2
+loyality_shop_3 <- prod_purch_ratio_shop_3 * amt_purch_ratio_shop_3
+loyality_shop_4 <- prod_purch_ratio_shop_4 * amt_purch_ratio_shop_4
+loyality_shop_5 <- prod_purch_ratio_shop_5 * amt_purch_ratio_shop_5
+
+
+## Data frames based on calculated values
+prod_purch_ratio_shop <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_1, prod_purch_ratio_shop_2, prod_purch_ratio_shop_3, prod_purch_ratio_shop_4, prod_purch_ratio_shop_5)
+amt_purch_ratio_shop <- data.frame(supermarket_data_clean$customer_id, amt_purch_ratio_shop_1, amt_purch_ratio_shop_2, amt_purch_ratio_shop_3, amt_purch_ratio_shop_4, amt_purch_ratio_shop_5)
+loyality <- data.frame(supermarket_data_clean$customer_id, loyality_shop_1, loyality_shop_2, loyality_shop_3, loyality_shop_4, loyality_shop_5)
+
+## Data frames as per shop nos
+shop_1 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_1, amt_purch_ratio_shop_1, loyality_shop_1)
+shop_2 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_2, amt_purch_ratio_shop_2, loyality_shop_2)
+shop_3 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_3, amt_purch_ratio_shop_3, loyality_shop_3)
+shop_4 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_4, amt_purch_ratio_shop_4, loyality_shop_4)
+shop_5 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_5, amt_purch_ratio_shop_5, loyality_shop_5)
+
+
+## Customer segments for Shop 1 based on Loyality Score
+high_end_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0.9), ]
+mid_range_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0.50 & shop_1$loyality_shop_1 <= 0.9), ]
+low_end_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0 & shop_1$loyality_shop_1 <= 0.5), ]
+
+## Customer segments for Shop 2 based on Loyality Score
+high_end_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0.9), ]
+mid_range_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0.50 & shop_2$loyality_shop_2 <= 0.9), ]
+low_end_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0 & shop_2$loyality_shop_2 <= 0.5), ]
+
+## Customer segments for Shop 3 based on Loyality Score
+high_end_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0.9), ]
+mid_range_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0.50 & shop_3$loyality_shop_3 <= 0.9), ]
+low_end_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0 & shop_3$loyality_shop_3 <= 0.5), ]
+
+## Customer segments for Shop 4 based on Loyality Score
+high_end_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0.9), ]
+mid_range_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0.50 & shop_4$loyality_shop_4 <= 0.9), ]
+low_end_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0 & shop_4$loyality_shop_4 <= 0.5), ]
+
+## Customer segments for Shop 5 based on Loyality Score
+high_end_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0.9), ]
+mid_range_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0.50 & shop_5$loyality_shop_5 <= 0.9), ]
+low_end_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0 & shop_5$loyality_shop_5 <= 0.5), ]
+
+
+## Number of customers in each segment for Shop 1
+count_high_end_shop_1 <- nrow(high_end_shop_1)
+count_mid_range_shop_1 <- nrow(mid_range_shop_1)
+count_low_end_shop_1 <- nrow(low_end_shop_1)
+
+## Number of customers in each segment for Shop 2
+count_high_end_shop_2 <- nrow(high_end_shop_2)
+count_mid_range_shop_2 <- nrow(mid_range_shop_2)
+count_low_end_shop_2 <- nrow(low_end_shop_2)
+
+## Number of customers in each segment for Shop 3
+count_high_end_shop_3 <- nrow(high_end_shop_3)
+count_mid_range_shop_3 <- nrow(mid_range_shop_3)
+count_low_end_shop_3 <- nrow(low_end_shop_3)
+
+## Number of customers in each segment for Shop 4
+count_high_end_shop_4 <- nrow(high_end_shop_4)
+count_mid_range_shop_4 <- nrow(mid_range_shop_4)
+count_low_end_shop_4 <- nrow(low_end_shop_4)
+
+## Number of customers in each segment for Shop 5
+count_high_end_shop_5 <- nrow(high_end_shop_5)
+count_mid_range_shop_5 <- nrow(mid_range_shop_5)
+count_low_end_shop_5 <- nrow(low_end_shop_5)
+
+## Setting up values
+shops <- c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5)
+
+customer_segments <- c("high", "med", "low", "high", "med", "low", "high", "med", "low", "high", "med", "low", "high", "med", "low")
+
+count_shop_1 <- c(count_high_end_shop_1, count_mid_range_shop_1, count_low_end_shop_1)
+count_shop_2 <- c(count_high_end_shop_2, count_mid_range_shop_2, count_low_end_shop_2)
+count_shop_3 <- c(count_high_end_shop_3, count_mid_range_shop_3, count_low_end_shop_3)
+count_shop_4 <- c(count_high_end_shop_4, count_mid_range_shop_4, count_low_end_shop_4)
+count_shop_5 <- c(count_high_end_shop_5, count_mid_range_shop_5, count_low_end_shop_5)
+
+counts <- c(count_shop_1, count_shop_2, count_shop_3, count_shop_4, count_shop_5)
+
+
+## Count of customers based on the three customer segments (high, mid, low)
+shop_customer_segment_count <-data.frame(shops, customer_segments, counts)
+
+## Change datatype of columns to numerical
+shop_customer_segment_count <- shop_customer_segment_count %>% mutate_if(is.integer, as.numeric) %>% mutate_if(is.factor, as.numeric)
+
+## Plot the count of customers for each shop based on customer segments (high - 1, mid - 3, low - 2)
+qplot(shops, counts, data = shop_customer_segment_count, size=counts, color = customer_segments) + 
+    scale_size_continuous(range = c(3, 8))
+```
+
+```{r echo=TRUE, message=FALSE}
+## Plot the count of customers for each segment
+qplot(customer_segments, counts, data = shop_customer_segment_count, size=counts, color = counts) + 
+    scale_size_continuous(range = c(3, 8))
+```
+
+_Analysis:_ As visualized, the customers can be categorized on the basis of three different customer segements i.e. high, mid and low in terms of their loyality towards the shops and promotional offers can be customised for each segment. 
+
+#Final Research Questions
 
 Exploratory Data Analysis provided a feasibility check on the Initial RQs formulated. The EDA phase helped to get a better understanding of the data in relation with the project objective. Hence this lead to the modification, removal or addition of new RQ. Below is the final set of RQ formulated which will be answered through this project,
 
@@ -580,8 +667,8 @@ _Relevance:_ This will help to understand whether the price is an important fact
 __2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
 _Relevance:_ This will help to understand the important factors that contribute towards the customers willing to travel long-distances to purchase products in spite of the high average product price in a shop, in turn better understanding the purchase behaviour of the customers<br />
 
-__3. What is the maximum likelihood of a customer to select a particular shop to purchase a particular product?__ <br />
-_Relevance:_ This will help to understand that which shops in the retail chain are in demand for a particular product. This can further facilitate better stock management to meet customer demands.<br />
+__3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
+_Relevance:_ This will help to understand that which shops in the retail chain are in demand and predict their estimated customer base. This can further facilitate better stock management to meet customer demands.<br />
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
 _Relevance:_ This will help to understand the groups of similar customer based on their purchase behviour and target different shop-level marketing schemes to the appropriate customers.<br />
@@ -589,16 +676,230 @@ _Relevance:_ This will help to understand the groups of similar customer based o
 __5. Which are the Top 100 customers that are most profitable in terms of revenue generation?__<br />
 _Relevance:_ This will help to understand the customers with potential high Customer Lifetime Value and target appropriate loyalty programs to generate satisfied loyal customers as advocates for the business.
 
-<h4><b>9. Final Analysis</h4></b>
+#Final Analysis
 
-<h4><b>10. Important Links</h4></b>
+__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
 
-<b>1. GitHub Repository</b> https://github.com/Rspawar/Data-Science-with-R.git 
+__Algorithms selected:__
 
-<b>2. Project Website</b>
+__Reason for Algorithm Selections:__
 
-<b>3. Project Screencast</b>
+__Analysis__
+
+__Observations:__
+Thus, the research question is answered by
+
+__Applications:__ These insights obtained can be further utilized by the business to 
+
+__2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
+
+__Algorithms selected:__
+
+__Reason for Algorithm Selections:__
+
+__Analysis__
+
+__Observations:__
+Thus, the research question is answered by
+
+__Applications:__ These insights obtained can be further utilized by the business to
+
+__3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
+
+__Algorithms selected:__
+
+__Reason for Algorithm Selections:__
+
+__Analysis__
+
+__Observations:__
+Thus, the research question is answered by
+
+__Applications:__ These insights obtained can be further utilized by the business to 
+
+__4. What are the different customer segments based on their purchase behaviour?__<br />
+
+__Algorithms selected:__ K-means, Pricipal Component Analysis (PCA)
+
+__Reason for Algorithm Selections:__ K-means clustering is a very simple and fast algorithm. It is the popular method used for customer segmentation and specially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Comparing with hierarchical and model based clustering methods, they were not able to function on the large input dataset being used due to their requirements to calculate a full distance matrix exhibiting limited scalability and big memory requirements. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
+
+PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and  transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data). PCA is used here for this research question as a valuable cross-check to k-means cluster determination.
+
+__Analysis__
+
+__1) Estimating the optimal number of clusters__
+
+K-means requires to specify the number of clusters prior to the algorithm start. Determining the optimal number of clusters is crucial to output better results.
+
+```{r echo=TRUE, message=FALSE}
+library(cluster)
+library(factoextra)
+library("metricsgraphics")
+
+# Read file contents
+supermarket_data_clean <- read.csv("Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv")
+
+# Prepare data frames for clustering
+# Select only the rows customer_id, amount_purchased_shop_1, 2, 3, 4, 5
+cluster.slice.temp <- supermarket_data_clean[,c(1,29,30,31,32,33)]
+# Remover customer_id from the clustering data frame 
+cluster.slice.data <- supermarket_data_clean[,c(29,30,31,32,33)]
+
+# Scale the data and Determine the ideal number of clusters
+cluster.slice.scale <- scale(cluster.slice.data)
+
+wssplot <- function(data, nc=15, seed=1234){
+  wss <- (nrow(data)-1)*sum(apply(data,2,var))
+  for (i in 2:nc){
+    set.seed(seed)
+    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+  plot(1:nc, wss, type="b", xlab="Number of Clusters",
+       ylab="Within groups sum of squares")}
+
+wssplot(cluster.slice.scale)
+
+```
+
+The above plot depicts a sharp decrease from values 1 to 4 for number of clusters with a slight decrease from 4 to 5 which estimates a 4-cluster or 5-cluster solution.
+
+__2) Perform K-means clustering with number of clusters as 4 and 5__
+
+```{r echo=TRUE, message=FALSE}
+
+# Perform k-means on cluster values as 4 and 5
+
+set.seed(123) # fix the random starting clusters
+kclust4 <- kmeans(cluster.slice.data, 4, nstart = 25)
+
+set.seed(123) # fix the random starting clusters
+kclust5 <- kmeans(cluster.slice.data, 5, nstart = 25)
+
+```
+
+__3) Perform PCA to visualize the clusters__
+
+PCA with 5 cluster K-means
+
+```{r echo=TRUE, message=FALSE}
+
+cluster.pc5 <- prcomp(cluster.slice.data, center = FALSE, scale. = FALSE)$x %>% as.data.frame()
+cluster.pc5$kmeans.cluster <- kclust5$cluster
+
+mjs_plot(cluster.pc5, x=PC1, y=PC2) %>%
+  mjs_point(color_accessor=kmeans.cluster) %>%
+  mjs_labs(x="Principal Comp 1", y="Principal Comp 2")
+```
+
+PCA with 4 cluster K-means
+
+```{r echo=TRUE, message=FALSE}
+
+cluster.pc4 <- prcomp(cluster.slice.data, center = FALSE, scale. = FALSE)$x %>% as.data.frame()
+cluster.pc4$kmeans.cluster <- kclust4$cluster
+
+mjs_plot(cluster.pc4, x=PC1, y=PC2) %>%
+  mjs_point(color_accessor=kmeans.cluster) %>%
+  mjs_labs(x="Principal Comp 1", y="Principal Comp 2")
+```
+
+Comparing the above two plots determines that a 5 cluster solution will be an ideal estimate for K-means clustering.
+
+__4) Visualize the different separable clusters in the data__
+
+```{r echo=TRUE, message=FALSE}
+
+fviz_cluster(kclust5, data = cluster.slice.data, geom = "point",
+             stand = FALSE, ellipse.type = "norm") + 
+  ggtitle(label='Customer Clusters')
+
+```
+
+__5) Cluster Analysis__
+
+Determine the different customers belonging to each cluster
+
+```{r echo=TRUE, message=FALSE}
+
+## retrieve customer ID's in each cluster
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 1,])))
+
+```
+
+```{r echo=TRUE, message=FALSE, results="hide"}
+
+## retrieve customer ID's in each cluster
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 2,])))
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 3,])))
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 4,])))
+head(gather(data.frame(cluster.slice.temp[kclust5$cluster == 5,])))
+```
+
+__6) Customer Segmentation__
+
+```{r echo=TRUE, message=FALSE}
+
+#Customer segmentation through aggeration of results by mean
+cluster.slice.kmeans.aggregate <- aggregate(cluster.slice.data, by = list(kclust5$cluster), mean)
+
+cluster<-c(cluster.slice.kmeans.aggregate$Group.1)
+shop1<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_1)
+shop2<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_2)
+shop3<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_3)
+shop4<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_4)
+shop5<-c(cluster.slice.kmeans.aggregate$amount_purchased_shop_5)
+
+# Plot a Bar graph
+Legends <-c(rep("Customers Shop 1", 5), rep("Customers Shop 2", 5), rep("Customers Shop 3", 5), rep("Customers Shop 4", 5), rep("Customers Shop 5", 5))
+values <-c(shop1,shop2,shop3,shop4,shop5)
+mydata <-data.frame(cluster, values)
+
+p <-ggplot(mydata, aes(cluster, values))
+p +geom_bar(stat = "identity", aes(fill = Legends)) +
+  xlab("Cluster") + ylab("Total") +
+  ggtitle("Customer Segmentation") +
+  theme_bw() + scale_y_continuous(labels = scales::comma)
+
+```
+
+__Observations:__ Clustering the data based on the purchase behaviour of customers i.e. from the shops they shop the most, revealed 5 separable clusters to analyze. Cluster analysis, helped to identify the customers in each cluster based on their customer IDs. This is useful to understand the different customers that build the customer base in each cluster. Further, Customer Segmentation facilitated to identify the customers of different shops in each segment (cluster). This further helped to divide the cluster and attach meaning to it. Thus, the research question is answered by identifying five customer segments based on their purchase behaviour and further partitioning these segments by determining the specific customers belonging to the five different shops.     
+
+__Applications:__ Detection of clusters can help the business to develop a specific strategy for each cluster base. Clustering can also be used to understand the purchase behaviour of customers by keeping a track of customers over months and detecting the number of customers moving from one cluster to other. This helps the business to better organize strategies to increase revenue at different shops. Customer Segmentation insights obtained can be further utilized by the business to better focus their marketing efforts on the right customers. Eg. Discounts and offers related to a particular shop can be sent to only the customers who usually purchase at the particular shop without bothering the customers of other shops. Thus, targeting the right customers for the right deals can help to cut-down the marketing costs, generate more revenue and increase customer satisfaction.  
+
+__5. Which are the Top 100 customers that are most profitable in terms of revenue generation?__<br />
+
+__Algorithms selected:__
+
+__Reason for Algorithm Selections:__
+
+__Analysis__
+
+__Observations:__
+Thus, the research question is answered by
+
+__Applications:__ These insights obtained can be further utilized by the business to
+
+#Important Links
+
+<b>GitHub Repository</b> 
+
+https://github.com/Rspawar/Data-Science-with-R.git 
+
+<b>Project Website</b> 
+
+https://sites.google.com/view/customerbehaviouralanalytics
+
+<b>Project Screencast</b>
+
+<b>Project Presentation</b>
+
+<b>Complete Analysis Report as RMarkdown file</b>
+
+https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer%20Behavioural%20Analytics%20in%20the%20Retail%20sector.Rmd
+
+<b>Complete Analysis Report as HTML file</b>
+
+https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 <h4><b>Date</b></h4> ```r format(Sys.Date(), "%B %e, %Y")``` 
 
-<h4><b>References</h4></b></font>
+#References

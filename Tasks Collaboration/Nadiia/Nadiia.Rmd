@@ -1,0 +1,164 @@
+---
+title: "Nadiia"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Related Work Summary
+
+The Article "Explaining the Product Range Effect in Purchase Data" proposes an analytic framework based on big data to measure the personal utility function and proves that this function has a stronger
+effect on customer behavior than the price. It introduces, defines a concept, shows a presence of
+customer range effect. According to this paper so-called range effect the more sophisticated the
+needs they satisfy, the more cost the customers are willing to pay to buy them, in terms of distance to travel more than in terms of the price of the item itself. For this research were used a customers data from a database of a large supermarket chain in Italy, based on recognizing of a clients by their membershipcards. It was made several assumptions for this study, for example:<br />
+  - customers wants to minimized their travel length <br />
+  - they will travel more to purchase products that are more expensive <br />
+  - product sophistication can be used to describe the average customer behavior <br />
+  - behaviour depends from the frequency with which a product needs to be purchased <br />
+  - customer may decide to buy or not buy a given product because it is close enough or too far away from the shop <br />
+  and so on. <br />
+  This were several start research questions set to limit the scope of the study and explain the existance of the range effect during shopping. Based on the mining, that customers modify their
+shopping behavior according to their relative position, the authors show, that the price
+plays a small role in predicting the distance a customer will travel for purchasing a product, by increasing it. If a product is needed more frequently then it drives (down) the distance a
+customer will travel to buy it, regardless of the price. Than they generalize the range effect reasons only to a few factors and provide evidences that the product and the customer sophistication are variables able to better explain the distance traveled by customers, what gave them an opportunity to create a predictions of customer behavior.
+<br />
+  (some notes for our project) <br />
+  - we have a compressed dataset, not a dataset from this paper <br />
+  - we are trying to reseach each relation between distancy and external factors as far as data allows <br />
+  - the analysis in paper based on the more factors, such as popularity, product category, product buyied frequency, marketing category, shop size,
+which are not available for us. Therefore we making our analysis based on common and already weighed results 
+
+EDA
+
+Reserch question 1
+<br />
+  In the first question, we are trying to find out whether there is a relationship between long distances and the average price tag in the store. In order to better understand, check the existence of this dependence is to investigate separately the data that relate to distances and average prices.
+First of all, it is worth checking the existence of a certain relationship between price and distance, which is well reflected by the covariance.
+Based on the scatterplot, it can be noted, that the average price is close enough to zero, therefore, it makes a sense to check zero values in the current dataset and its influence. In this context, zero values are equal to the missing values. Therefore, we replaced the zero values with the missing ones and verified by plotting, if some values are deleted. The scatterplots were constructed again and we tried to compare them with those that were obtained for covarience visualisation earlier.
+Further, it was interesting to consider the density of the distribution of the average cost for each individual shop in order to understand their variations. It is convenient to use lines for displaing the distribution, since in this way it will be easier to observe the intersection of the quantities.
+Since it became clear from the first part of the analysis, that exists the strong relationship between distance and average cost, than it should be to explore the subtleties that remain. For this it should be created some model, that predicts price from dependencies and then computes the residuals (the difference between the predicted value and the actual value). The residuals give us a view of the price, once the effect of distance has been removed.To do this, we will use the technique of building a template and display it with scatterplot.Once the strong relationship between distance and price had been removed, relationship between shop and price relative other external factors (better quality of products, products alternative and so on) became noticable.
+
+__3) Visualize the relationship between average prices and distances to the shop__
+
+```{r echo=TRUE, message=FALSE}
+library(modelr)
+library(gridExtra)
+library(tidyverse)
+library(dplyr)
+
+cleared_supermarket_data <- read_csv(file_path)
+cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
+
+shop_ordered_slice <- select(cleared_supermarked_tbl, 3,23,4,24,5,25,6,26,7,27) %>% 
+  bind_cols(cleared_supermarked_tbl[,8:10], cleared_supermarked_tbl[,28])
+
+# Splitting the data
+get_slice_for_shop <- function(col1, col2){
+  shop_slice <- shop_ordered_slice[,col1:col2]
+  colnames(shop_slice) <- c("distance","price")
+  return(shop_slice)
+}
+
+shop_1_data <- get_slice_for_shop(1,2)
+shop_2_data <- get_slice_for_shop(3,4)
+shop_3_data <- get_slice_for_shop(5,6)
+shop_4_data <- get_slice_for_shop(7,8)
+shop_5_data <- get_slice_for_shop(9,10)
+shop_avg_data <- get_slice_for_shop(13,14)
+shop_agg_min_data <- get_slice_for_shop(11,14)
+shop_agg_max_data <- get_slice_for_shop(12,14)
+
+# Combine data to the one mutated table to show all shops at the one graph
+joined_shops_data <- mutate(shop_1_data, Shop="1") %>%
+  union_all(mutate(shop_2_data, Shop="2")) %>%
+  union_all(mutate(shop_3_data, Shop="3")) %>%
+  union_all(mutate(shop_4_data, Shop="4")) %>%
+  union_all(mutate(shop_5_data, Shop="5")) 
+
+# Create base for plots
+get_base_for_plot <- function(dataset, caption){
+  plot_base <- ggplot(data = dataset, mapping = aes(x = distance, y = price)) + ggtitle(caption)
+  return(plot_base)
+}
+
+# Colours list
+colours_shema <- c("Red", "Green", "Yellow", "Pink", "Blue", "Purple", "steelblue1", "tomato1")
+
+#create scatter plot
+add_geom_point <- function(colorNum){
+  geom_p <- geom_point(colour=colours_shema[colorNum], alpha=0.3)
+  return(geom_p)
+}
+
+#draw scatter plot with plot base
+draw_cov_point_plot <- function(dataset, colorNum, caption){
+  cov_geom_plot <- get_base_for_plot(dataset, caption) + add_geom_point(colorNum) +       
+    scale_y_continuous(trans="log2")+ 
+    geom_smooth(stat = 'smooth', color = 'Black', method = 'gam', formula = y ~ s(x, bs = "cs")) 
+  return(cov_geom_plot)
+}
+
+p1_1 <- draw_cov_point_plot(shop_1_data, 1, "Shop 1")
+p2_1 <- draw_cov_point_plot(shop_2_data, 2, "Shop 2")
+p3_1 <- draw_cov_point_plot(shop_3_data, 3, "Shop 3")
+p4_1 <- draw_cov_point_plot(shop_4_data, 4, "Shop 4")
+p5_1 <- draw_cov_point_plot(shop_5_data, 5, "Shop 5")
+pavg_1 <- draw_cov_point_plot(shop_avg_data, 6, "Average price with average distance")
+pmin_1 <- draw_cov_point_plot(shop_agg_min_data, 7, "Average price with min distance")
+pmax_1 <- draw_cov_point_plot(shop_agg_max_data, 8, "Average price with max distance")
+
+pall_1 <- get_base_for_plot(joined_shops_data, "All shops") + geom_point(mapping = aes(colour = Shop), alpha=0.3) 
+
+comb_cov_shops <- grid.arrange(p1_1, p2_1, p3_1, p4_1, p5_1, 
+                               nrow=2, ncol=3, 
+                               top="Covariation between distances and average prices")
+comb_cov_aggrs <- grid.arrange(pmin_1, pmax_1,
+                               nrow=2,
+                               top= "Covariation between min/max distances and average prices")
+comb_cov_avg <- grid.arrange(pall_1, pavg_1,
+                               nrow=2,
+                               top= "Covariation between distances and average prices (aggregeted)")
+
+```
+
+_Analysis:_ There are strong dependencies between long average distance and the average price in a shop. Also the average price is close enough to zero, therefore it makes a sense to check for zero values for price in the current dataset and its influence.
+
+__4) Visualize data gap for average price in each shop__
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+prices <- shop_ordered_slice[,seq(2, 10 ,2)]
+names(prices) <- c("Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5")
+dataset_with_na <- data.frame(sapply(prices, function(x) { 
+    na_if(x,0)
+            } ))
+pavg_2 <- plot_missing(dataset_with_na) + ggtitle("Gaps in shop prices")
+
+
+```
+
+
+_Analysis:_ As visualized, there is a data gap for the value of average price in each shop. The value for average price in a shop for a customer is only filled in the dataset if the particular customer prefers the shop, else it is left as zero. This can be considered as a data gap but at the same time it is an information which is never utilized during analysis, meaning that the customer does not choose that particular shop in the first place. But this data gap does not affect on the tendency of the relationship between price and distance.
+
+__5) Visualize patterns for the average price__
+
+```{r echo=TRUE, message=FALSE}
+joined_shops_without_null <- filter(joined_shops_data, price != 0)
+mod <- lm(log(price) ~ distance, data = joined_shops_without_null)
+
+joined_shops_data2 <- joined_shops_without_null %>% 
+  add_residuals(mod) %>% 
+  mutate(resid = exp(resid))
+
+pall_4 <- ggplot(data = joined_shops_data2, aes(x = Shop, y = resid)) + 
+  geom_bar(stat = "identity", fill = colours_shema[6]) + ggtitle("Average price pattern")
+pall_4
+```
+
+_Analysis:_ As visualized, the residuals gave us a view of the average price after removing the distance effect. Once the strong relationship between distance and price has been removed, relationship to other external factors become noticable.
+
+__6) Visualize the customer base for each shop based on different customer segments__
