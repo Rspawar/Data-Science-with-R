@@ -141,7 +141,6 @@ pavg_2 <- plot_missing(dataset_with_na) + ggtitle("Gaps in shop prices")
 
 ```
 
-
 _Analysis:_ As visualized, there is a data gap for the value of average price in each shop. The value for average price in a shop for a customer is only filled in the dataset if the particular customer prefers the shop, else it is left as zero. This can be considered as a data gap but at the same time it is an information which is never utilized during analysis, meaning that the customer does not choose that particular shop in the first place. But this data gap does not affect on the tendency of the relationship between price and distance.
 
 __5) Visualize patterns for the average price__
