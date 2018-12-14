@@ -47,6 +47,7 @@ shop_ordered_slice <- select(cleared_supermarked_tbl, 3,23,4,24,5,25,6,26,7,27) 
   bind_cols(cleared_supermarked_tbl[,8:10], cleared_supermarked_tbl[,28])
 
 distance_separator <- mean(shop_ordered_slice[["avg_distance_to_all_shops"]])
+price_separator <- mean(shop_ordered_slice[["avg_purchased_product_price_allShops"]])
 
 set.seed(101)
 row_count <- nrow(shop_ordered_slice)
@@ -54,7 +55,7 @@ train_index <- sample(row_count, round(0.7 * row_count))
 
 rq1_dataset <- shop_ordered_slice %>%
   select(11,12,13,14)%>%
-  mutate(label=factor(ifelse((max_dist_to_custSel_shops > distance_separator), "y", "n"))) %>%
+  mutate(label=factor(ifelse((max_dist_to_custSel_shops > distance_separator & avg_purchased_product_price_allShops > price_separator), "y", "n"))) %>%
   rename(average_distance = avg_distance_to_all_shops, 
          average_price = avg_purchased_product_price_allShops) %>%
   select(average_distance, average_price, label) %>%
@@ -119,7 +120,7 @@ summary(tuneSvm)
 plot(tuneSvm)
 #classify with best params
 svmFit <- svm(y_train ~ ., data = cbind(train_ds,y_train), kernel = "radial", 
-           cost = 1, gamma = 2,
+           cost = 1, gamma = 0.5,
            scale=TRUE, cachesize=95)
 
 plot(svmFit, cbind(train_ds,y_train))
@@ -139,7 +140,7 @@ knnTrain <- train(y_train ~ ., data = cbind(train_ds,y_train), method = "knn",
 plot(knnTrain)
 
 #classify with best params
-knnFit <- knn3(train_ds, y_train, k = 39)
+knnFit <- knn3(train_ds, y_train, k = 15)
 classify_with_fit(knnFit, "KNN classification")
 ```
 
