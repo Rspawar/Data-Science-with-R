@@ -89,7 +89,7 @@ supermarket_data <- read_csv(filepath)
 supermarket_tbl<-tbl_df(supermarket_data)
 ```
 
-```{r echo=TRUE}
+```{r echo=TRUE, message=FALSE}
 # Check the dimension of the input dataset and the variables through a plot
 plot_str(supermarket_tbl)
 ``` 
@@ -490,52 +490,24 @@ pavg_2 <- plot_missing(dataset_with_na) + ggtitle("Gaps in shop prices")
 
 _Analysis:_ As visualized, there is a data gap for the value of average price in each shop. The value for average price in a shop for a customer is only filled in the dataset if the particular customer prefers the shop, else it is left as zero. This can be considered as a data gap but at the same time it is an information which is never utilized during analysis, meaning that the customer does not choose that particular shop in the first place. But this data gap does not affect on the tendency of the relationship between price and distance.
 
-__5) Visualize the distribution density of the average price across shops__
-
-```{r echo=TRUE, message=FALSE}
-# Normilizing of average price for common average data
-dt_avg <- transform(shop_avg_data, price = pnorm(price))
-
-pavg_3 <- ggplot(data = dt_avg, mapping = aes(x = price, y = ..density..)) +
-  geom_freqpoly(colour=colours_shema[6], binwidth = 0.1) + ggtitle("Average price distribution")
-
-# Normilizing of average price for shops
-dt_all <- transform(joined_shops_data, price = pnorm(price))
-pall_2 <- ggplot(data = dt_all, mapping = aes(x = price, y = ..density..)) + 
-  geom_freqpoly(mapping = aes(colour = Shop), binwidth = 0.1) + ggtitle("Common average price distribution")
-
-comb_vis_distibution <- grid.arrange(pavg_3, pall_2,
-                                     nrow=2, ncol=1, 
-                                     top="Distribution of average price across shops")
-```
-
-
-_Analysis:_ As visualized, according to the data the average price is varyingly distributed in each shop. 
-
-__6) Visualize patterns for the average price__
+__5) Visualize patterns for the average price__
 
 ```{r echo=TRUE, message=FALSE}
 joined_shops_without_null <- filter(joined_shops_data, price != 0)
-mod <- lm(log(price) ~ log(distance), data = joined_shops_without_null)
+mod <- lm(log(price) ~ distance, data = joined_shops_without_null)
 
 joined_shops_data2 <- joined_shops_without_null %>% 
   add_residuals(mod) %>% 
   mutate(resid = exp(resid))
 
-
-pall_3 <- ggplot(data = joined_shops_data2) + 
-  geom_point(mapping = aes(x = price, y = resid), colour=colours_shema[6], alpha=0.3) + ggtitle("Average price pattern")
-
-pall_3
-
-pall_4 <- ggplot(data = joined_shops_data2) + 
-  geom_boxplot(mapping = aes(x = Shop, y = resid), color=colours_shema[6]) + ggtitle("Average price pattern")
+pall_4 <- ggplot(data = joined_shops_data2, aes(x = Shop, y = resid)) + 
+  geom_bar(stat = "identity", fill = colours_shema[6]) + ggtitle("Average price pattern")
 pall_4
 ```
 
 _Analysis:_ As visualized, the residuals gave us a view of the average price after removing the distance effect. Once the strong relationship between distance and price has been removed, relationship to other external factors become noticable.
 
-__7) Visualize the customer base for each shop based on different customer segments__
+__6) Visualize the customer base for each shop based on different customer segments__
 
 ```{r echo=TRUE, message=FALSE}
 ## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
@@ -721,9 +693,9 @@ __4. What are the different customer segments based on their purchase behaviour?
 
 __Algorithms selected:__ K-means, Pricipal Component Analysis (PCA)
 
-__Reason for Algorithm Selections:__ K-means clustering is a very simple and fast algorithm. It is the popular method used for customer segmentation and specially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Comparing with hierarchical and model based clustering methods, they were not able to function on the large input dataset being used due to their requirements to calculate a full distance matrix exhibiting limited scalability and big memory requirements. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
+__Reason for Algorithm Selections:__ K-means clustering is a very simple and fast algorithm. It is the popular method used for customer segmentation and specially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Hierarchical and model based clustering methods require to calculate a full distance matrix exhibiting limited scalability and large memory requirements for computation on a large dataset. Comparably, K-means clustering is more run-time efficient. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
 
-PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and  transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data). PCA is used here for this research question as a valuable cross-check to k-means cluster determination.
+PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and  transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data). PCA is used here for this research question as a valuable cross-check to k-means number of clusters determination.
 
 __Analysis__
 
@@ -768,6 +740,7 @@ __2) Perform K-means clustering with number of clusters as 4 and 5__
 
 # Perform k-means on cluster values as 4 and 5
 
+# On entire dataset
 set.seed(123) # fix the random starting clusters
 kclust4 <- kmeans(cluster.slice.data, 4, nstart = 25)
 
@@ -778,31 +751,31 @@ kclust5 <- kmeans(cluster.slice.data, 5, nstart = 25)
 
 __3) Perform PCA to visualize the clusters__
 
-PCA with 5 cluster K-means
-
-```{r echo=TRUE, message=FALSE}
-
-cluster.pc5 <- prcomp(cluster.slice.data, center = FALSE, scale. = FALSE)$x %>% as.data.frame()
-cluster.pc5$kmeans.cluster <- kclust5$cluster
-
-mjs_plot(cluster.pc5, x=PC1, y=PC2) %>%
-  mjs_point(color_accessor=kmeans.cluster) %>%
-  mjs_labs(x="Principal Comp 1", y="Principal Comp 2")
-```
-
 PCA with 4 cluster K-means
 
 ```{r echo=TRUE, message=FALSE}
-
 cluster.pc4 <- prcomp(cluster.slice.data, center = FALSE, scale. = FALSE)$x %>% as.data.frame()
-cluster.pc4$kmeans.cluster <- kclust4$cluster
+cluster.pc4$kmeans.cluster <- factor(kclust4$cluster)
 
-mjs_plot(cluster.pc4, x=PC1, y=PC2) %>%
-  mjs_point(color_accessor=kmeans.cluster) %>%
-  mjs_labs(x="Principal Comp 1", y="Principal Comp 2")
+p<-ggplot(cluster.pc4,aes(x=PC1,y=PC2,color=kmeans.cluster))
+p+geom_point() +
+  theme_bw() + scale_y_continuous(labels = scales::comma) + 
+  ggtitle(label='PCA with 4 cluster K-means')
 ```
 
-Comparing the above two plots determines that a 5 cluster solution will be an ideal estimate for K-means clustering.
+PCA with 5 cluster K-means
+
+```{r echo=TRUE, message=FALSE}
+cluster.pc5 <- prcomp(cluster.slice.data, center = FALSE, scale. = FALSE)$x %>% as.data.frame()
+cluster.pc5$kmeans.cluster <- factor(kclust5$cluster)
+
+p<-ggplot(cluster.pc5,aes(x=PC1,y=PC2,color=kmeans.cluster))
+p+geom_point() +
+  theme_bw() + scale_y_continuous(labels = scales::comma) + 
+  ggtitle(label='PCA with 5 cluster K-means')
+```
+
+Comparing the above two plots determine that a 5 cluster solution will be an ideal estimate for K-means clustering.
 
 __4) Visualize the different separable clusters in the data__
 
@@ -810,6 +783,7 @@ __4) Visualize the different separable clusters in the data__
 
 fviz_cluster(kclust5, data = cluster.slice.data, geom = "point",
              stand = FALSE, ellipse.type = "norm") + 
+  theme_bw() + scale_y_continuous(labels = scales::comma) +
   ggtitle(label='Customer Clusters')
 
 ```
