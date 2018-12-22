@@ -656,6 +656,8 @@ __Algorithms selected:__
 
 __Reason for Algorithm Selections:__
 
+__Features Selected:__
+
 __Analysis__
 
 __Observations:__
@@ -668,6 +670,8 @@ __2. What are the factors that contribute towards the long distance travel of th
 __Algorithms selected:__
 
 __Reason for Algorithm Selections:__
+
+__Features Selected:__
 
 __Analysis__
 
@@ -682,6 +686,8 @@ __Algorithms selected:__
 
 __Reason for Algorithm Selections:__
 
+__Features Selected:__
+
 __Analysis__
 
 __Observations:__
@@ -695,7 +701,9 @@ __Algorithms selected:__ K-means, Pricipal Component Analysis (PCA)
 
 __Reason for Algorithm Selections:__ K-means clustering is a very simple and fast algorithm. It is the popular method used for customer segmentation and specially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Hierarchical and model based clustering methods require to calculate a full distance matrix exhibiting limited scalability and large memory requirements for computation on a large dataset. Comparably, K-means clustering is more run-time efficient. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
 
-PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and  transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data). PCA is used here for this research question as a valuable cross-check to k-means number of clusters determination.
+PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and  transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data). As compared to K-means PCA is not a direct solution thus finding it from a different perspective and can help to detect customer clusters not found by K-means. PCA is used here for this research question as a valuable cross-check to K-means number of clusters determination.
+
+__Features Selected:__ The RQ wants to identify the clusters of customers based on their purchase behaviour i.e. the shops which the customer prefers for the purchase. Hence the features, customer_id, amount_purchased_shop_1, amount_purchased_shop_2, amount_purchased_shop_3, amount_purchased_shop_4, amount_purchased_shop_5 are of importance and are selected for this RQ.
 
 __Analysis__
 
@@ -750,6 +758,15 @@ kclust5 <- kmeans(cluster.slice.data, 5, nstart = 25)
 ```
 
 __3) Perform PCA to visualize the clusters__
+
+```{r echo=TRUE, message=FALSE}
+pca <- prcomp(t(cluster.slice.data), scale. = T, center = T)
+fviz_eig(pca) + 
+  theme_bw() + scale_y_continuous(labels = scales::comma) +
+  ggtitle(label='Principal Component Analysis')
+```
+
+As observed, PCA 1 and PCA 2 combined explain majority of the data variance and then there is a drop from PCA 2 to PCA 3. Hence this infers that, visualization with PCA 1 and PC 2 will give a good understanding of the data and including more PCA's after PCA 2 will only result in a minimal improvement.
 
 PCA with 4 cluster K-means
 
@@ -844,6 +861,8 @@ __5. Which are the Top 100 customers that are most profitable in terms of revenu
 __Algorithms selected:__
 
 __Reason for Algorithm Selections:__
+
+__Features Selected:__
 
 __Analysis__
 
