@@ -120,7 +120,7 @@ __Analysis__
 __Observations:__
 Thus, the research question is answered by
 
-__Applications:__ These insights obtained can be further utilized by the business to 
+__Applications:__ These insights obtained can be further utilized by the business to create the best price politics and strategy in context of the stores location, which will increase its revenue.
 
 
 ## Classification
