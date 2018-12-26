@@ -105,6 +105,23 @@ classify_with_fit <- function(fit, title){
 
 #plot(test_ds, col = c("red","blue")[as.numeric(yclass_test)], pch = 20, cex = 1.3)
 ```
+#Final Analysis
+
+__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+  
+  __Algorithms selected:__ SVM, K-nearest neighbor, Random Forest
+
+__Reason for Algorithm Selections:__ According to the several papers and studies, in the event that the relationship between two variables is non-linear and we are handling a two class classification problem,  nothing is going to be nearly as accurate as SVM. Concerning K-nearest neighbor algorithm, it runs generally slower and has lower accuracy in comparision with SVM, but it’s got some nice practical qualities. It’s easy to train, because k-NN is ranked as a lazy algorithmus and in fact there’s no training at all. Consequently it's easy to use, and it’s easy to understand the results. However k-NN classification is used more in the industry than an academic might think. In comparision with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used, roughly speaking, as they are, when SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and KNN Random Forest doesn't demand a parameter tuning to reach a high accuracy. 
+
+__Features Selected:__ Average price by shops, max travelled distance to shop, average distance by shops.
+
+__Analysis__
+
+__Observations:__
+Thus, the research question is answered by
+
+__Applications:__ These insights obtained can be further utilized by the business to create the best price politics and strategy in context of the stores location, which will increase its revenue.
+
 
 ## Classification
 
