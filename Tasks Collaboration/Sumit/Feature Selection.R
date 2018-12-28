@@ -1,3 +1,5 @@
+library(tidyverse)
+
 ## Set file path
 file_path <- "Input Dataset/Cleaned Dataset/Supermarket_Data_Classification.csv"
 
@@ -30,6 +32,7 @@ sm_rf <- randomForest(class~., data = supermarket_data_class)
 
 ## Generate the importance value for features 
 varImp(sm_rf)
+importance(sm_rf)
 
 ## Plot the importance value of features
 varImpPlot(sm_rf)
