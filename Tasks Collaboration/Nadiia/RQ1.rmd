@@ -1,0 +1,170 @@
+---
+title: "RQ1"
+author: "Nadiia Honcharenko"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r echo=TRUE, message=FALSE}
+library(caret)
+library(randomForest)
+library(e1071)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+
+# Creating of useful functions
+create_conf_matrix <- function(refLabels, predictLabels, positiveLabel){
+  conf_matrix <- confusionMatrix(
+    refLabels, # reference labels
+    predictLabels, # predicted labels
+    positive = positiveLabel, # label that corresponds to a "positive" results (optional)
+    dnn = c("actual", "predicted") # names of the confusion matrix dimensions  (optional)
+  )
+  return (conf_matrix)
+}
+
+get_evaluation <- function(refLabels, predictLabels, positiveLabel){
+  conf_matrix <- create_conf_matrix(refLabels, predictLabels, positiveLabel)
+  conf_matrix
+  print(conf_matrix$overall["Accuracy"])
+  print(conf_matrix$byClass["Sensitivity"])
+  print(conf_matrix$byClass["Specificity"])
+  ## todo add another evaluations
+}
+
+# Data preparation
+cleared_supermarket_data <- read_csv("D:/Data-Science-with-R/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv")
+cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
+
+shop_ordered_slice <- select(cleared_supermarked_tbl, 3,23,4,24,5,25,6,26,7,27) %>% 
+  bind_cols(cleared_supermarked_tbl[,8:10], cleared_supermarked_tbl[,28])
+
+distance_separator <- mean(shop_ordered_slice[["avg_distance_to_all_shops"]])
+price_separator <- mean(shop_ordered_slice[["avg_purchased_product_price_allShops"]])
+
+set.seed(101)
+row_count <- nrow(shop_ordered_slice)
+train_index <- sample(row_count, round(0.7 * row_count))
+
+rq1_dataset <- shop_ordered_slice %>%
+  select(11,12,13,14)%>%
+  mutate(label=factor(ifelse((max_dist_to_custSel_shops > distance_separator & avg_purchased_product_price_allShops > price_separator), "y", "n"))) %>%
+  rename(average_distance = avg_distance_to_all_shops, 
+         average_price = avg_purchased_product_price_allShops) %>%
+  select(average_distance, average_price, label) %>%
+  mutate(in_train = if_else(row_number() %in% train_index, TRUE, FALSE))
+
+
+# splitting data to test and training
+train_ds <- rq1_dataset %>% 
+  filter(in_train) %>% 
+  select(average_distance, average_price)
+y_train <- rq1_dataset %>% 
+  filter(in_train) %>%
+  pull(label)
+y_test <- rq1_dataset %>% 
+  filter(!in_train) %>% 
+  pull(label)
+
+test_ds <- rq1_dataset %>% 
+  filter(!in_train) %>% 
+  select(average_distance, average_price)
+
+create_random_forest_fit <- function(ntree){
+  fit <- randomForest(y_train ~ ., cbind(train_ds,y_train), ntree=ntree)
+  return(fit)
+}
+
+draw_plot_for_classes <- function(data, predicted, title){
+  plot_data <- data %>% mutate(label = as.factor(predicted))
+  ggplot(plot_data, aes(average_distance, average_price, color = label)) +
+    geom_point(alpha = .75) +
+    xlab("Distance") + ylab("Price") +
+    # geom_smooth(method=lm) +
+    coord_trans(x ="sqrt", y="log10") +
+    theme_bw()+
+    ggtitle(title)
+}
+
+classify_with_fit <- function(fit, title){
+  train_predicted <- predict(fit, train_ds, type = "class")
+  print("Evaluation for the training")
+  get_evaluation(y_train, train_predicted, "y")
+  predicted <- predict(fit, test_ds, type = "class")
+  print("Evaluation for the tests")
+  get_evaluation(y_test, predicted, "y")
+  draw_plot_for_classes(test_ds, predicted, title)
+}
+
+#plot(test_ds, col = c("red","blue")[as.numeric(yclass_test)], pch = 20, cex = 1.3)
+```
+#Final Analysis
+
+__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+  
+  __Algorithms selected:__ SVM, K-nearest neighbor, Random Forest
+
+__Reason for Algorithm Selections:__ According to the several papers and studies, in the event that the relationship between two variables is non-linear and we are handling a two class classification problem,  nothing is going to be nearly as accurate as SVM. Concerning K-nearest neighbor algorithm, it runs generally slower and has lower accuracy in comparision with SVM, but it’s got some nice practical qualities. It’s easy to train, because k-NN is ranked as a lazy algorithmus and in fact there’s no training at all. Consequently it's easy to use, and it’s easy to understand the results. However k-NN classification is used more in the industry than an academic might think. In comparision with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used, roughly speaking, as they are, when SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and KNN Random Forest doesn't demand a parameter tuning to reach a high accuracy. 
+
+__Features Selected:__ Average price by shops, max travelled distance to shop, average distance by shops.
+
+__Analysis__
+
+__Observations:__
+Thus, the research question is answered by
+
+__Applications:__ These insights obtained can be further utilized by the business to create the best price politics and strategy in context of the stores location, which will increase its revenue.
+
+
+## Classification
+
+__1) Classification with SVM __
+
+_Why SVM?:_ According to the several papers and studies, in the event that the relationship between two variables is non-linear and we are handling a two class classification problem,  nothing is going to be nearly as accurate as SVM.
+
+```{r echo=TRUE, message=FALSE}
+#tune SVM
+tuneSvm <- tune(svm, y_train ~ ., data = cbind(train_ds,y_train), ranges = list(gamma = 2^(-1:1)),
+     cost = 2^(2:4), tunecontrol = tune.control(sampling = "fix"))
+summary(tuneSvm)
+plot(tuneSvm)
+#classify with best params
+svmFit <- svm(y_train ~ ., data = cbind(train_ds,y_train), kernel = "radial", 
+           cost = 1, gamma = 0.5,
+           scale=TRUE, cachesize=95)
+
+plot(svmFit, cbind(train_ds,y_train))
+classify_with_fit(svmFit, "SVM classification")
+```
+
+__2) Classification with K-nearest neighbor __
+_Why k-NN?:_ Generally runs K-nearest neighbor algorithm slower and has lower accuracy in comparision with SVM, but it’s got some nice practical qualities. It’s easy to train, because k-NN is ranked as a lazy algorithmus and there’s no training. Consequently it's easy to use, and it’s easy to understand the results. However k-NN classification is used more in the industry than an academic might think.
+
+```{r echo=TRUE, message=FALSE}
+# train knn classifier
+
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+knnTrain <- train(y_train ~ ., data = cbind(train_ds,y_train), method = "knn", 
+                trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
+plot(knnTrain)
+
+#classify with best params
+knnFit <- knn3(train_ds, y_train, k = 15)
+classify_with_fit(knnFit, "KNN classification")
+```
+
+__2) Classification with Random Forest __
+_Why Random Forest?:_ In comparision with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. This algorithm is also very hard to beat in terms of performance. And on top of that, RF can handle a lot of different feature types, like binary, categorical and numerical.
+
+```{r echo=TRUE, message=FALSE}
+randomFit <- randomForest(y_train ~ ., cbind(train_ds,y_train), ntree=500)
+classify_with_fit(randomFit, "Random Forest")
+```
