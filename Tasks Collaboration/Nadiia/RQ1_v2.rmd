@@ -1,0 +1,158 @@
+---
+title: "RQ1"
+author: "Nadiia Honcharenko"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+
+#Final Analysis
+
+__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+  
+  __Algorithms selected:__ SVM, K-nearest neighbor, Random Forest
+
+__Reason for Algorithm Selections:__ According to the several papers and studies, in the event that the relationship between two variables is non-linear and we are handling a two class classification problem,  nothing is going to be nearly as accurate as SVM. Concerning K-nearest neighbor algorithm, it runs generally slower and has lower accuracy in comparision with SVM, but it’s got some nice practical qualities. It’s easy to train, because k-NN is ranked as a lazy algorithmus and in fact there’s no training at all. Consequently it's easy to use, and it’s easy to understand the results. However k-NN classification is used more in the industry than an academic might think. In comparision with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used, roughly speaking, as they are, when SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and KNN Random Forest doesn't demand a parameter tuning to reach a high accuracy. 
+
+__Features Selected:__ Average price by shops, max travelled distance to shop, average distance by shops.
+
+__Analysis__
+__1) Data preparation for classification__
+```{r echo=TRUE, message=FALSE}
+library(caret)
+library(randomForest)
+library(e1071)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+
+# Creating of useful functions
+create_conf_matrix <- function(refLabels, predictLabels, positiveLabel){
+  conf_matrix <- confusionMatrix(
+    refLabels, # reference labels
+    predictLabels, # predicted labels
+    positive = positiveLabel, # label that corresponds to a "positive" results (optional)
+    dnn = c("actual", "predicted") # names of the confusion matrix dimensions  (optional)
+  )
+  return (conf_matrix)
+}
+
+get_evaluation <- function(refLabels, predictLabels, positiveLabel){
+  conf_matrix <- create_conf_matrix(refLabels, predictLabels, positiveLabel)
+  conf_matrix
+  print(conf_matrix$overall["Accuracy"])
+  print(conf_matrix$byClass["Sensitivity"])
+  print(conf_matrix$byClass["Specificity"])
+  ## todo add another evaluations
+}
+
+# Data preparation
+cleared_supermarket_data <- read_csv("D:/Data-Science-with-R/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_Data_Classification.csv")
+cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
+# %>%
+#   transform(class = as.factor(class))
+cleared_supermarked_tbl$class[cleared_supermarked_tbl$class == 0] <- "n"
+cleared_supermarked_tbl$class[cleared_supermarked_tbl$class == 1] <- "y"
+
+cleared_supermarked_tbl  %>%
+   transform(class = as.factor(class))
+flds <- createFolds(factor(cleared_supermarked_tbl$class), k = 5, list = FALSE, returnTrain = TRUE)
+
+comb_factor <- tbl_df(cbind(cleared_supermarked_tbl, flds))
+train_folders <- c(1,3,4)
+test_folders <- c(2,5)
+train_data <- cleared_supermarked_tbl[comb_factor$flds %in% train_folders,]
+test_data <- cleared_supermarked_tbl[comb_factor$flds %in% test_folders,]
+
+# splitting data to test and training
+train_ds <- train_data[, -26]
+y_train <- train_data %>% 
+  pull(class)
+y_test <- test_data %>% 
+  pull(class)
+test_ds <- test_data[, -26]
+
+draw_plot_for_classes <- function(data, predicted, title){
+  plot_data <- data %>% mutate(label = as.factor(predicted))
+  ggplot(plot_data, aes(distance_shop_1, avg_product_price_shop_1, color = label)) +
+    geom_point(alpha = .75) +
+    xlab("Distance") + ylab("Price") +
+    # geom_smooth(method=lm) +
+    coord_trans(x ="sqrt", y="sqrt") +
+    theme_bw()+
+    ggtitle(title)
+}
+
+classify_with_fit <- function(fit, title){
+  train_predicted <- predict(fit, train_ds, type = "class")
+  print("Evaluation for the training")
+  get_evaluation(as.factor(y_train), train_predicted, "y")
+  predicted <- predict(fit, test_ds, type = "class")
+  print("Evaluation for the tests")
+  get_evaluation(y_test, predicted, "y")
+  draw_plot_for_classes(test_ds, predicted, title)
+}
+
+#plot(test_ds, col = c("red","blue")[as.numeric(yclass_test)], pch = 20, cex = 1.3)
+```
+## Classification
+
+__2) Classification with SVM __
+
+```{r echo=TRUE, message=FALSE}
+#tune SVM
+tuneSvm <- tune(svm, class ~ ., data = train_data, ranges = list(gamma = 2^(-1:1)),
+     cost = 2^(2:4), tunecontrol = tune.control(sampling = "fix"))
+summary(tuneSvm)
+plot(tuneSvm)
+#classify with best params
+svmFit <- svm(y_train ~ ., data = train_data, kernel = "radial", 
+           cost = 1, gamma = 0.5,
+           scale=TRUE, cachesize=95)
+
+plot(svmFit, cbind(train_ds,y_train))
+classify_with_fit(svmFit, "SVM classification")
+```
+
+__3) Classification with K-nearest neighbor __
+
+```{r echo=TRUE, message=FALSE}
+# train knn classifier
+
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3, classProbs = TRUE) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+knnTrain <- train(class ~ ., data = train_data, method = "knn", 
+                trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
+plot(knnTrain)
+
+#classify with best params
+knnFit <- knn3(train_ds, as.factor(y_train), k = 9)
+
+train_predicted <- predict(knnFit, train_ds, type = "class")
+  print("Evaluation for the training")
+  get_evaluation(as.factor(y_train), train_predicted, "y")
+  predicted <- predict(knnFit, test_ds, type = "class")
+  print("Evaluation for the tests")
+  get_evaluation(as.factor(y_test), predicted, "y")
+  draw_plot_for_classes(test_ds, predicted, "knn clsf test")
+classify_with_fit(knnFit, "KNN classification")
+```
+
+__4) Classification with Random Forest __
+
+```{r echo=TRUE, message=FALSE}
+randomFit <- randomForest(y_train ~ ., train_data, ntree=500)
+classify_with_fit(randomFit, "Random Forest")
+```
+__Observations:__
+Binary classification gives an opportunity to divide the data into two separate classes, which will help to understand whether the buyer will go a long distance to the store, based on certain factors, or not. Thus, it is possible to observe an importance of the shop location criteria for customers in comparision with such measures as prices, product uniqueness, range of choice, etc.
+
+__Applications:__ These insights obtained can be further utilized by the business to create the best price politics and strategy in context of the stores location, which will increase its revenue.
+
+
