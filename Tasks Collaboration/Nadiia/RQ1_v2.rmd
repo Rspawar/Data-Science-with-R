@@ -55,13 +55,11 @@ get_evaluation <- function(refLabels, predictLabels, positiveLabel){
 # Data preparation
 cleared_supermarket_data <- read_csv("D:/Data-Science-with-R/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_Data_Classification.csv")
 cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
-# %>%
-#   transform(class = as.factor(class))
+
 cleared_supermarked_tbl$class[cleared_supermarked_tbl$class == 0] <- "n"
 cleared_supermarked_tbl$class[cleared_supermarked_tbl$class == 1] <- "y"
 
-cleared_supermarked_tbl  %>%
-   transform(class = as.factor(class))
+cleared_supermarked_tbl$class <- as.factor(cleared_supermarked_tbl$class)
 flds <- createFolds(factor(cleared_supermarked_tbl$class), k = 5, list = FALSE, returnTrain = TRUE)
 
 comb_factor <- tbl_df(cbind(cleared_supermarked_tbl, flds))
@@ -92,7 +90,7 @@ draw_plot_for_classes <- function(data, predicted, title){
 classify_with_fit <- function(fit, title){
   train_predicted <- predict(fit, train_ds, type = "class")
   print("Evaluation for the training")
-  get_evaluation(as.factor(y_train), train_predicted, "y")
+  get_evaluation(y_train, train_predicted, "y")
   predicted <- predict(fit, test_ds, type = "class")
   print("Evaluation for the tests")
   get_evaluation(y_test, predicted, "y")
@@ -111,11 +109,11 @@ tuneSvm <- tune(svm, class ~ ., data = train_data, ranges = list(gamma = 2^(-1:1
 summary(tuneSvm)
 plot(tuneSvm)
 #classify with best params
-svmFit <- svm(y_train ~ ., data = train_data, kernel = "radial", 
+svmFit <- svm(class ~ ., data = train_data, kernel = "radial", 
            cost = 1, gamma = 0.5,
            scale=TRUE, cachesize=95)
 
-plot(svmFit, cbind(train_ds,y_train))
+plot(svmFit, train_data)
 classify_with_fit(svmFit, "SVM classification")
 ```
 
@@ -131,14 +129,14 @@ knnTrain <- train(class ~ ., data = train_data, method = "knn",
 plot(knnTrain)
 
 #classify with best params
-knnFit <- knn3(train_ds, as.factor(y_train), k = 9)
+knnFit <- knn3(train_ds, y_train, k = 9)
 classify_with_fit(knnFit, "KNN classification")
 ```
 
 __4) Classification with Random Forest __
 
 ```{r echo=TRUE, message=FALSE}
-randomFit <- randomForest(y_train ~ ., train_data, ntree=500)
+randomFit <- randomForest(class ~ ., train_data, ntree=500)
 classify_with_fit(randomFit, "Random Forest")
 ```
 __Observations:__
