@@ -98,7 +98,6 @@ classify_with_fit <- function(fit, title){
   get_evaluation(y_test, predicted, "y")
   draw_plot_for_classes(test_ds, predicted, title)
 }
-
 #plot(test_ds, col = c("red","blue")[as.numeric(yclass_test)], pch = 20, cex = 1.3)
 ```
 ## Classification
@@ -133,14 +132,6 @@ plot(knnTrain)
 
 #classify with best params
 knnFit <- knn3(train_ds, as.factor(y_train), k = 9)
-
-train_predicted <- predict(knnFit, train_ds, type = "class")
-  print("Evaluation for the training")
-  get_evaluation(as.factor(y_train), train_predicted, "y")
-  predicted <- predict(knnFit, test_ds, type = "class")
-  print("Evaluation for the tests")
-  get_evaluation(as.factor(y_test), predicted, "y")
-  draw_plot_for_classes(test_ds, predicted, "knn clsf test")
 classify_with_fit(knnFit, "KNN classification")
 ```
 
