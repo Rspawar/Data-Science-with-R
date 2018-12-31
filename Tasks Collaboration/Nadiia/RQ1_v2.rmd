@@ -84,7 +84,7 @@ draw_plot_for_classes <- function(data, predicted, title){
     geom_point(alpha = .75) +
     xlab("Distance") + ylab("Price") +
     # geom_smooth(method=lm) +
-    coord_trans(x ="sqrt", y="sqrt") +
+    coord_trans(x ="sqrt", y="log10") +
     theme_bw()+
     ggtitle(title)
 }
