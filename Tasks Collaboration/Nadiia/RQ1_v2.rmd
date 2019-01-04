@@ -80,14 +80,10 @@ draw_plot_for_classes <- function(data, predicted, title){
 
   plot_data <- cbind(data, predicted) %>%
     select(distance_shop_1, avg_product_price_shop_1, predicted) %>% 
-    filter(data$distance_shop_1 > 0 & avg_product_price_shop_1 >0)%>%
-    mutate(label = as.factor(predicted))
-   print(colnames(plot_data))
-  ggplot(plot_data, aes(x = distance_shop_1, y = avg_product_price_shop_1, color = label)) +
-    geom_point(alpha = .75) +
-    xlab("Distance") + ylab("Price") +
-    # geom_smooth(method=lm) +
-    coord_trans(x ="sqrt", y="log10") +
+    filter(data$distance_shop_1 > 0 & avg_product_price_shop_1 >0)
+  
+  ggplot(plot_data, aes(x = predicted, fill = predicted)) +
+    geom_bar() +
     theme_bw()+
     ggtitle(title)
 }
