@@ -77,8 +77,11 @@ y_test <- test_data %>%
 test_ds <- test_data[, -26]
 
 draw_plot_for_classes <- function(data, predicted, title){
-  plot_data <- data %>% mutate(label = as.factor(predicted))
-  ggplot(plot_data, aes(distance_shop_1, avg_product_price_shop_1, color = label)) +
+  plot_data <- data %>% 
+    filter(distance_shop_1, avg_product_price_shop_1, predicted) %>% 
+    filter(data$distance_shop_1 > 0)  %>%
+  mutate(label = as.factor(predicted))
+  ggplot(plot_data, aes(color = label)) +
     geom_point(alpha = .75) +
     xlab("Distance") + ylab("Price") +
     # geom_smooth(method=lm) +
