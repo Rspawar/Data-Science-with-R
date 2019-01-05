@@ -36,11 +36,11 @@ for (row in 1:nrow(test)){
   ## Sort and find the most preferred shop
   supermarket_data_model[row, "most_pref"] <- names(sort(summary(as.factor(unlist(vec))), decreasing=T)[1:1])
   
-  ## Assign lables to customers (0 - 'Not willing to travel far for shopping' and 1 - 'Willing to travel far for shopping')
+  ## Assign lables to customers (0 or 'no' - 'Not willing to travel far for shopping' and 1 or 'yes'- 'Willing to travel far for shopping')
   if (supermarket_data_model[row, "min_dist"] == supermarket_data_model[row, "most_pref"]){
-    supermarket_data_model[row, "class"] <- 0
+    supermarket_data_model[row, "class"] <- 'no'
   } else{
-    supermarket_data_model[row, "class"] <- 1
+    supermarket_data_model[row, "class"] <- 'yes'
   }
 }
 
