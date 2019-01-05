@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 __1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
   
-  __Algorithms selected:__ SVM, K-nearest neighbor, Random Forest
+__Algorithms selected:__ SVM, K-nearest neighbor, Random Forest
 
 __Reason for Algorithm Selections:__ According to the several papers and studies, in the event that the relationship between two variables is non-linear and we are handling a two class classification problem,  nothing is going to be nearly as accurate as SVM. Concerning K-nearest neighbor algorithm, it runs generally slower and has lower accuracy in comparision with SVM, but it’s got some nice practical qualities. It’s easy to train, because k-NN is ranked as a lazy algorithmus and in fact there’s no training at all. Consequently it's easy to use, and it’s easy to understand the results. However k-NN classification is used more in the industry than an academic might think. In comparision with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used, roughly speaking, as they are, when SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and KNN Random Forest doesn't demand a parameter tuning to reach a high accuracy. 
 
@@ -55,8 +55,6 @@ get_evaluation <- function(refLabels, predictLabels, positiveLabel){
 cleared_supermarket_data <- read_csv("D:/Data-Science-with-R/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_Data_Classification.csv")
 cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
 
-cleared_supermarked_tbl$class[cleared_supermarked_tbl$class == 0] <- "n"
-cleared_supermarked_tbl$class[cleared_supermarked_tbl$class == 1] <- "y"
 cleared_supermarked_tbl$class <- as.factor(cleared_supermarked_tbl$class)
 ```
 
@@ -87,10 +85,10 @@ __3)  Functions for classifying and plotting__
 classify_with_fit <- function(fit, title){
   train_predicted <- predict(fit, train_ds, type = "class")
   print("Evaluation for the training")
-  get_evaluation(y_train, train_predicted, "y")
+  get_evaluation(y_train, train_predicted, "yes")
   predicted <- predict(fit, test_ds, type = "class")
   print("Evaluation for the tests")
-  get_evaluation(y_test, predicted, "y")
+  get_evaluation(y_test, predicted, "yes")
   draw_plot_for_classes(test_ds, predicted, title)
 }
 
