@@ -96,6 +96,7 @@ draw_plot_for_classes <- function(data, predicted, title){
   plot_data <- cbind(data, predicted)
   ggplot(plot_data, aes(x = predicted, fill = predicted)) +
     geom_bar() +
+    xlab("Prediction") + ylab("Customer count") +
     theme_bw()+
     ggtitle(title)
 }
