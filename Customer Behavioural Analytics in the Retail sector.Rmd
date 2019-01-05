@@ -54,7 +54,7 @@ However, on the contrary, our analysis is not carried out on the same datasets a
 
 Below are the RQs which were formulated at the initial stages of the project based on a primary understanding of the data but without a detailed Exploratory Data Analysis, 
 
-__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+__1. Are customers willing to travel long distances to purchase products?__ <br />
 _Relevance:_ This will help to understand whether the price is an important factor affecting the majority of customers purchase decisions. <br />
 
 __2. Which are the products for which customers are ready to travel long distances and for which products they select the closest shop?__ <br />
@@ -633,7 +633,7 @@ _Analysis:_ As visualized, the customers can be categorized on the basis of thre
 
 Exploratory Data Analysis provided a feasibility check on the Initial RQs formulated. The EDA phase helped to get a better understanding of the data in relation with the project objective. Hence this lead to the modification, removal or addition of new RQ. Below is the final set of RQ formulated which will be answered through this project,
 
-__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+__1. Are customers willing to travel long distances to purchase products?__ <br />
 _Relevance:_ This will help to understand whether the price is an important factor affecting the majority of customers purchase decisions. <br />
 
 __2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
@@ -650,7 +650,7 @@ _Relevance:_ This will help to understand the customers with potential high Cust
 
 #Final Analysis
 
-__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+__1. Are customers willing to travel long distances to purchase products?__ <br />
 
 __Algorithms selected:__
 

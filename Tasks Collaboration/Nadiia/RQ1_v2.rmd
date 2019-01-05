@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Final Analysis
 
-__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+__1. Are customers willing to travel long distances to purchase products?__ <br />
   
 __Algorithms selected:__ SVM, K-nearest neighbor, Random Forest
 
