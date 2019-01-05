@@ -85,10 +85,10 @@ __3)  Functions for classifying and plotting__
 classify_with_fit <- function(fit, title){
   train_predicted <- predict(fit, train_ds, type = "class")
   print("Evaluation for the training")
-  get_evaluation(y_train, train_predicted, "yes")
+  get_evaluation(y_train, train_predicted, "Yes")
   predicted <- predict(fit, test_ds, type = "class")
   print("Evaluation for the tests")
-  get_evaluation(y_test, predicted, "yes")
+  get_evaluation(y_test, predicted, "Yes")
   draw_plot_for_classes(test_ds, predicted, title)
 }
 
@@ -97,7 +97,8 @@ draw_plot_for_classes <- function(data, predicted, title){
   ggplot(plot_data, aes(x = predicted, fill = predicted)) +
     geom_bar() +
     xlab("Prediction") + ylab("Customer count") +
-    theme_bw()+
+    theme_bw() +
+    theme(legend.title = element_blank()) +
     ggtitle(title)
 }
 
