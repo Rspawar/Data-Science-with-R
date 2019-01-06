@@ -1,10 +1,7 @@
-library(tidyverse)
-library(ggplot2)
-library("RColorBrewer")
-library(readr)
-library(dplyr)
+
 library(e1071)
 library (caret)
+library(rpart)
 
 file_path<- "Input Dataset/Cleaned Dataset/Supermarket_Data_Prediction.csv"
 supermarket_data_predict <- read_csv(file_path)
@@ -20,7 +17,9 @@ test=mydata[-trainIndex, ]
 
 
 #naive bayes classifier
-NBclassfier=naiveBayes(most_pref_shop~., data=train)
+model = rpart(most_pref_shop ~., data=train, method="class")
+
+NBclassfier=naiveBayes(most_pref_shop ~., data=train)
 print(NBclassfier)
 trainPred=predict(NBclassfier,newdata =train, type = "class")
 trainTable=table(train$most_pref_shop, trainPred)
