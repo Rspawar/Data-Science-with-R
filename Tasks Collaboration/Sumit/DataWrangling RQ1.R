@@ -38,9 +38,9 @@ for (row in 1:nrow(test)){
   
   ## Assign lables to customers (0 or 'no' - 'Not willing to travel far for shopping' and 1 or 'yes'- 'Willing to travel far for shopping')
   if (supermarket_data_model[row, "min_dist"] == supermarket_data_model[row, "most_pref"]){
-    supermarket_data_model[row, "class"] <- 'no'
+    supermarket_data_model[row, "class"] <- 'No'
   } else{
-    supermarket_data_model[row, "class"] <- 'yes'
+    supermarket_data_model[row, "class"] <- 'Yes'
   }
 }
 
