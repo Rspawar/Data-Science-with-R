@@ -18,8 +18,8 @@ train_ind <- sample(seq_len(nrow(supermarket_data_predict)), size = smp_size)
 train <- supermarket_data_predict[train_ind, ]
 test <- supermarket_data_predict[-train_ind, ]
 
-svmmodel=svm(most_pref_shop ~., data=train, method="class")
-
+svmmodel=svm(most_pref_shop ~., data=train)
+print(svmmodel)
 #decision tree classifier
 modelr = rpart(most_pref_shop ~., data=train, method="class")
 
@@ -43,5 +43,6 @@ printALL=function(model,name){
 }
 printALL(NBclassfier,"naive bayes")
 printALL(modelr,"decision trees")
+printALL(svmmodel,"SVM")
 
 
