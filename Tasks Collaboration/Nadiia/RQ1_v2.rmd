@@ -128,13 +128,13 @@ __5) Classification with K-nearest neighbor __
 # train knn classifier
 
 set.seed(400)
-ctrl <- trainControl(method="repeatedcv",repeats = 3, classProbs = TRUE) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+ctrl <- trainControl(method="repeatedcv",repeats = 3)
 knnTrain <- train(class ~ ., data = train_data, method = "knn", 
                 trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
 plot(knnTrain)
 
 #classify with best params
-knnFit <- knn3(train_ds, y_train, k = 9)
+knnFit <- knn3(train_ds, y_train, k = 7)
 classify_with_fit(knnFit, "KNN classification")
 ```
 
