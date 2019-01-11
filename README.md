@@ -36,7 +36,9 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 The output is a detailed Analysis Report rendered as a HTML file Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 # Links
-Project Website: []: https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html
+Project Website: <> https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html
+
+<a href="https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html">Learn about the a href attribute</a>
 
 Project Screencast: 
 
