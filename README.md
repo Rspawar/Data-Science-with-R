@@ -32,13 +32,10 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 3. Select Knit to html_document to generate the detailed Analysis Report Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 # Output
-
 The output is a detailed Analysis Report rendered as a HTML file Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 # Links
-Project Website: <> https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html
-
-<a href="https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html">Learn about the a href attribute</a>
+Project Website:
 
 Project Screencast: 
 
