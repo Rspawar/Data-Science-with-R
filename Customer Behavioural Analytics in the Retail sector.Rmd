@@ -33,11 +33,11 @@ M.Sc. Uli Niemann
 #Overview and Motivation
 
 <font color ="black"> A customer is a key-centric factor for any business to be successful. Conventional wisdom tells us that the cost of retaining an existing customer is far less than acquiring a new one. In order that a business has a sustainable growth, the retention of its old customer base and expansion of the new customer base is very critical. This demands from a business to understand the behaviour of its customers in relation to the business. Therefore obtaining a 360&deg; view of its customers is crucial for a business looking for a competitive edge in the market. In such a scenario, Customer Behavioural Analytics plays an important role in leveraging data analytics to find meaningful behavioural patterns in the customer-specific business data. <br/>
-Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also aims to discover existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement strategies leading to an increased revenue through customer satisfaction. 
+Consequently, this project aims to understand the consumer behaviour in the retail sector. Decoding the consumer behaviour will be based on understanding how consumers make purchase decisions and what factors influence those decisions. This project also aims to discover the existence of dependencies between customers, products and shops to highlight further insights about their behaviour. These meaningful insights will further help a business to implement strategies leading to an increased revenue through customer satisfaction. 
 
 #Project Objective
 
-This project aims to address the problem of understanding behaviour of customers of an Italian retail distribution company _Coop_ in a single Italian city. The project intends to discover different analytical insights about the purchase behaviour of the customers through answering different formulated Research Questions (RQ)
+This project aims to address the problem of understanding the behaviour of customers of an Italian retail distribution company _Coop_ in a single Italian city. The project intends to discover different analytical insights about the purchase behaviour of the customers through answering different formulated Research Questions (RQ)
 
 #Data Source
 
@@ -47,14 +47,14 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 
 #Related Work
 
-The paper [@pennacchioli2013explaining] studies and highlights the product range effect illustrating that the customers are focussed more on the needs satisfied by the product. The range effect highlights that if the satisfaction is higher, customers are ready to travel long distances to purchase them and thus pay more than the price of the product itself. The study is based on the creation of a data mining framework and introduction of a new measurement called as "product sophistication" to study the range effect. The paper also studies the effect of the introduced measure on the accuracy of predicting the shop selected by the customer to buy a particular product. Hence this paper studies the customer behaviour in the retail sector majorly based on this range effect.<br />
-However, on the contrary, our analysis is not carried out on the same datasets as used in the paper but our dataset contains data aggregated from customer and information from shops and pivoted to new columns. As we have new columns in our dataset, the perspective of our analysis becomes different. Based on our data and understanding its different features, we framed different Research Questions to be answered from the data. These research questions do not focus only on one aspect (as the range effect in the paper), but attempt to decode the customer behaviour in different ways. Unlike the methodology used in the paper, this project obtains customer behavioural insights through the application of machine learning algorithms on the data. Through this, the project thus studies the consumer nature to determine whether customers are ready to travel long distances in spite of the high average price in a shop and what are the factors that contribute to their long distance travel. Additionally, the likelihood of a customer to select a particular shop, different customer segments and discovering the top-100 profitable customers is also studied in the scope of the project.
+The paper [@pennacchioli2013explaining] studies and highlights the product range effect illustrating that the customers are focussed more on the needs satisfied by the product. The range effect highlights that if the satisfaction is higher, customers are ready to travel long distances to purchase them and thus pay more than the price of the product itself. The study is based on the creation of a data mining framework and the introduction of a new measurement called "product sophistication" to study the range effect. The paper also studies the effect of the introduced measure on the accuracy of predicting the shop selected by the customer to buy a particular product. Hence this paper studies the customer behaviour in the retail sector majorly based on this range effect.<br />
+However, on the contrary, our analysis is not carried out on the same datasets as used in the paper but our dataset contains data aggregated from customer and information from shops and pivoted to new columns. As we have new columns in our dataset, the perspective of our analysis becomes different. Based on our data and understanding its different features, we framed different Research Questions to be answered from the data. These research questions do not focus only on one aspect (as the range effect in the paper), but attempt to decode the customer behaviour in different ways. Unlike the methodology used in the paper, this project obtains customer behavioural insights through the application of machine learning algorithms on the data. Through this, the project thus studies the consumer nature to determine whether customers are ready to travel long distances in spite of the high average price in a shop and what are the factors that contribute to their long-distance travel. Additionally, the likelihood of a customer to select a particular shop, different customer segments and discovering the top-100 profitable customers is also studied in the scope of the project.
 
 #Initial Questions
 
 Below are the RQs which were formulated at the initial stages of the project based on a primary understanding of the data but without a detailed Exploratory Data Analysis, 
 
-__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+__1. Are customers willing to travel long distances to purchase products?__ <br />
 _Relevance:_ This will help to understand whether the price is an important factor affecting the majority of customers purchase decisions. <br />
 
 __2. Which are the products for which customers are ready to travel long distances and for which products they select the closest shop?__ <br />
@@ -71,7 +71,7 @@ _Relevance:_ This will help to understand the customers with potential high Cust
 
 #Data Wrangling
 
-Data Wrangling consists of different steps transforming data from raw form into a clean form which is appropriate and accurate for data analysis. Below are the different steps which were carried out as a part of Data Wrangling,  
+Data Wrangling consists of different steps transforming data from the raw form into a clean form which is appropriate and accurate for data analysis. Below are the different steps which were carried out as a part of Data Wrangling,  
 
 ###Examination of Input Dataset 
 
@@ -85,7 +85,7 @@ library(DataExplorer)
 filepath<- "Input Dataset/Supermarket aggr.Customer.csv"
 supermarket_data <- read_csv(filepath)
 
-# Converts data to tbl class. as tbl’s are easier to examine than data frames and View data set in spreadsheet-like display
+# Converts data to tbl class. as tbl’s are easier to examine than data frames and View dataset in a spreadsheet-like display
 supermarket_tbl<-tbl_df(supermarket_data)
 ```
 
@@ -113,7 +113,7 @@ skim(supermarket_tbl) %>%  skimr::kable()
 
 ###Dataset Cleaning and Processing
 
-__Eliminate the mising values in the input dataset__
+__Eliminate the missing values in the input dataset__
 
 ```{r echo=TRUE, message=FALSE}
 # Eliminate the missing values in the dataset
@@ -243,9 +243,9 @@ __Analyze the Continuous Variables in the cleaned dataset as a Histogram__
 plot_histogram(supermarket_tbl_Clean1)
 ```
 
-_Interpretation:_ The histograms plotted depict the distribution of each continuous variable in the dataset. These plots can be used to understand the data spread, whether the data is symmetric or skewed and graphically summarize the univariate dataset distribution.
+_Interpretation:_ The plotted histograms depict the distribution of each continuous variable in the dataset. These plots can be used to understand the data spread, whether the data is symmetric or skewed and graphically summarize the univariate dataset distribution.
 
-__Examine the corelated features in the cleaned dataset through Correlation Analysis__
+__Examine the correlated features in the cleaned dataset through Correlation Analysis__
 
 ```{r echo=TRUE, message=FALSE}
 # Correlation analysis (Multivariate Analysis, On Continuous features only) to examine corelated features in the cleaned dataset
@@ -273,11 +273,11 @@ __Visualize the deviation from a specific probability distribution in the cleane
 plot_qq(supermarket_tbl_Clean1)
 ```
 
-_Interpretation:_ The Quantile-Quantile plot compares two probability distributions through plotting their quantiles against each other. This plot depicts if both set of quantiles are from the same distribution (points form a roughly straight line), helping to further understand the data distribution.
+_Interpretation:_ The Quantile-Quantile plot compares two probability distributions through plotting their quantiles against each other. This plot depicts if both sets of quantiles are from the same distribution (points form a roughly straight line), helping to further understand the data distribution.
 
 #Exploratory Data Analysis
 
-Exploratory Data Analysis (EDA) is the process of visualizing the main characteristics in the data before the formal modeling on the data to discover data patterns and verify the initial primary assumptions made on the data. Below are the visualizations of the EDA carried out,  
+Exploratory Data Analysis (EDA) is the process of visualizing the main characteristics in the data before the formal modelling on the data to discover data patterns and verify the initial primary assumptions made on the data. Below are the visualizations of the EDA carried out,  
 
 __1) Visualize the highest revenue generating shops, shops selling the highest number of products, shops selling the highest number of unique products and the relation between them__
 
@@ -349,9 +349,9 @@ p +geom_bar(stat = "identity", aes(fill = Legends), position = "dodge") +
 
 ```
 
-_Analysis:_ As visualized, the shops ordered based on the their highest Revenue Generated are Shop 1, 2, 3, 5, 4.
-The shops ordered based on the their highest amount of Products Sold are Shop 1, 2, 3, 5, 4.
-The shops ordered based on the their highest amount of Unique Products Sold are Shop 1, 2, 3, 4 & 5 (are on the same level).
+_Analysis:_ As visualized, the shops ordered based on their highest Revenue Generated is Shop 1, 2, 3, 5, 4.
+The shops ordered based on their highest amount of Products Sold is Shop 1, 2, 3, 5, 4.
+The shops ordered based on their highest amount of Unique Products Sold is Shop 1, 2, 3, 4 & 5 (are on the same level).
 The relation between these parameters as visualized based on the shop order can be determined as the shop generating the highest revenue has the highest amount of products sold (unique included). So in the dataset, the relation between the revenue generated and the products sold is directly proportional to each other. The ordering of the shops is mostly stable here at Shop 1, 2, 3, 5, 4.
 
 __2) Visualize the approximate customer base count for the different shops__
@@ -391,7 +391,7 @@ p +geom_bar(stat = "identity", fill = "gray" , position = "dodge", color = "blac
 
 ```
 
-_Analysis:_ As visualized, the shops ordered based on the their highest approximate customer base are Shop 1, 2, 3, 5, 4. So the highest approximate customer base for a shop determines its popularity in terms of a customer's product purchase from the shop. The ordering of the shops is here as Shop 1, 2, 3, 5, 4.  
+_Analysis:_ As visualized, the shops ordered based on their highest approximate customer base is Shop 1, 2, 3, 5, 4. So the highest approximate customer base for a shop determines its popularity in terms of a customer's product purchase from the shop. The ordering of the shops is here as Shop 1, 2, 3, 5, 4.  
 
 __3) Visualize the relationship between average prices and distances to the shop__
 
@@ -474,9 +474,9 @@ comb_cov_avg <- grid.arrange(pall_1, pavg_1,
 
 ```
 
-_Analysis:_ There are strong dependencies between long average distance and the average price in a shop. Also the average price is close enough to zero, therefore it makes a sense to check for zero values for price in the current dataset and its influence.
+_Analysis:_ There are strong dependencies between long average distance and the average price in a shop. Also, the average price is close enough to zero, therefore it makes a sense to check for zero values for the price in the current dataset and its influence.
 
-__4) Visualize data gap for average price in each shop__
+__4) Visualize data gap for the average price in each shop__
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 prices <- shop_ordered_slice[,seq(2, 10 ,2)]
@@ -488,7 +488,7 @@ pavg_2 <- plot_missing(dataset_with_na) + ggtitle("Gaps in shop prices")
 
 ```
 
-_Analysis:_ As visualized, there is a data gap for the value of average price in each shop. The value for average price in a shop for a customer is only filled in the dataset if the particular customer prefers the shop, else it is left as zero. This can be considered as a data gap but at the same time it is an information which is never utilized during analysis, meaning that the customer does not choose that particular shop in the first place. But this data gap does not affect on the tendency of the relationship between price and distance.
+_Analysis:_ As visualized, there is a data gap for the value of the average price in each shop. The value for average price in a shop for a customer is only filled in the dataset if the particular customer prefers the shop, else it is left as zero. This can be considered as a data gap but at the same time, it is an information which is never utilized during analysis, meaning that the customer does not choose that particular shop in the first place. But this data gap does not affect on the tendency of the relationship between price and distance.
 
 __5) Visualize patterns for the average price__
 
@@ -505,7 +505,7 @@ pall_4 <- ggplot(data = joined_shops_data2, aes(x = Shop, y = resid)) +
 pall_4
 ```
 
-_Analysis:_ As visualized, the residuals gave us a view of the average price after removing the distance effect. Once the strong relationship between distance and price has been removed, relationship to other external factors become noticable.
+_Analysis:_ As visualized, the residuals gave us a view of the average price after removing the distance effect. Once the strong relationship between distance and price has been removed, relationship to other external factors become noticeable.
 
 __6) Visualize the customer base for each shop based on different customer segments__
 
@@ -627,43 +627,170 @@ qplot(customer_segments, counts, data = shop_customer_segment_count, size=counts
     scale_size_continuous(range = c(3, 8))
 ```
 
-_Analysis:_ As visualized, the customers can be categorized on the basis of three different customer segements i.e. high, mid and low in terms of their loyality towards the shops and promotional offers can be customised for each segment. 
+_Analysis:_ As visualized, the customers can be categorized on the basis of three different customer segments i.e. high, mid and low in terms of their loyalty towards the shops and promotional offers can be customised for each segment. 
 
 #Final Research Questions
 
-Exploratory Data Analysis provided a feasibility check on the Initial RQs formulated. The EDA phase helped to get a better understanding of the data in relation with the project objective. Hence this lead to the modification, removal or addition of new RQ. Below is the final set of RQ formulated which will be answered through this project,
+Exploratory Data Analysis provided a feasibility check on the Initial RQs formulated. The EDA phase helped to get a better understanding of the data in relation to the project objective. Hence this leads to the modification, removal or addition of new RQ. Below is the final set of RQ formulated which will be answered through this project,
 
-__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
-_Relevance:_ This will help to understand whether the price is an important factor affecting the majority of customers purchase decisions. <br />
+__1. Are customers willing to travel long distances to purchase products?__ <br />
+_Relevance:_ This will help to understand the majority of the customer trends towards long distance travel to purchase products.<br />
 
-__2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
-_Relevance:_ This will help to understand the important factors that contribute towards the customers willing to travel long-distances to purchase products in spite of the high average product price in a shop, in turn better understanding the purchase behaviour of the customers<br />
+__2. What are the factors that contribute towards the long distance travel of the customer to purchase products?__ <br />
+_Relevance:_ This will help to understand the important factors that contribute towards the majority of the customers willing to travel long distances to purchase products, in turn better understanding the purchase behaviour of the customers.<br />
 
 __3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
 _Relevance:_ This will help to understand that which shops in the retail chain are in demand and predict their estimated customer base. This can further facilitate better stock management to meet customer demands.<br />
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
-_Relevance:_ This will help to understand the groups of similar customer based on their purchase behviour and target different shop-level marketing schemes to the appropriate customers.<br />
+_Relevance:_ This will help to understand the groups of the similar customer based on their purchase behaviour and target different shop-level marketing schemes to the appropriate customers.<br />
 
 __5. Which are the Top 100 customers that are most profitable in terms of revenue generation?__<br />
 _Relevance:_ This will help to understand the customers with potential high Customer Lifetime Value and target appropriate loyalty programs to generate satisfied loyal customers as advocates for the business.
 
 #Final Analysis
 
-__1. Are customers willing to travel long distances to purchase products in spite of the high average product price in a shop?__ <br />
+__1. Are customers willing to travel long distances to purchase products?__ <br />
 
-__Algorithms selected:__
+__Algorithms selected:__ Support Vector Machine (SVM), K-nearest neighbor (k-NN), Random Forest
 
-__Reason for Algorithm Selections:__
+__Reason for Algorithm Selections:__ In the event given that the relationship between two variables is non-linear and we are handling a two-class classification problem, SVM is the most accurate choice. 
 
-__Features Selected:__
+k-NN algorithm, runs generally slower and has lower accuracy in comparison with that of SVM, but exhibits certain practical qualities. It is easy to train k-NN as it is a lazy algorithm. Consequently, it is easy to use and eventually easy to understand the results. 
+
+In comparison with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of the difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used as it is whereas SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and k-NN Random Forest does not demand parameter tuning to reach a high accuracy.
+
+__Features Selected:__ distance_shop_1, distance_shop_2, distance_shop_3, distance_shop_4, distance_shop_5, products_purchased_shop_1, products_purchased_shop_2, products_purchased_shop_3, products_purchased_shop_4, products_purchased_shop_5, unique_products_purchased_shop_1, unique_products_purchased_shop_2, unique_products_purchased_shop_3, unique_products_purchased_shop_4, unique_products_purchased_shop_5, avg_product_price_shop_1, avg_product_price_shop_2, avg_product_price_shop_3, avg_product_price_shop_4, avg_product_price_shop_5, amount_purchased_shop_1, amount_purchased_shop_2, amount_purchased_shop_3, amount_purchased_shop_4, amount_purchased_shop_5, class are of importance and are selected for this RQ.
 
 __Analysis__
 
-__Observations:__
-Thus, the research question is answered by
+__1) Data preparation for classification__
 
-__Applications:__ These insights obtained can be further utilized by the business to 
+```{r echo=TRUE, message=FALSE}
+library(caret)
+library(randomForest)
+library(e1071)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+
+# Creating of useful functions
+create_conf_matrix <- function(refLabels, predictLabels, positiveLabel){
+  conf_matrix <- confusionMatrix(
+    refLabels, # reference labels
+    predictLabels, # predicted labels
+    positive = positiveLabel, # label that corresponds to a "positive" results (optional)
+    dnn = c("actual", "predicted") # names of the confusion matrix dimensions  (optional)
+  )
+  return (conf_matrix)
+}
+
+get_evaluation <- function(refLabels, predictLabels, positiveLabel){
+  conf_matrix <- create_conf_matrix(refLabels, predictLabels, positiveLabel)
+  conf_matrix
+  print(conf_matrix$overall["Accuracy"])
+  print(conf_matrix$byClass["Sensitivity"])
+  print(conf_matrix$byClass["Specificity"])
+}
+
+# Data preparation
+cleared_supermarket_data <- read_csv("Input Dataset/Cleaned Dataset/Supermarket_Data_Classification.csv")
+cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
+
+cleared_supermarked_tbl$class <- as.factor(cleared_supermarked_tbl$class)
+```
+
+__2) Stratified k-fold cross validation__
+
+```{r echo=TRUE, message=FALSE}
+flds <- createFolds(factor(cleared_supermarked_tbl$class), k = 5, list = FALSE, returnTrain = TRUE)
+
+comb_factor <- tbl_df(cbind(cleared_supermarked_tbl, flds))
+train_folders <- c(1,3,4)
+test_folders <- c(2,5)
+train_data <- cleared_supermarked_tbl[comb_factor$flds %in% train_folders,]
+test_data <- cleared_supermarked_tbl[comb_factor$flds %in% test_folders,]
+
+# splitting data to test and training
+train_ds <- train_data[, -26]
+y_train <- train_data %>% 
+  pull(class)
+y_test <- test_data %>% 
+  pull(class)
+test_ds <- test_data[, -26]
+```
+
+__3)  Functions for classifying and plotting__
+
+```{r echo=TRUE, message=FALSE}
+
+classify_with_fit <- function(fit, title){
+  train_predicted <- predict(fit, train_ds, type = "class")
+  print("Evaluation for the training")
+  get_evaluation(y_train, train_predicted, "Yes")
+  predicted <- predict(fit, test_ds, type = "class")
+  print("Evaluation for the tests")
+  get_evaluation(y_test, predicted, "Yes")
+  draw_plot_for_classes(test_ds, predicted, title)
+}
+
+draw_plot_for_classes <- function(data, predicted, title){
+  plot_data <- cbind(data, predicted)
+  ggplot(plot_data, aes(x = predicted, fill = predicted)) +
+    geom_bar() +
+    xlab("Prediction") + ylab("Customer count") +
+    theme_bw() +
+    theme(legend.title = element_blank()) +
+    ggtitle(title)
+}
+
+```
+
+Classification
+
+__4) Classification with SVM __
+
+```{r echo=TRUE, message=FALSE}
+#tune SVM
+tuneSvm <- tune(svm, class ~ ., data = train_data, ranges = list(gamma = 2^(-1:1)),
+     cost = 2^(2:4), tunecontrol = tune.control(sampling = "fix"))
+summary(tuneSvm)
+plot(tuneSvm)
+#classify with best params
+svmFit <- svm(class ~ ., data = train_data, kernel = "radial", 
+           cost = 1, gamma = 0.5,
+           scale=TRUE, cachesize=95)
+
+#plot(svmFit, train_data)
+classify_with_fit(svmFit, "SVM classification")
+```
+
+__5) Classification with k-NN __
+
+```{r echo=TRUE, message=FALSE}
+# train knn classifier
+
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3)
+knnTrain <- train(class ~ ., data = train_data, method = "knn", 
+                trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
+plot(knnTrain)
+
+#classify with best params
+knnFit <- knn3(train_ds, y_train, k = 7)
+classify_with_fit(knnFit, "KNN classification")
+```
+
+__6) Classification with Random Forest __
+
+```{r echo=TRUE, message=FALSE}
+randomFit <- randomForest(class ~ ., train_data, ntree=500)
+classify_with_fit(randomFit, "Random Forest")
+```
+
+__Observations:__ It was found out that Yes the majority of the customers are ready to travel long distances to purchase products and which is affected by certain factors. Binary classification gives an opportunity to divide the data into two separate classes, which will help to understand whether the buyer will travel a long distance to the store or not, based on certain factors. Thus, the research question is answered by classifying the customers based on certain features to identify whether or not the majority of them are ready to travel long distances to purchase products.
+
+__Applications:__ These insights obtained can be further utilized by the business to understand the behaviour trend of the majority of the customers related to long-distance travel to purchase products. This further paves way for the business to understand the reasons behind such majority trends. Eventually, this helps the business to devise strategies in the context of the store locations coupled with enhancing the factors influencing such trends and thus generating more revenue for the business with increased customer satisfaction..
 
 __2. What are the factors that contribute towards the long distance travel of the customer to purchase products in spite of the high average product price in a shop?__ <br />
 
@@ -697,11 +824,11 @@ __Applications:__ These insights obtained can be further utilized by the busines
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
 
-__Algorithms selected:__ K-means, Pricipal Component Analysis (PCA)
+__Algorithms selected:__ K-means, Principal Component Analysis (PCA)
 
-__Reason for Algorithm Selections:__ K-means clustering is a very simple and fast algorithm. It is the popular method used for customer segmentation and specially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Hierarchical and model based clustering methods require to calculate a full distance matrix exhibiting limited scalability and large memory requirements for computation on a large dataset. Comparably, K-means clustering is more run-time efficient. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
+__Reason for Algorithm Selections:__ K-means clustering is a very simple and fast algorithm [@hartigan1979algorithm]. It is the popular method used for customer segmentation and especially for numerical data. K-means also has computational advantages in terms of it scaling well with large datasets. Hierarchical and model-based clustering methods require to calculate a full distance matrix exhibiting limited scalability and large memory requirements for computation on a large dataset. Comparably, K-means clustering is more run-time efficient. Considering these facts and given that the input dataset is large and mainly contains numerical data, k-means was an ideal choice for customer segmentation. 
 
-PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and  transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data). As compared to K-means PCA is not a direct solution thus finding it from a different perspective and can help to detect customer clusters not found by K-means. PCA is used here for this research question as a valuable cross-check to K-means number of clusters determination.
+PCA is a dimensionality reduction algorithm which visualizes the essence of the dataset through data decomposition and transformation into principal components (PC) maximizing the linear variance of the data (More variance indicates more understanding of the data) [@ding2004k]. As compared to K-means PCA is not a direct solution thus finding it from a different perspective and can help to detect customer clusters not found by K-means. PCA is used here for this research question as a valuable cross-check to K-means number of clusters determination.
 
 __Features Selected:__ The RQ wants to identify the clusters of customers based on their purchase behaviour i.e. the shops which the customer prefers for the purchase. Hence the features, customer_id, amount_purchased_shop_1, amount_purchased_shop_2, amount_purchased_shop_3, amount_purchased_shop_4, amount_purchased_shop_5 are of importance and are selected for this RQ.
 
@@ -740,9 +867,9 @@ wssplot(cluster.slice.scale)
 
 ```
 
-The above plot depicts a sharp decrease from values 1 to 4 for number of clusters with a slight decrease from 4 to 5 which estimates a 4-cluster or 5-cluster solution.
+The above plot depicts a sharp decrease for number of clusters from values 1 to 4 with a slight decrease from 4 to 5 which estimates a 4-cluster or 5-cluster solution.
 
-__2) Perform K-means clustering with number of clusters as 4 and 5__
+__2) Perform K-means clustering with the number of clusters as 4 and 5__
 
 ```{r echo=TRUE, message=FALSE}
 
@@ -766,7 +893,7 @@ fviz_eig(pca) +
   ggtitle(label='Principal Component Analysis')
 ```
 
-As observed, PCA 1 and PCA 2 combined explain majority of the data variance and then there is a drop from PCA 2 to PCA 3. Hence this infers that, visualization with PCA 1 and PC 2 will give a good understanding of the data and including more PCA's after PCA 2 will only result in a minimal improvement.
+As observed, PCA 1 and PCA 2 combined explain the majority of the data variance and then there is a drop from PCA 2 to PCA 3. Hence this infers that visualization with PCA 1 and PC 2 will give a good understanding of the data and including more PCA's after PCA 2 will only result in minimal improvement.
 
 PCA with 4 cluster K-means
 
@@ -852,7 +979,7 @@ p +geom_bar(stat = "identity", aes(fill = Legends)) +
 
 ```
 
-__Observations:__ Clustering the data based on the purchase behaviour of customers i.e. from the shops they shop the most, revealed 5 separable clusters to analyze. Cluster analysis, helped to identify the customers in each cluster based on their customer IDs. This is useful to understand the different customers that build the customer base in each cluster. Further, Customer Segmentation facilitated to identify the customers of different shops in each segment (cluster). This further helped to divide the cluster and attach meaning to it. Thus, the research question is answered by identifying five customer segments based on their purchase behaviour and further partitioning these segments by determining the specific customers belonging to the five different shops.     
+__Observations:__ Clustering the data based on the purchase behaviour of customers i.e. from the shops they shop the most, revealed 5 separable clusters to analyze. Cluster analysis helped to identify the customers in each cluster based on their customer IDs. This is useful to understand the different customers that build the customer base in each cluster. Further, Customer Segmentation facilitated to identify the customers of different shops in each segment (cluster). This further helped to divide the cluster and attach meaning to it. Thus, the research question is answered by identifying five customer segments based on their purchase behaviour and further partitioning these segments by determining the specific customers belonging to the five different shops.     
 
 __Applications:__ Detection of clusters can help the business to develop a specific strategy for each cluster base. Clustering can also be used to understand the purchase behaviour of customers by keeping a track of customers over months and detecting the number of customers moving from one cluster to other. This helps the business to better organize strategies to increase revenue at different shops. Customer Segmentation insights obtained can be further utilized by the business to better focus their marketing efforts on the right customers. Eg. Discounts and offers related to a particular shop can be sent to only the customers who usually purchase at the particular shop without bothering the customers of other shops. Thus, targeting the right customers for the right deals can help to cut-down the marketing costs, generate more revenue and increase customer satisfaction.  
 
