@@ -32,18 +32,13 @@ for(i in 1:5){
   #function to calculate accuracy of different models
   printALL=function(model,name){
     message(name)
-    trainPred=predict(model,newdata =train, type = "class")
-    conf<-confusionMatrix(ytrain,trainPred,"YES")
-    
-    print("Train")
-    print(conf$overall["Accuracy"])
-    print(conf$byClass[,"Sensitivity"])
-    print(conf$byClass[,"Specificity"])
     testPred=predict(model, newdata=test, type="class")
     conftest<-confusionMatrix(ytest,testPred,"YES")
-    print("Test")
+    print(conftest)
     print(conftest$overall["Accuracy"])
+    print("Sensitivity")
     print(conftest$byClass[,"Sensitivity"])
+    print("Specificity")
     print(conftest$byClass[,"Specificity"])
   }
   NBclassfier=naiveBayes(most_pref_shop ~., data=train,laplace=3)
