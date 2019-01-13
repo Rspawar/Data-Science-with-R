@@ -51,21 +51,28 @@ __3)  Accuracy calculation__
 #5 folds 5 different train-test dataset combinations
 for(i in 1:5){
   #Segement your data by fold using the which() function 
+  
   testIndexes <- which(folds==i,arr.ind=TRUE)
   test <- supermarket_data_predict[testIndexes, ]
   train <- supermarket_data_predict[-testIndexes, ]
-  
+  ytrain<-train%>%pull(most_pref_shop)
+  ytest<-test%>%pull(most_pref_shop)
   #function to calculate accuracy of different models
   printALL=function(model,name){
-      
-    trainPred=predict(model,newdata =train, type = "class")
-    trainTable=table(train$most_pref_shop, trainPred)
-    testPred=predict(model, newdata=test, type="class")
-    testTable=table(test$most_pref_shop, testPred) 
-    trainAcc=(trainTable[1,1]+trainTable[2,2]+trainTable[3,3])/sum(trainTable)
-    testAcc=(testTable[1,1]+testTable[2,2]+testTable[3,3])/sum(testTable)
     message(name)
-    print(round(cbind(trainAccuracy=trainAcc, testAccuracy=testAcc),3))
+    trainPred=predict(model,newdata =train, type = "class")
+    conf<-confusionMatrix(ytrain,trainPred,"YES")
+    
+    print("Train")
+    print(conf$overall["Accuracy"])
+    print(conf$byClass[,"Sensitivity"])
+    print(conf$byClass[,"Specificity"])
+    testPred=predict(model, newdata=test, type="class")
+    conftest<-confusionMatrix(ytest,testPred,"YES")
+    print("Test")
+    print(conftest$overall["Accuracy"])
+    print(conftest$byClass[,"Sensitivity"])
+    print(conftest$byClass[,"Specificity"])
   }
   NBclassfier=naiveBayes(most_pref_shop ~., data=train,laplace=3)
   modelr<-rpart(most_pref_shop ~., data=train, method="class",control=rpart.control(cp=0.0001))
