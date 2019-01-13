@@ -17,7 +17,9 @@ __Analysis__
 __1) Data preparation__
 Out of all 5 shops in the chain, every customer has a shop which they prefer the most. To find out the factors that are responsible for the customers selecting a particular shop as the most preferred shop, we generated 7 new columns. We generated new columns to find out the shop which are closest to every customer (a), the shop from which the buy the mos number of products (b), the shops from which they buy the most number of unique products (c), the shops at which they have the least average price (d), the shops at which they spend most amount of money (e), the most preferred shop (f) and the factor based on which they choose their most preferred shop (g). 
 
-To generate the values for column - (f), the most frequent value in the columns - b, c, d and e is selected and assigned to the customers as the most preferred shop. Based on the most preferred shop for each customer, they are assigned different factors. The customers who have the closest shop, shop with least average price or shop with most unique products purchased as the most preferred shop, they are assigned 'dist', 'price' or 'satisf' respectively as the factor. If they have a combination of these three factors, they are assigned 'dist_price', 'dist_satisf', 'price_satisf' or 'dist_price_satisf' respectively.
+To generate the values for column - (f), the most frequent value in the columns - (b), (c), (d) and (e) is selected and assigned to the customers as the most preferred shop. Based on the most preferred shop for each customer, they are assigned different factors. The customers who have the closest shop, shop with least average price or shop with most unique products purchased as the most preferred shop, they are assigned 'dist', 'price' or 'satisf' respectively as the factor. If they have a combination of these three factors, they are assigned 'dist_price', 'dist_satisf', 'price_satisf' or 'dist_price_satisf' respectively.
+
+Every product has a sohpistication value attached with it and are meant to satisfy the needs of a customer. Higher the sohpistication value of a product, higher satisfaction they provide to the buyer. The products needed for daily use such as bread, water, etc. are bought in bulk and are considered less sophisticated than the ones that are bought in comparitively lesser quantities such as dvd player, coffee flask, etc. So, here we have assumed that higher the number of unique products bought, higher is the satisfaction of the customer and more cost they will be ready to pay in terms of either distance to travel or in terms of the price of the items.
 
 ```{r echo=TRUE, message=FALSE}
 ## Call the packages
@@ -39,7 +41,7 @@ sel_features <- all_features[-c(1,2,8,9,10,16,22,28,34,35,36,37,38,39,40)]
 ## Create a data frame with only the selected features
 supermarket_data_model <- supermarket_data_clean %>% select(sel_features)
 
-## Generate new columns to find the closest shop, shops from which most products are purchased, shops ## from which most unique products are purchased, shops offfering least average product price and shops ## at which maximum amount of money is spent by a customers.  
+## Generate new columns to find the closest shop, shops from which most products are purchased, shops from which most unique products are purchased, shops offfering least average product price and shops at which maximum amount of money is spent by a customers.  
 supermarket_data_model$min_dist <- str_sub(colnames(supermarket_data_model[,1:5]),-1,-1)[apply(supermarket_data_model[,1:5],1,which.min)]
 supermarket_data_model$most_prod_purch_from <- str_sub(names(supermarket_data_model[,6:10]),-1,-1)[max.col(supermarket_data_model[,6:10], "last")]
 supermarket_data_model$most_uni_prod_purch_from <- str_sub(names(supermarket_data_model[,11:15]),-1,-1)[max.col(supermarket_data_model[,11:15], "last")]
@@ -126,7 +128,7 @@ fc_plot + geom_bar(stat = "identity", aes(fill = Legend)) +
 
 ```
 
-So, from the above observation we can conclude that 'satisfaction' or 'shopping experiece' plays a key role in the customer's decision making process while choosing the most preferred shop.
+So, from the above observation we can conclude that 'satisfaction' plays a key role in the customer's decision making process while choosing the most preferred shop.
 
 __Applications:__ 
 The insights obtained can be used by the business to devise strategies which will help them to increase their revenue while maintaining their current customer base.
