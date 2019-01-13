@@ -1,7 +1,7 @@
 ---
 title: "RQ3"
-author:"Shivani Jadhav"
 output: html_document
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -31,8 +31,9 @@ library(e1071)
 library(rpart)
 library(readr)
 library(tidyverse)
+library(rpart.plot)
 
-file_path<- "Input Dataset/Cleaned Dataset/Supermarket_Data_Prediction.csv"
+file_path<- "Supermarket_Data_Prediction.csv"
 supermarket_data_predict <- read_csv(file_path)
 View(supermarket_data_predict)
 supermarket_data_predict$most_pref_shop=factor(supermarket_data_predict$most_pref_shop)
@@ -59,7 +60,7 @@ for(i in 1:5){
   ytest<-test%>%pull(most_pref_shop)
   #function to calculate accuracy of different models
   printALL=function(model,name){
-    message(name)
+    print(name)
     testPred=predict(model, newdata=test, type="class")
     conftest<-confusionMatrix(ytest,testPred,"YES")
     print(conftest$overall["Accuracy"])
