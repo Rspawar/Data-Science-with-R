@@ -7,7 +7,24 @@ file_path<- "Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
 supermarket_data_clean <- read_csv(file_path)
 
 
-## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
+## Calculate the revenue generated for each shop
+revenue_shop_1 <- sum(supermarket_data_clean$amount_purchased_shop_1)
+revenue_shop_2 <- sum(supermarket_data_clean$amount_purchased_shop_2)
+revenue_shop_3 <- sum(supermarket_data_clean$amount_purchased_shop_3)
+revenue_shop_4 <- sum(supermarket_data_clean$amount_purchased_shop_4)
+revenue_shop_5 <- sum(supermarket_data_clean$amount_purchased_shop_5)
+
+## Calculate the Loyality Score of the customers for each shop based on their contribution to the revenue of the shop
+supermarket_data_clean$loyality_score_shop_1 <- with(supermarket_data_clean, amount_purchased_shop_1/revenue_shop_1 * 100)
+supermarket_data_clean$loyality_score_shop_2 <- with(supermarket_data_clean, amount_purchased_shop_2/revenue_shop_2 * 100)
+supermarket_data_clean$loyality_score_shop_3 <- with(supermarket_data_clean, amount_purchased_shop_3/revenue_shop_3 * 100)
+supermarket_data_clean$loyality_score_shop_4 <- with(supermarket_data_clean, amount_purchased_shop_4/revenue_shop_4 * 100)
+supermarket_data_clean$loyality_score_shop_5 <- with(supermarket_data_clean, amount_purchased_shop_5/revenue_shop_5 * 100)
+  
+## Sort the data by desceding order
+s <- supermarket_data_clean[order(-supermarket_data_clean$loyality_score_shop_1)]
+
+
 prod_purch_ratio_shop_1 <- with(supermarket_data_clean, products_purchased_shop_1/products_purchased_total)
 prod_purch_ratio_shop_2 <- with(supermarket_data_clean, products_purchased_shop_2/products_purchased_total)
 prod_purch_ratio_shop_3 <- with(supermarket_data_clean, products_purchased_shop_3/products_purchased_total)
