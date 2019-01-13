@@ -15,7 +15,7 @@ all_features <- colnames(supermarket_data_clean)
 sel_features <- all_features[-c(1,2,8,9,10,16,22,28,34,35,36,37,38,39,40)]
 
 ## Create a data frame with only the selected features
-supermarket_data_model <- supermarket_data_clean %>% select(sel_features)
+supermarket_data_model <- supermarket_data_clean %>% select(sel_features) %>% select()
 
 ## Generate new columns to find the closest shop, shops from which most products are purchased, shops from which most unique products are purchased, 
 ## shops offfering least average product price and shops at which maximum amount of money is spent by a customers.  
@@ -59,7 +59,7 @@ for (row in 1:nrow(test)){
     supermarket_data_model[row, "factor"] <- 2
   }
   else{
-    #supermarket_data_model[row, "factor"] <- 0
+    supermarket_data_model[row, "factor"] <- 7
   }
 }
 
