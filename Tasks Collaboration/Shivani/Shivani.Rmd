@@ -1,7 +1,7 @@
 ---
 title: "RQ3"
-author:"Shivani Jadhav"
 output: html_document
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -31,8 +31,9 @@ library(e1071)
 library(rpart)
 library(readr)
 library(tidyverse)
+library(rpart.plot)
 
-file_path<- "Input Dataset/Cleaned Dataset/Supermarket_Data_Prediction.csv"
+file_path<- "Supermarket_Data_Prediction.csv"
 supermarket_data_predict <- read_csv(file_path)
 View(supermarket_data_predict)
 supermarket_data_predict$most_pref_shop=factor(supermarket_data_predict$most_pref_shop)
@@ -51,21 +52,22 @@ __3)  Accuracy calculation__
 #5 folds 5 different train-test dataset combinations
 for(i in 1:5){
   #Segement your data by fold using the which() function 
+  
   testIndexes <- which(folds==i,arr.ind=TRUE)
   test <- supermarket_data_predict[testIndexes, ]
   train <- supermarket_data_predict[-testIndexes, ]
-  
+  ytrain<-train%>%pull(most_pref_shop)
+  ytest<-test%>%pull(most_pref_shop)
   #function to calculate accuracy of different models
   printALL=function(model,name){
-      
-    trainPred=predict(model,newdata =train, type = "class")
-    trainTable=table(train$most_pref_shop, trainPred)
+    print(name)
     testPred=predict(model, newdata=test, type="class")
-    testTable=table(test$most_pref_shop, testPred) 
-    trainAcc=(trainTable[1,1]+trainTable[2,2]+trainTable[3,3])/sum(trainTable)
-    testAcc=(testTable[1,1]+testTable[2,2]+testTable[3,3])/sum(testTable)
-    message(name)
-    print(round(cbind(trainAccuracy=trainAcc, testAccuracy=testAcc),3))
+    conftest<-confusionMatrix(ytest,testPred,"YES")
+    print(conftest$overall["Accuracy"])
+    print("Sensitivity")
+    print(conftest$byClass[,"Sensitivity"])
+    print("Specificity")
+    print(conftest$byClass[,"Specificity"])
   }
   NBclassfier=naiveBayes(most_pref_shop ~., data=train,laplace=3)
   modelr<-rpart(most_pref_shop ~., data=train, method="class",control=rpart.control(cp=0.0001))
