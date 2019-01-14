@@ -19,11 +19,23 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 ```
    pacman::p_load(char = c(
    "tidyverse",
-   "DataExplorer",
-   "corrplot",
-   "corrr",
-   "deldir",
+   "dplyr",
+   "ggplot2",
+   "modelr",
+   "gridExtra",
+   "caret",
+   "randomForest",
    "e1071",
+   "RColorBrewer",
+   "factoextra",
+   "cluster",
+   "metricsgraphics",
+   "rpart",
+   "readr",
+   "rpart.plot",
+   "plotly",
+   "clvalid"
+   
    ))
 ```
 
