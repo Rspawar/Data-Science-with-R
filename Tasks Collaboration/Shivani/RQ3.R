@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 library(caret)
 library(dplyr)         # Used by caret
 library(kernlab)       # support vector machine 
@@ -8,6 +8,9 @@ library(rpart)
 library(readr)
 library(tidyverse)
 library(rpart.plot)
+library(ggplot2)
+library(gridExtra)
+library(grid)
 
 
 file_path<- "Input Dataset/Cleaned Dataset/Supermarket_Data_Prediction.csv"
@@ -57,12 +60,14 @@ for(i in 1:5){
   
 }
 
+
 #cross-validation accuracy plot
+par(mfrow=c(2,3))
 y<-list(resnb[1,1],resnb[2,1],resnb[3,1],resnb[4,1],resnb[5,1])
 ynew<-list(resdec[1,1],resdec[2,1],resdec[3,1],resdec[4,1],resdec[5,1])
 x<-list(1,2,3,4,5)
 xaxis<-unlist(x)
-plot(xaxis,unlist(y),type="l" ,lwd=2,col="red",xlab="Folds",ylab="Accuracy",ylim=range( c(y, ynew) ),main="Cross Validation - Accuracy")
+accuracyplot<-plot(xaxis,unlist(y),type="l" ,lwd=2,col="red",xlab="Folds",ylab="Accuracy",ylim=range( c(y, ynew) ),main="Cross Validation - Accuracy")
 lines(xaxis,unlist(ynew),type="l",lwd=2,col="green")
 legend("topleft", 
        legend = c("Naive Bayes", "Decision Tree"),lwd=2,col=c("red","green"))
@@ -72,7 +77,7 @@ y<-list(resnb[1,2],resnb[2,2],resnb[3,2],resnb[4,2],resnb[5,2])
 ynew<-list(resdec[1,2],resdec[2,2],resdec[3,2],resdec[4,2],resdec[5,2])
 x<-list(1,2,3,4,5)
 xaxis<-unlist(x)
-plot(xaxis,unlist(y),type="l" ,lwd=2,col="red",xlab="Folds",ylab="Sensitivity",ylim=range( c(y, ynew) ),main="Cross Validation - Sensitivity")
+sensitivityplot<-plot(xaxis,unlist(y),type="l" ,lwd=2,col="red",xlab="Folds",ylab="Sensitivity",ylim=range( c(y, ynew) ),main="Cross Validation - Sensitivity")
 lines(xaxis,unlist(ynew),type="l",lwd=2,col="green")
 legend("topleft", 
        legend = c("Naive Bayes", "Decision Tree"),lwd=2,col=c("red","green"))
@@ -82,11 +87,10 @@ y<-list(resnb[1,3],resnb[2,3],resnb[3,3],resnb[4,3],resnb[5,3])
 ynew<-list(resdec[1,3],resdec[2,3],resdec[3,3],resdec[4,3],resdec[5,3])
 x<-list(1,2,3,4,5)
 xaxis<-unlist(x)
-plot(xaxis,unlist(y),type="l" ,lwd=2,col="red",xlab="Folds",ylab="Specificity",ylim=range( c(y, ynew) ),main="Cross Validation - Specificity")
+specificityplot<-plot(xaxis,unlist(y),type="l" ,lwd=2,col="red",xlab="Folds",ylab="Specificity",ylim=range( c(y, ynew) ),main="Cross Validation - Specificity")
 lines(xaxis,unlist(ynew),type="l",lwd=2,col="green")
 legend("topleft", 
        legend = c("Naive Bayes", "Decision Tree"),lwd=2,col=c("red","green"))
-
 
 
 
@@ -159,4 +163,3 @@ printALL(NBclassfier,"naive bayes")
 printALL(modelr,"decision trees")
 
 
->>>>>>> 5bd6c20ea30814287ac8323188f8ed06ff618c96
