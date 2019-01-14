@@ -509,125 +509,10 @@ _Analysis:_ As visualized, the residuals gave us a view of the average price aft
 
 __6) Visualize the customer base for each shop based on different customer segments__
 
-```{r echo=TRUE, message=FALSE}
-## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
-prod_purch_ratio_shop_1 <- with(supermarket_data_clean, products_purchased_shop_1/products_purchased_total)
-prod_purch_ratio_shop_2 <- with(supermarket_data_clean, products_purchased_shop_2/products_purchased_total)
-prod_purch_ratio_shop_3 <- with(supermarket_data_clean, products_purchased_shop_3/products_purchased_total)
-prod_purch_ratio_shop_4 <- with(supermarket_data_clean, products_purchased_shop_4/products_purchased_total)
-prod_purch_ratio_shop_5 <- with(supermarket_data_clean, products_purchased_shop_5/products_purchased_total)
-
-## Ratio of amount spent at each shop (amount spent by a customer at a shop over total amount spent by that customer)
-amt_purch_ratio_shop_1 <- with(supermarket_data_clean, amount_purchased_shop_1/amount_purchased_total)
-amt_purch_ratio_shop_2 <- with(supermarket_data_clean, amount_purchased_shop_2/amount_purchased_total)
-amt_purch_ratio_shop_3 <- with(supermarket_data_clean, amount_purchased_shop_3/amount_purchased_total)
-amt_purch_ratio_shop_4 <- with(supermarket_data_clean, amount_purchased_shop_4/amount_purchased_total)
-amt_purch_ratio_shop_5 <- with(supermarket_data_clean, amount_purchased_shop_5/amount_purchased_total)
-
-## Loyality of customer to a shop (Ratio of products purchased from each shop times Ratio of amount spent at each shop)
-loyality_shop_1 <- prod_purch_ratio_shop_1 * amt_purch_ratio_shop_1
-loyality_shop_2 <- prod_purch_ratio_shop_2 * amt_purch_ratio_shop_2
-loyality_shop_3 <- prod_purch_ratio_shop_3 * amt_purch_ratio_shop_3
-loyality_shop_4 <- prod_purch_ratio_shop_4 * amt_purch_ratio_shop_4
-loyality_shop_5 <- prod_purch_ratio_shop_5 * amt_purch_ratio_shop_5
 
 
-## Data frames based on calculated values
-prod_purch_ratio_shop <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_1, prod_purch_ratio_shop_2, prod_purch_ratio_shop_3, prod_purch_ratio_shop_4, prod_purch_ratio_shop_5)
-amt_purch_ratio_shop <- data.frame(supermarket_data_clean$customer_id, amt_purch_ratio_shop_1, amt_purch_ratio_shop_2, amt_purch_ratio_shop_3, amt_purch_ratio_shop_4, amt_purch_ratio_shop_5)
-loyality <- data.frame(supermarket_data_clean$customer_id, loyality_shop_1, loyality_shop_2, loyality_shop_3, loyality_shop_4, loyality_shop_5)
 
-## Data frames as per shop nos
-shop_1 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_1, amt_purch_ratio_shop_1, loyality_shop_1)
-shop_2 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_2, amt_purch_ratio_shop_2, loyality_shop_2)
-shop_3 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_3, amt_purch_ratio_shop_3, loyality_shop_3)
-shop_4 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_4, amt_purch_ratio_shop_4, loyality_shop_4)
-shop_5 <- data.frame(supermarket_data_clean$customer_id, prod_purch_ratio_shop_5, amt_purch_ratio_shop_5, loyality_shop_5)
-
-
-## Customer segments for Shop 1 based on Loyality Score
-high_end_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0.9), ]
-mid_range_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0.50 & shop_1$loyality_shop_1 <= 0.9), ]
-low_end_shop_1 <- shop_1[which(shop_1$loyality_shop_1 > 0 & shop_1$loyality_shop_1 <= 0.5), ]
-
-## Customer segments for Shop 2 based on Loyality Score
-high_end_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0.9), ]
-mid_range_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0.50 & shop_2$loyality_shop_2 <= 0.9), ]
-low_end_shop_2 <- shop_2[which(shop_2$loyality_shop_2 > 0 & shop_2$loyality_shop_2 <= 0.5), ]
-
-## Customer segments for Shop 3 based on Loyality Score
-high_end_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0.9), ]
-mid_range_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0.50 & shop_3$loyality_shop_3 <= 0.9), ]
-low_end_shop_3 <- shop_3[which(shop_3$loyality_shop_3 > 0 & shop_3$loyality_shop_3 <= 0.5), ]
-
-## Customer segments for Shop 4 based on Loyality Score
-high_end_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0.9), ]
-mid_range_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0.50 & shop_4$loyality_shop_4 <= 0.9), ]
-low_end_shop_4 <- shop_4[which(shop_4$loyality_shop_4 > 0 & shop_4$loyality_shop_4 <= 0.5), ]
-
-## Customer segments for Shop 5 based on Loyality Score
-high_end_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0.9), ]
-mid_range_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0.50 & shop_5$loyality_shop_5 <= 0.9), ]
-low_end_shop_5 <- shop_5[which(shop_5$loyality_shop_5 > 0 & shop_5$loyality_shop_5 <= 0.5), ]
-
-
-## Number of customers in each segment for Shop 1
-count_high_end_shop_1 <- nrow(high_end_shop_1)
-count_mid_range_shop_1 <- nrow(mid_range_shop_1)
-count_low_end_shop_1 <- nrow(low_end_shop_1)
-
-## Number of customers in each segment for Shop 2
-count_high_end_shop_2 <- nrow(high_end_shop_2)
-count_mid_range_shop_2 <- nrow(mid_range_shop_2)
-count_low_end_shop_2 <- nrow(low_end_shop_2)
-
-## Number of customers in each segment for Shop 3
-count_high_end_shop_3 <- nrow(high_end_shop_3)
-count_mid_range_shop_3 <- nrow(mid_range_shop_3)
-count_low_end_shop_3 <- nrow(low_end_shop_3)
-
-## Number of customers in each segment for Shop 4
-count_high_end_shop_4 <- nrow(high_end_shop_4)
-count_mid_range_shop_4 <- nrow(mid_range_shop_4)
-count_low_end_shop_4 <- nrow(low_end_shop_4)
-
-## Number of customers in each segment for Shop 5
-count_high_end_shop_5 <- nrow(high_end_shop_5)
-count_mid_range_shop_5 <- nrow(mid_range_shop_5)
-count_low_end_shop_5 <- nrow(low_end_shop_5)
-
-## Setting up values
-shops <- c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5)
-
-customer_segments <- c("high", "med", "low", "high", "med", "low", "high", "med", "low", "high", "med", "low", "high", "med", "low")
-
-count_shop_1 <- c(count_high_end_shop_1, count_mid_range_shop_1, count_low_end_shop_1)
-count_shop_2 <- c(count_high_end_shop_2, count_mid_range_shop_2, count_low_end_shop_2)
-count_shop_3 <- c(count_high_end_shop_3, count_mid_range_shop_3, count_low_end_shop_3)
-count_shop_4 <- c(count_high_end_shop_4, count_mid_range_shop_4, count_low_end_shop_4)
-count_shop_5 <- c(count_high_end_shop_5, count_mid_range_shop_5, count_low_end_shop_5)
-
-counts <- c(count_shop_1, count_shop_2, count_shop_3, count_shop_4, count_shop_5)
-
-
-## Count of customers based on the three customer segments (high, mid, low)
-shop_customer_segment_count <-data.frame(shops, customer_segments, counts)
-
-## Change datatype of columns to numerical
-shop_customer_segment_count <- shop_customer_segment_count %>% mutate_if(is.integer, as.numeric) %>% mutate_if(is.factor, as.numeric)
-
-## Plot the count of customers for each shop based on customer segments (high - 1, mid - 3, low - 2)
-qplot(shops, counts, data = shop_customer_segment_count, size=counts, color = customer_segments) + 
-    scale_size_continuous(range = c(3, 8))
-```
-
-```{r echo=TRUE, message=FALSE}
-## Plot the count of customers for each segment
-qplot(customer_segments, counts, data = shop_customer_segment_count, size=counts, color = counts) + 
-    scale_size_continuous(range = c(3, 8))
-```
-
-_Analysis:_ As visualized, the customers can be categorized on the basis of three different customer segments i.e. high, mid and low in terms of their loyalty towards the shops and promotional offers can be customised for each segment. 
+ 
 
 #Final Research Questions
 
@@ -640,7 +525,7 @@ __2. What are the factors that contribute towards the long distance travel of th
 _Relevance:_ This will help to understand the important factors that contribute towards the majority of the customers willing to travel long distances to purchase products, in turn better understanding the purchase behaviour of the customers.<br />
 
 __3. What is the maximum likelihood of a customer to select a particular shop?__ <br />
-_Relevance:_ This will help to understand that which shops in the retail chain are in demand and predict their estimated customer base. This can further facilitate better stock management to meet customer demands.<br />
+_Relevance:_ This will help to understand which shops in the retail chain which are most likely to be preferred by new customers. This can further facilitate better stock management to meet increasing customer demands.<br />
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
 _Relevance:_ This will help to understand the groups of the similar customer based on their purchase behaviour and target different shop-level marketing schemes to the appropriate customers.<br />
@@ -654,11 +539,11 @@ __1. Are customers willing to travel long distances to purchase products?__ <br 
 
 __Algorithms selected:__ Support Vector Machine (SVM), K-nearest neighbor (k-NN), Random Forest
 
-__Reason for Algorithm Selections:__ In the event given that the relationship between two variables is non-linear and we are handling a two-class classification problem, SVM is the most accurate choice. 
+__Reason for Algorithm Selections:__ In the event given that the relationship between two variables is non-linear and we are handling a two-class classification problem, SVM is the most accurate choice [@hsu2003practical]. 
 
-k-NN algorithm, runs generally slower and has lower accuracy in comparison with that of SVM, but exhibits certain practical qualities. It is easy to train k-NN as it is a lazy algorithm. Consequently, it is easy to use and eventually easy to understand the results. 
+k-NN algorithm, runs generally slower and has lower accuracy in comparison with that of SVM, but exhibits certain practical qualities. It is easy to train k-NN as it is a lazy algorithm. Consequently, it is easy to use and eventually easy to understand the results [@soucy2001simple]. 
 
-In comparison with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of the difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used as it is whereas SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and k-NN Random Forest does not demand parameter tuning to reach a high accuracy.
+In comparison with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of the difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used as it is whereas SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and k-NN Random Forest does not demand parameter tuning to reach a high accuracy [@liaw2002classification].
 
 __Features Selected:__ distance_shop_1, distance_shop_2, distance_shop_3, distance_shop_4, distance_shop_5, products_purchased_shop_1, products_purchased_shop_2, products_purchased_shop_3, products_purchased_shop_4, products_purchased_shop_5, unique_products_purchased_shop_1, unique_products_purchased_shop_2, unique_products_purchased_shop_3, unique_products_purchased_shop_4, unique_products_purchased_shop_5, avg_product_price_shop_1, avg_product_price_shop_2, avg_product_price_shop_3, avg_product_price_shop_4, avg_product_price_shop_5, amount_purchased_shop_1, amount_purchased_shop_2, amount_purchased_shop_3, amount_purchased_shop_4, amount_purchased_shop_5, class are of importance and are selected for this RQ.
 
@@ -720,7 +605,7 @@ y_test <- test_data %>%
 test_ds <- test_data[, -26]
 ```
 
-__3)  Functions for classifying and plotting__
+__3) Functions for classifying and plotting__
 
 ```{r echo=TRUE, message=FALSE}
 
@@ -811,9 +696,9 @@ __3. What is the maximum likelihood of a customer to select a particular shop?__
 
 __Algorithms selected:__ Naive Bayes, Decision tree
 
-__Reason for Algorithm Selections:__ Naive Bayes is a supervised classiﬁer which works on the assumption that all attributes are independent of each other. Because of this, all attributes can be learned separately which results in faster performance. But its accuracy rate is less than that of Decision tree [].
+__Reason for Algorithm Selections:__ Naive Bayes is a supervised classiﬁer which works on the assumption that all attributes are independent of each other. Because of this, all attributes can be learned separately which results in faster performance. But its accuracy rate is less than that of Decision tree [@john1995estimating].
 
-Decision tree is a type of supervised learning algorithm that can be used in both regression and classification problems. A small change in the data can cause a large change in the final estimated tree. However, they are intuitively very easy to explain. They closely mirror human decision-making compared to other regression and classification approaches [].
+Decision tree is a type of supervised learning algorithm that can be used in both regression and classification problems. A small change in the data can cause a large change in the final estimated tree. However, they are intuitively very easy to explain. They closely mirror human decision-making compared to other regression and classification approaches [@safavian1991survey].
 
 __Features Selected:__ distance_avg, products_purchased_avg, unique_products_purchased_avg, product_price_Avg, amount_purchased_Avg.
 
@@ -824,19 +709,15 @@ __1) Data preparation for classification__
 ```{r echo=TRUE, message=FALSE}
 library(caret)
 library(dplyr)         # Used by caret
-library(kernlab)       # support vector machine 
-library(pROC)	
 library(e1071)
 library(rpart)
 library(readr)
 library(tidyverse)
 library(rpart.plot)
 
-file_path<- "Supermarket_Data_Prediction.csv"
+file_path<- "Input Dataset/Cleaned Dataset/Supermarket_Data_Prediction.csv"
 supermarket_data_predict <- read_csv(file_path)
-View(supermarket_data_predict)
 supermarket_data_predict$most_pref_shop=factor(supermarket_data_predict$most_pref_shop)
-str(supermarket_data_predict)
 ```
 
 __2) Stratified k-fold cross validation__
@@ -853,7 +734,7 @@ __3)  Accuracy calculation__
 #to store accuracy,sensitivity ,specificity for naive bayes and decision tree
 resnb<-matrix(ncol=3, nrow=5)
 resdec<-matrix(ncol=3, nrow=5)
-#5 folds 5 different train-test dataset combinations
+#Prints 5 folds 5 different train-test dataset combinations
 for(i in 1:5){
   #Segement your data by fold using the which() function 
   
@@ -949,10 +830,9 @@ modelr<-rpart(most_pref_shop ~., data=train, method="class",control=rpart.contro
 print(modelr$cptable)
 ```
 
-__Observations:__
-Thus, the research question is answered by
+__Observations:__ The graph for the overall performance of the model with respect to accuracy, specificity and sensitivity of each fold suggest that Decision tree have better accuracy than Naive Bayes on the input dataset used. Thus, the research question is answered by visualizing the predictive model performance with algorithms Naive Bayes and Decision tree, suggesting that the predictive model based on Decision tree will output better results in predicting the maximum likelihood of a new customer to select a particular shop.
 
-__Applications:__ These insights obtained can be further utilized by the business to 
+__Applications:__ These insights obtained can be further utilized by the business to understand which shops in the retail chain are most likely to be preferred by new customers. Predicting the maximum likelihood of new customers towards shop selection will further facilitate towards better stock management to meet the increasing customer demands. Relevantly, different strategies to increase profit and attract new customers in different shops can be built upon accordingly. 
 
 __4. What are the different customer segments based on their purchase behaviour?__<br />
 
