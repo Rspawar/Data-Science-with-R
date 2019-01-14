@@ -19,11 +19,23 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 ```
    pacman::p_load(char = c(
    "tidyverse",
-   "DataExplorer",
-   "corrplot",
-   "corrr",
-   "deldir",
+   "dplyr",
+   "ggplot2",
+   "modelr",
+   "gridExtra",
+   "caret",
+   "randomForest",
    "e1071",
+   "RColorBrewer",
+   "factoextra",
+   "cluster",
+   "metricsgraphics",
+   "rpart",
+   "readr",
+   "rpart.plot",
+   "plotly",
+   "clvalid"
+   
    ))
 ```
 
@@ -32,12 +44,11 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 3. Select Knit to html_document to generate the detailed Analysis Report Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 # Output
-The output is a detailed Analysis Report rendered as a HTML file Customer_Behavioural_Analytics_in_the_Retail_sector.html.
 
-[Click here](https://cdn.staticaly.com/gh/Rspawar/Data-Science-with-R/2d40603b/Customer_Behavioural_Analytics_in_the_Retail_sector.html) to view the HTML file directly in the browser.
+The output is a detailed Analysis Report rendered as a HTML file Customer_Behavioural_Analytics_in_the_Retail_sector.html
 
 # Links
-Project Website: https://sites.google.com/view/customerbehaviouralanalytics/home
+Project Website:
 
 Project Screencast: 
 

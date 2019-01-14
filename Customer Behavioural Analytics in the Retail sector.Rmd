@@ -700,7 +700,7 @@ cleared_supermarked_tbl <- tbl_df(cleared_supermarket_data)
 cleared_supermarked_tbl$class <- as.factor(cleared_supermarked_tbl$class)
 ```
 
-__2) Stratified k-fold cross validation__
+__2) k-fold cross validation__
 
 ```{r echo=TRUE, message=FALSE}
 flds <- createFolds(factor(cleared_supermarked_tbl$class), k = 5, list = FALSE, returnTrain = TRUE)
