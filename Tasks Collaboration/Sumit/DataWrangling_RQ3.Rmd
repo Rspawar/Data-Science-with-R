@@ -1,0 +1,64 @@
+---
+title: "RQ3"
+author: "Sumit Kundu"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Wrangling
+
+We removed a few unimportant and derieved features while preparing the dataset for RQ1. We repeated the same here as well. We also generated the most preferred shop (e) for each customer based on the same assumption we used for RQ1 and used it as the class label.
+
+We generated new columns to find the average distance travelled (a), average number of products purchased (b), average number of unique products purchased (c), average product price (d) and average amount spent (e) for each customer. We further generated a dataset using these newly created columns - (a), (b), (c), (d) and (e) to be used for creating a model that would predict the shop most likely to be selected by a customer as their most preferred shop.
+
+```{r echo=TRUE, message=FALSE}
+## Call the packages
+library(tidyverse)
+library(dplyr)
+
+## Set file path
+file_path <- "/home/sumit/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
+
+## Read data from a file
+supermarket_data_clean <- read_csv(file_path)
+
+## Generate columns to find the average distance travelled, average number of products purchased, average number of unique products purchased, average product price
+## and average amount spent by each customer
+supermarket_data_clean$distance_avg <- with(supermarket_data_clean, avg_distance_to_all_shops)
+supermarket_data_clean$products_purchased_avg <- with(supermarket_data_clean, round(products_purchased_total/shops_used_total))
+supermarket_data_clean$unique_products_purchased_avg <- with(supermarket_data_clean, round(unique_products_purchased_total_exclCommon/shops_used_total))
+supermarket_data_clean$product_price_avg<- with(supermarket_data_clean, avg_purchased_product_price_allShops)
+supermarket_data_clean$amount_purchased_avg<- with(supermarket_data_clean, avg_purchase_amount_allShops)
+
+## Generate new columns to find shops from which most products are purchased, shops from which most unique products are purchased, 
+## shops offfering least average product price and shops at which maximum amount of money is spent by a customers.  
+supermarket_data_clean$most_prod_purch_from <- str_sub(names(supermarket_data_clean[,11:15]),-6,-1)[max.col(supermarket_data_clean[,11:15], "random")]
+supermarket_data_clean$most_uni_prod_purch_from <- str_sub(names(supermarket_data_clean[,17:21]),-6,-1)[max.col(supermarket_data_clean[,17:21], "random")]
+supermarket_data_clean$least_avg_prod_pri <- str_sub(colnames(supermarket_data_clean[,23:27]),-6,-1)[apply(supermarket_data_clean[,23:27],1,which.min)]
+supermarket_data_clean$max_amt_purch <- str_sub(names(supermarket_data_clean[,29:33]),-6,-1)[max.col(supermarket_data_clean[,29:33], "random")]
+
+## Create a data frame having only the newly generated columns
+gen_df <- supermarket_data_clean[,46:49]
+
+## Gnereate new columns - most preferred shop and class to which the customer belongs
+for (row in 1:nrow(gen_df)){
+  ## Create a vector for each row
+  vec <- c(gen_df[row, "most_prod_purch_from"], gen_df[row, "most_uni_prod_purch_from"], gen_df[row, "max_amt_purch"])
+  
+  ## Sort and find the most preferred shop
+  supermarket_data_clean[row, "most_pref_shop"] <- names(sort(summary(as.factor(unlist(vec))), decreasing=T)[1:1])
+}
+
+## Re-order columns
+supermarket_data_predict <- supermarket_data_clean[c(41,42,43,44,45,50)]
+
+## Set file path 
+clean_filepath = "~/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_Data_Prediction.csv"
+
+## Write the dataframe to csv file
+write.csv(supermarket_data_predict, file = clean_filepath, row.names = FALSE)
+
+```

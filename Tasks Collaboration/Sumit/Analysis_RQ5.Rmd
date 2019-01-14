@@ -65,16 +65,17 @@ amt_shop_4 <- supermarket_data_clean[head(shop_4, 5), "amount_purchased_shop_4"]
 amt_shop_5 <- supermarket_data_clean[head(shop_5, 5), "amount_purchased_shop_5"]
 
 ## Create a vector of values to be shown in the plot
-values <- c(amt_shop_1, amt_shop_2, amt_shop_3, amt_shop_4, amt_shop_5)
+values <- c(unlist(amt_shop_1), unlist(amt_shop_2), unlist(amt_shop_3), unlist(amt_shop_4), unlist(amt_shop_5))
 
 ## Create a vector of labels to be shown in the plot
-labels <- factor(labels, levels = c(head(shop_1, 5), head(shop_2, 5), head(shop_3, 5), head(shop_4, 5), head(shop_5, 5)))
+labels <- c(head(shop_1, 5), head(shop_2, 5), head(shop_3, 5), head(shop_4, 5), head(shop_5, 5))
+labels_factor <- factor(labels, levels = labels)
 
 ## Create a data frame to store the vectors
-top_cust <- data.frame(labels, values)
+top_cust <- data.frame(labels_factor, values)
 
 ## Generate a plot
-tc_plot <- ggplot(top_cust, aes(labels, values))
+tc_plot <- ggplot(top_cust, aes(labels_factor, values))
 
 ## Add featurs to the plot
 tc_plot + geom_bar(stat = "identity", aes(fill = Legend), width = 0.6) +
