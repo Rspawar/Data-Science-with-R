@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Final Analysis
 
-__2. What are the factors that affect the customers decision making process while choosing their most preferred shop?__ <br />
+__2. What are the factors that affect the customer's decision making process while choosing their most preferred shop?__ <br />
 
 __Analysis__
 

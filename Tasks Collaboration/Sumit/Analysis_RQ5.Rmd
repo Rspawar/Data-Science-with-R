@@ -55,8 +55,8 @@ We generated a list of top 100 customers that spend the most amount of money in 
 
 ```{r echo=TRUE, message=FALSE}
 ## Create the legend for the plot
-#Legend <- c(rep("Shop 1", 5), rep("Shop 2", 5), rep("Shop 3", 5), rep("Shop 4", 5), rep("Shop 5", 5))
-Legend <- c("Shop 1", "Shop 1", "Shop 1", "Shop 1", "Shop 1", "Shop 2", "Shop 2", "Shop 2", "Shop 2", "Shop 2", "Shop 3", "Shop 3", "Shop 3", "Shop 3", "Shop 3", "Shop 4", "Shop 4", "Shop 4", "Shop 4", "Shop 4", "Shop 5", "Shop 5", "Shop 5", "Shop 5", "Shop 5")
+Legend <- c(rep("Shop 1", 5), rep("Shop 2", 5), rep("Shop 3", 5), rep("Shop 4", 5), rep("Shop 5", 5))
+
 ## Generate the count of columns assigned to each factor
 amt_shop_1 <- supermarket_data_clean[head(shop_1, 5), "amount_purchased_shop_1"]
 amt_shop_2 <- supermarket_data_clean[head(shop_2, 5), "amount_purchased_shop_2"]
