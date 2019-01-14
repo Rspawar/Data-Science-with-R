@@ -51,7 +51,7 @@ shop_5 <- head(order(supermarket_data_clean$loyality_score_shop_5, decreasing = 
 ```
 
 __Observations:__
-We generated a list of top 100 customers that spend the most amount of money in each of the 5 shops based on the loyality score described above and visualied it.
+We generated a list of top 100 customers that spend the most amount of money in each of the 5 shops based on the loyalty score described above and visualized it.
 
 ```{r echo=TRUE, message=FALSE}
 ## Create the legend for the plot
@@ -86,4 +86,4 @@ tc_plot + geom_bar(stat = "identity", aes(fill = Legend), width = 0.6) +
 ```
 
 __Applications:__ 
-This would help business to identify the customers who contribute highly to reveneue of the respective shops, formulate reward schmes for them and in turn retain the high-value customer base.
+This would help business to identify the customers who contribute highly to revenue of the respective shops, formulate reward schemes for them and in turn retain the high-value customer base.
