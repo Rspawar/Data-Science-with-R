@@ -6,8 +6,50 @@ library(plotly)
 file_path<- "Input Dataset/Cleaned Dataset/Supermarket_DataCleaned.csv"
 supermarket_data_clean <- read_csv(file_path)
 
+### Loyality Score based on Revenue ###
 
-## Ratio of products purchased from each shop (product purchased by a customer at a shop over total produccts purchased by that customer)
+## Calculate the revenue generated for each shop
+revenue_shop_1 <- sum(supermarket_data_clean$amount_purchased_shop_1)
+revenue_shop_2 <- sum(supermarket_data_clean$amount_purchased_shop_2)
+revenue_shop_3 <- sum(supermarket_data_clean$amount_purchased_shop_3)
+revenue_shop_4 <- sum(supermarket_data_clean$amount_purchased_shop_4)
+revenue_shop_5 <- sum(supermarket_data_clean$amount_purchased_shop_5)
+
+## Create a vector 
+revenue <- c(revenue_shop_1, revenue_shop_2, revenue_shop_3, revenue_shop_4, revenue_shop_5)
+shops <- c("shop 1", "shop 2", "shop 3", "shop 4", "shop 5")
+
+## Create a data frame to store the vectors
+revenue_per_shop <- data.frame(shops, revenue)
+
+## Generate a plot
+rps_plot <- ggplot(revenue_per_shop, aes(shops, revenue))
+
+## Add featurs to the plot
+rps_plot + geom_bar(stat = "identity", width = 0.6, position = "dodge2") +
+  xlab("Shops") + ylab("Revenue") +
+  ggtitle("Revenue Generated") +
+  theme_bw() + scale_y_continuous(labels = scales::comma)
+
+
+
+### Loyality Score based on product purchased and amount spent ###
+
+## Calculate the Loyality Score of the customers for each shop based on their contribution to the revenue of the shop
+supermarket_data_clean$loyality_score_shop_1 <- with(supermarket_data_clean, amount_purchased_shop_1/revenue_shop_1 * 100)
+supermarket_data_clean$loyality_score_shop_2 <- with(supermarket_data_clean, amount_purchased_shop_2/revenue_shop_2 * 100)
+supermarket_data_clean$loyality_score_shop_3 <- with(supermarket_data_clean, amount_purchased_shop_3/revenue_shop_3 * 100)
+supermarket_data_clean$loyality_score_shop_4 <- with(supermarket_data_clean, amount_purchased_shop_4/revenue_shop_4 * 100)
+supermarket_data_clean$loyality_score_shop_5 <- with(supermarket_data_clean, amount_purchased_shop_5/revenue_shop_5 * 100)
+  
+## Sort the column - Loyality Score for each shop in descending order and generate a list of top 100 customers
+shop_1 <- head(order(supermarket_data_clean$loyality_score_shop_1, decreasing = TRUE), 100)
+shop_2 <- head(order(supermarket_data_clean$loyality_score_shop_2, decreasing = TRUE), 100)
+shop_3 <- head(order(supermarket_data_clean$loyality_score_shop_3, decreasing = TRUE), 100)
+shop_4 <- head(order(supermarket_data_clean$loyality_score_shop_4, decreasing = TRUE), 100)
+shop_5 <- head(order(supermarket_data_clean$loyality_score_shop_5, decreasing = TRUE), 100)
+
+## Ratio of products purchased at each shop (number of products purchased by a customer at a shop over total number of products purchased by that customer)
 prod_purch_ratio_shop_1 <- with(supermarket_data_clean, products_purchased_shop_1/products_purchased_total)
 prod_purch_ratio_shop_2 <- with(supermarket_data_clean, products_purchased_shop_2/products_purchased_total)
 prod_purch_ratio_shop_3 <- with(supermarket_data_clean, products_purchased_shop_3/products_purchased_total)
