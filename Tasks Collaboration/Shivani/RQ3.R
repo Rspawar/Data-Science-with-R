@@ -1,8 +1,6 @@
 
 library(caret)
-library(dplyr)         # Used by caret
-library(kernlab)       # support vector machine 
-library(pROC)	
+library(dplyr)         
 library(e1071)
 library(rpart)
 library(readr)
