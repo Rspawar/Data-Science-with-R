@@ -5,13 +5,13 @@ library(clValid)
 library(tidyverse)
 
 ## Set file path
-file_path <- "Input Dataset/Cleaned Dataset/Supermarket_Data_Clustering.csv"
+file_path <- "Input Dataset/Cleaned Dataset/Supermarket_Data_Classification.csv"
 
 ## Read data from a file
-supermarket_data_clus <- read_csv(file_path)
+supermarket_data_class <- read_csv(file_path)
 
 ## Scale the data
-supermarket_data_scaled <- scale(supermarket_data_clus[,-26])
+supermarket_data_scaled <- scale(supermarket_data_class[,-26])
 
 
 ## Computed correlation based distances
@@ -44,16 +44,6 @@ ggplot(sm_sse, aes(k, sse)) +
   geom_point() +
   scale_x_continuous(breaks = seq(2, 30, 2))
 
-clustering <- kmeans(supermarket_data_scaled, centers = 7)
-
-names(clustering)
-head(clustering$cluster)
-clustering$size
-clustering$iter
-
-
-
-
 
 ## Compute the distance matrix
 sm_dist_eucl <- dist(supermarket_data_scaled)
@@ -77,6 +67,8 @@ sm_gapstat <- clusGap(supermarket_data_scaled, FUN = kmeans, nstart = 30, K.max 
 ## Plot Gap Statistic for different values of k
 plot(gap_stat, frame = FALSE, xlab = "Number of clusters k")
 abline(v = 3, lty = 2)
+
+
 
 
 ## Set the clustering methods to be used
