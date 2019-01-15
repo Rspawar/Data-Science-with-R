@@ -1373,6 +1373,8 @@ https://sites.google.com/view/customerbehaviouralanalytics
 
 <b>Project Presentation</b>
 
+https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_Sector.pdf
+
 <b>Complete Analysis Report as RMarkdown file</b>
 
 https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer%20Behavioural%20Analytics%20in%20the%20Retail%20sector.Rmd
@@ -1380,10 +1382,6 @@ https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer%20Behavioura
 <b>Complete Analysis Report as HTML file</b>
 
 https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_sector.html
-
-<b>Complete Analysis Report as HTML file rendered in the browser</b>
-
-https://cdn.staticaly.com/gh/Rspawar/Data-Science-with-R/2d40603b/Customer_Behavioural_Analytics_in_the_Retail_sector.html#exploratory_data_analysis
 
 <h4><b>Date</b></h4> ```r format(Sys.Date(), "%B %e, %Y")``` 
 
