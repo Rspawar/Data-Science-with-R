@@ -47,14 +47,12 @@ The output is a detailed Analysis Report rendered as a HTML file Customer_Behavi
 
 [Click here](https://cdn.staticaly.com/gh/Rspawar/Data-Science-with-R/2d40603b/Customer_Behavioural_Analytics_in_the_Retail_sector.html) to view the HTML file directly in the browser.
 
-[Click here](https://cdn.staticaly.com/gh/Rspawar/Data-Science-with-R/2d40603b/Customer_Behavioural_Analytics_in_the_Retail_sector.html) to view the HTML file directly in the browser.
-
 # Links
 Project Website: https://sites.google.com/view/customerbehaviouralanalytics/home
 
 Project Screencast: 
 
-Project Presentation:
+Project Presentation: https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_Sector.pdf
 
 # Contributors
 Rutuja Shivraj Pawar, Nadiia Honcharenko, Shivani Jadhav, Sumit Kundu
