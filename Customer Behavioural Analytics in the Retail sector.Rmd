@@ -708,7 +708,7 @@ __Reason for Algorithm Selections:__ In the event given that the relationship be
 
 k-NN algorithm, runs generally slower and has lower accuracy in comparison with that of SVM, but exhibits certain practical qualities. It is easy to train k-NN as it is a lazy algorithm. Consequently, it is easy to use and eventually easy to understand the results [@soucy2001simple]. 
 
-In comparison with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of the difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used as it is whereas SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and k-NN Random Forest does not demand parameter tuning to reach a high accuracy [@liaw2002classification].
+In comparison with k-NN classification, Random Forest is a great algorithm to train early in the model development process, to see how it performs. Considering the context of the difference between Forest and Vectors algorithms it should be mentioned, that with Random Forest data can be used as it is whereas SVM maximizes the "margin" and thus relies on the concept of "distance" between different points. This tree-algorithm is also very hard to beat in terms of performance. Moreover, in contrast with SVM and k-NN, Random Forest does not demand parameter tuning to reach a high accuracy [@liaw2002classification].
 
 __Features Selected:__ distance_shop_1, distance_shop_2, distance_shop_3, distance_shop_4, distance_shop_5, products_purchased_shop_1, products_purchased_shop_2, products_purchased_shop_3, products_purchased_shop_4, products_purchased_shop_5, unique_products_purchased_shop_1, unique_products_purchased_shop_2, unique_products_purchased_shop_3, unique_products_purchased_shop_4, unique_products_purchased_shop_5, avg_product_price_shop_1, avg_product_price_shop_2, avg_product_price_shop_3, avg_product_price_shop_4, avg_product_price_shop_5, amount_purchased_shop_1, amount_purchased_shop_2, amount_purchased_shop_3, amount_purchased_shop_4, amount_purchased_shop_5, class are of importance and are selected for this RQ.
 
@@ -828,7 +828,7 @@ plot(knnTrain)
 
 #classify with best params
 knnFit <- knn3(train_ds, y_train, k = 7)
-classify_with_fit(knnFit, "KNN classification")
+classify_with_fit(knnFit, "k-NN classification")
 ```
 
 __6) Classification with Random Forest __
@@ -1369,11 +1369,13 @@ https://github.com/Rspawar/Data-Science-with-R.git
 
 https://sites.google.com/view/customerbehaviouralanalytics
 
-<b>Project Screencast</b>
+<b>Project Screencast</b> 
+
+https://youtu.be/vICvLamX-hA
 
 <b>Project Presentation</b>
 
-https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_Sector.pdf
+https://github.com/Rspawar/Data-Science-with-R/blob/master/Project%20Presentation/Customer_Behavioural_Analytics_in_the_Retail_Sector.pdf
 
 <b>Complete Analysis Report as RMarkdown file</b>
 
