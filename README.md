@@ -19,22 +19,24 @@ The Supermarket aggr.Customer dataset used for the analysis contains data aggreg
 ```
    pacman::p_load(char = c(
    "tidyverse",
+   "DataExplorer",
+   "skimr",
+   "ggcorrplot",
    "dplyr",
    "ggplot2",
+   "RColorBrewer",
    "modelr",
    "gridExtra",
+   "plotly",
+   "readr",
    "caret",
    "randomForest",
    "e1071",
-   "RColorBrewer",
    "factoextra",
    "cluster",
    "metricsgraphics",
    "rpart",
-   "readr",
    "rpart.plot",
-   "plotly",
-   "clvalid"
    ))
 ```
 
@@ -50,9 +52,9 @@ The output is a detailed Analysis Report rendered as a HTML file Customer_Behavi
 # Links
 Project Website: https://sites.google.com/view/customerbehaviouralanalytics/home
 
-Project Screencast: 
+Project Screencast: https://youtu.be/vICvLamX-hA 
 
-Project Presentation: https://github.com/Rspawar/Data-Science-with-R/blob/master/Customer_Behavioural_Analytics_in_the_Retail_Sector.pdf
+Project Presentation: https://github.com/Rspawar/Data-Science-with-R/blob/master/Project%20Presentation/Customer_Behavioural_Analytics_in_the_Retail_Sector.pdf
 
 # Contributors
 Rutuja Shivraj Pawar, Nadiia Honcharenko, Shivani Jadhav, Sumit Kundu
