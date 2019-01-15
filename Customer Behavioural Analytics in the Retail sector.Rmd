@@ -330,7 +330,7 @@ for (row in 1:nrow(test)){
 supermarket_data_class <- supermarket_data_model[c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,32)]
 
 ## Set file path 
-clean_filepath = "~/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_Data_Classification.csv"
+clean_filepath = "~/R GitHub/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_Data_Classification.csv"
 
 ## Write the dataframe to csv file
 write.csv(supermarket_data_class, file = clean_filepath, row.names = FALSE)
@@ -381,7 +381,7 @@ for (row in 1:nrow(gen_df)){
 supermarket_data_predict <- supermarket_data_clean[c(41,42,43,44,45,50)]
 
 ## Set file path 
-clean_filepath = "~/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_Data_Prediction.csv"
+clean_filepath = "~/R GitHub/Data-Science-with-R/Input Dataset/Cleaned Dataset/Supermarket_Data_Prediction.csv"
 
 ## Write the dataframe to csv file
 write.csv(supermarket_data_predict, file = clean_filepath, row.names = FALSE)
